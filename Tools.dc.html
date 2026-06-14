@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <script>window.addEventListener("unhandledrejection",function(ev){try{var m=ev&&ev.reason?String(ev.reason.message||ev.reason):"";if(/transition|skipped|aborted|invalid state/i.test(m))ev.preventDefault();}catch(e){}});</script>
+  <style>
+    @font-face { font-family: 'Scto Grotesk B'; src: url('fonts/SctoGroteskB-Regular.otf') format('opentype'); font-weight: 400; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Scto Grotesk B'; src: url('fonts/SctoGroteskB-Bold.otf') format('opentype'); font-weight: 700; font-style: normal; font-display: swap; }
+    html, body { margin: 0; padding: 0; background: #ebe7e7; }
+    @view-transition { navigation: auto; }
+    @keyframes vt-up { from { transform: translateY(100%); } to { transform: translateY(0); } }
+    ::view-transition-old(root) { animation: none; }
+    ::view-transition-new(root) { animation: vt-up 640ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+    @media (prefers-reduced-motion: reduce) { ::view-transition-old(root), ::view-transition-new(root) { animation: none !important; } }
+    * { box-sizing: border-box; }
+    .navlink { color: #111111; text-decoration: none; transition: color 160ms ease; }
+    .navlink:hover { color: #8a847f; }
+    .menulink { transition: color 160ms ease; }
+    .menunav:hover .menulink { color: rgba(255,255,255,0.4) !important; }
+    .menunav:hover .menulink:hover { color: #ffffff !important; }
+    .featrow { position: relative; }
+    .featrow::before { content: ""; position: absolute; inset: 0 -16px; border-radius: 6px; background: rgba(255,255,255,0.14); opacity: 0; transition: opacity 160ms ease; z-index: 0; }
+    .featrow:hover::before { opacity: 1; }
+    .featrow > * { position: relative; z-index: 1; }
+    .gcard { transition: transform 220ms cubic-bezier(0.22,0.61,0.36,1), box-shadow 220ms ease; }
+    .gcard:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(40,20,12,0.07); }
+    .carscroll { scrollbar-width: none; }
+    .carscroll::-webkit-scrollbar { height: 0; width: 0; }
+    @keyframes chatpop { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+    .chatpanel { animation: chatpop 300ms cubic-bezier(0.22,0.61,0.36,1); }
+    #chat-scroll::-webkit-scrollbar { width: 0; }
+    .sendbtn { transition: background 160ms ease, transform 160ms ease; }
+    .sendbtn:hover { background: #000000 !important; }
+    .iconbtn { transition: color 160ms ease; }
+    .iconbtn:hover svg { stroke: #555555; }
+    @keyframes modalscrim { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes modalscrimOut { from { opacity: 1; } to { opacity: 0; } }
+    @keyframes modalUp { from { transform: translateY(115%); } to { transform: translateY(0); } }
+    @keyframes modalDown { from { transform: translateY(0); } to { transform: translateY(115%); } }
+    .cardscrim { animation: modalscrim 240ms ease-out both; }
+    .cardscrim.closing { animation: modalscrimOut 320ms ease-in both; }
+    .cardmodal { animation: modalUp 500ms cubic-bezier(0.33, 1.13, 0.66, 1) both; }
+    .cardmodal.closing { animation: modalDown 330ms cubic-bezier(0.45, 0, 0.7, -0.06) both; }
+    .modalclose { transition: background 160ms ease, transform 160ms ease; }
+    .modalclose:hover { background: #f1efed !important; transform: rotate(90deg); }
+    .prow::before { content: ""; position: absolute; top: 0; bottom: 0; left: -24px; right: -24px; background: #ffffff; border-radius: 4px; opacity: 0; transition: opacity 160ms ease; z-index: 0; }
+    .prow:hover::before { opacity: 1; }
+    .prow > * { position: relative; z-index: 1; }
+    .prow:hover { border-bottom-color: transparent !important; }
+    .prow:hover .parrow { color: #111111 !important; }
+  </style>
+</helmet>
+
+<div id="page" style="min-height: 100vh; background: #ebe7e7; color: #111111; font-family: 'Scto Grotesk B', 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 17px; line-height: 1.55; -webkit-font-smoothing: antialiased; display: flex; flex-direction: column;">
+
+  <!-- Nav menu overlay (slides down from top; black) -->
+  <div style="{{ menuStyle }}">
+    <div style="width: 100%; max-width: 1240px; margin: auto; display: flex; flex-wrap: wrap; gap: clamp(40px, 6vw, 96px);">
+      <nav class="menunav" style="display: flex; flex-direction: column; gap: clamp(2px, 0.6vw, 10px); flex: 1 1 340px;">
+        <a class="menulink" href="About.dc.html" style="font-size: clamp(32px, 4.4vw, 60px); letter-spacing: -0.03em; line-height: 1.12; font-weight: 400; color: #ffffff; text-decoration: none;">About TRIPTK</a>
+        <a class="menulink" href="Tools.dc.html" style="font-size: clamp(32px, 4.4vw, 60px); letter-spacing: -0.03em; line-height: 1.12; font-weight: 400; color: #ffffff; text-decoration: none;">Tools &amp; Frameworks</a>
+        <a class="menulink" href="index.html" style="font-size: clamp(32px, 4.4vw, 60px); letter-spacing: -0.03em; line-height: 1.12; font-weight: 400; color: #ffffff; text-decoration: none;">How We Work</a>
+        <a class="menulink" href="index.html" style="font-size: clamp(32px, 4.4vw, 60px); letter-spacing: -0.03em; line-height: 1.12; font-weight: 400; color: #ffffff; text-decoration: none;">Industry Intel</a>
+      </nav>
+
+      <div style="flex: 1 1 420px; max-width: 540px;">
+        <p style="margin: 0 0 30px 0; font-size: 18px; line-height: 1.5; color: rgba(255,255,255,0.66); max-width: 430px;">A searchable internal platform that helps the TRIPTK team work &amp; learn.</p>
+        <sc-for list="{{ menuFeatured }}" as="f" hint-placeholder-count="3">
+          <a href="index.html" class="featrow" style="display: flex; align-items: center; gap: 20px; padding: 18px 0; border-top: 1px solid rgba(255,255,255,0.14); text-decoration: none;">
+            <div style="flex: 0 0 auto; width: 88px; height: 66px; border-radius: 6px; overflow: hidden; background: {{ f.grad }};"></div>
+            <div style="flex: 1 1 auto; min-width: 0;">
+              <div style="font-size: 14px; color: #8f8f8f;">{{ f.label }}</div>
+              <div style="margin-top: 4px; font-size: 18px; line-height: 1.25; color: #ffffff; text-wrap: pretty;">{{ f.title }}</div>
+            </div>
+            <span style="flex: 0 0 auto; display: inline-flex; color: #ffffff;">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg>
+            </span>
+          </a>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header data-screen-label="Header" style="{{ headerStyle }}">
+    <div style="width: 100%; display: flex; justify-content: space-between; align-items: center;">
+      <a href="index.html" aria-label="TRIPTK home" style="display: inline-flex; align-items: center;">
+        <img src="images/triptk-icon.png" alt="TRIPTK" style="{{ logoStyle }}">
+      </a>
+      <button type="button" aria-label="Menu" onClick="{{ toggleMenu }}" style="{{ menuBtnStyle }}">
+        <span style="{{ iconMenuStyle }}">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="8" x2="19" y2="8"></line><line x1="3" y1="14" x2="19" y2="14"></line></svg>
+        </span>
+        <span style="{{ iconCloseStyle }}">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="5" y1="5" x2="17" y2="17"></line><line x1="17" y1="5" x2="5" y2="17"></line></svg>
+        </span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Hero card: masthead + header card image -->
+  <section data-screen-label="Welcome" style="display: flex; justify-content: center; padding: 96px 24px 0 24px;">
+    <div style="width: min(1480px, 100%); margin: 0 auto;">
+      <h1 style="margin: 0 0 48px 0; max-width: min(1180px, 100%); font-size: clamp(40px, 5.2vw, 72px); line-height: 1.08; letter-spacing: -0.035em; font-weight: 400; color: #111111;">Tools for thinking better<br>and moving faster</h1>
+      <div style="width: 100%; height: clamp(420px, 48vw, 760px); border-radius: 4px; background: radial-gradient(120% 95% at 50% 108%, #ff8a3d 0%, #ffd9b8 44%, #f4f2f0 100%);"></div>
+    </div>
+  </section>
+
+  <!-- Subcopy -->
+  <section data-screen-label="Subcopy" style="display: flex; justify-content: center; padding: clamp(80px, 11vw, 150px) 48px 8px 48px;">
+    <div style="width: min(1240px, 100%);">
+      <div style="margin: 0 0 clamp(20px, 2.2vw, 32px) 0; font-size: clamp(15px, 1.4vw, 18px); letter-spacing: -0.01em; color: #8a847f;">What this is</div>
+      <p style="margin: 0; max-width: min(880px, 100%); font-size: clamp(30px, 3.2vw, 46px); line-height: 1.2; letter-spacing: -0.02em; font-weight: 400; color: #111111; text-wrap: pretty;">A curated set of tools and frameworks organized by specialty, built to help teams make sense of complexity and move with confidence.</p>
+    </div>
+  </section>
+
+  <!-- Body copy column -->
+  <section data-screen-label="Body" style="display: flex; justify-content: center; padding: clamp(44px, 5.5vw, 80px) 48px 0 48px;">
+    <div style="width: min(1240px, 100%);">
+    <div style="max-width: 620px; display: flex; flex-direction: column; gap: 24px;">
+      <p style="margin: 0; font-size: clamp(18px, 1.5vw, 21px); line-height: 1.62; letter-spacing: -0.005em; color: #111111; text-wrap: pretty;">This is a working library for the way we think, build, and experiment as a team. Inside, you&rsquo;ll find tools to help frame messy problems, sharpen strategy, generate stronger ideas, and move work forward with more confidence.</p>
+      <p style="margin: 0; font-size: clamp(18px, 1.5vw, 21px); line-height: 1.62; letter-spacing: -0.005em; color: #111111; text-wrap: pretty;">Use it when you need a starting point, a better question, a new way into the work, or a structure to help make sense of what you&rsquo;re seeing. Some tools are built for strategy. Some are built for creativity. Some are built to help teams align, decide, and act. The goal is simple: make our thinking easier to access, easier to apply, and easier to build on.</p>
+    </div>
+    </div>
+  </section>
+
+  <!-- Carousel -->
+  <section data-screen-label="Carousel" style="padding: clamp(100px, 13vw, 200px) 0 0 0;">
+    <div style="padding: 0 24px 0 max(48px, calc((100% - 1240px) / 2));">
+      <div style="margin: 0 0 clamp(20px, 2.2vw, 32px) 0; font-size: clamp(15px, 1.4vw, 18px); letter-spacing: -0.01em; color: #8a847f;">Featured tools</div>
+    </div>
+    <div class="carscroll" style="display: flex; gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-left: max(48px, calc((100% - 1240px) / 2)); -webkit-overflow-scrolling: touch; padding: 0 24px 4px max(48px, calc((100% - 1240px) / 2));">
+      <sc-for list="{{ carousel }}" as="card" hint-placeholder-count="7">
+        <a class="gcard" href="#" onClick="{{ onCardOpen }}" style="flex: 0 0 clamp(280px, 40vw, 400px); scroll-snap-align: start; display: flex; flex-direction: column; justify-content: flex-end; aspect-ratio: 3 / 4; border-radius: 4px; overflow: hidden; padding: 28px; text-decoration: none; background: {{ card.grad }}; color: #1a1a1a; cursor: pointer;">
+          <h3 style="margin: 0; font-size: 20px; font-weight: 400; letter-spacing: -0.01em; line-height: 1.22; text-wrap: balance;">{{ card.title }}</h3>
+          <span style="margin-top: 28px; display: inline-flex; line-height: 1;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6"></path><path d="M10 20H4v-6"></path></svg></span>
+        </a>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- Categories -->
+  <section data-screen-label="Categories" style="display: flex; justify-content: center; padding: clamp(80px, 11vw, 150px) 48px 8px 48px;">
+    <div style="width: min(1240px, 100%);">
+      <div style="margin: 0 0 clamp(20px, 2.2vw, 32px) 0; font-size: clamp(15px, 1.4vw, 18px); letter-spacing: -0.01em; color: #8a847f;">Tools &amp; frameworks</div>
+      <h2 style="margin: 0; max-width: none; font-size: clamp(30px, 3.2vw, 46px); line-height: 1.2; letter-spacing: -0.02em; font-weight: 400; color: #111111; text-wrap: nowrap;">100+ tools, organized into 12 specialty categories.</h2>
+    </div>
+  </section>
+
+  <section data-screen-label="Category list" style="display: flex; justify-content: center; padding: 40px 48px 24px 48px;">
+    <div style="width: min(1240px, 100%);">
+      <sc-for list="{{ categories }}" as="row" hint-placeholder-count="12">
+        <a href="#" class="prow" style="display: flex; align-items: center; gap: 24px; padding: 22px 24px 22px 0; border-radius: 4px; border-bottom: 1px solid #cfc8c1; text-decoration: none; box-sizing: border-box; position: relative; transition: background 320ms cubic-bezier(0.22,0.61,0.36,1), box-shadow 320ms cubic-bezier(0.22,0.61,0.36,1);">
+          <span class="ptitle" style="flex: 0 0 38%; font-size: 28px; letter-spacing: -0.01em; color: #111111; padding-left: 0; transition: color 320ms ease, padding 320ms cubic-bezier(0.22,0.61,0.36,1);">{{ row.title }}</span>
+          <span class="pdesc" style="flex: 1 1 auto; margin-left: 40px; font-size: 16px; line-height: 1.45; color: #5a544e; transition: color 320ms ease;">{{ row.desc }}</span>
+          <span class="parrow" style="flex: 0 0 auto; font-size: 20px; line-height: 1; color: transparent; transition: color 320ms ease;">&rarr;</span>
+        </a>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- Persistent assistant dock -->
+  <div style="position: fixed; left: 0; right: 0; bottom: 0; z-index: 90; display: flex; justify-content: center; padding: 0 16px 34px; pointer-events: none;">
+    <div style="width: min(720px, 100%); display: flex; flex-direction: column; pointer-events: auto;">
+
+      <sc-if value="{{ chatOpen }}" hint-placeholder-val="{{ false }}">
+        <div class="chatpanel" style="background: #ffffff; border: 1px solid #e4e4e4; border-radius: 4px; box-shadow: 0 18px 50px rgba(40,20,12,0.16); margin-bottom: 12px; display: flex; flex-direction: column; max-height: min(64vh, 560px); overflow: hidden;">
+          <div style="display: flex; align-items: center; justify-content: flex-end; padding: 12px 16px; border-bottom: 1px solid #f0f0f0; flex: 0 0 auto;">
+            <button type="button" aria-label="Collapse" onClick="{{ closeChat }}" style="border: none; background: transparent; cursor: pointer; display: inline-flex; color: #8a847f; padding: 4px;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"></path></svg>
+            </button>
+          </div>
+          <div id="chat-scroll" style="flex: 1 1 auto; overflow-y: auto; padding: 22px 20px; display: flex; flex-direction: column; gap: 18px;">
+            <sc-if value="{{ noMessages }}" hint-placeholder-val="{{ true }}">
+              <div style="display: flex; flex-direction: column; gap: 12px;">
+                <div style="font-size: 13px; letter-spacing: 0.04em; color: #8a847f;">Try asking</div>
+                <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                  <sc-for list="{{ samples }}" as="s" hint-placeholder-count="4">
+                    <button type="button" onClick="{{ s.onClick }}" style="text-align: left; border: 1px solid #e4e4e4; border-radius: 999px; padding: 10px 16px; background: transparent; cursor: pointer; font-family: inherit; font-size: 14px; color: #111111;">{{ s.text }}</button>
+                  </sc-for>
+                </div>
+              </div>
+            </sc-if>
+            <sc-for list="{{ messages }}" as="msg" hint-placeholder-count="0">
+              <sc-if value="{{ msg.isUser }}" hint-placeholder-val="{{ false }}">
+                <div style="align-self: flex-end; max-width: 82%; background: #f0efed; color: #111111; border-radius: 4px; padding: 12px 16px; font-size: 15px; line-height: 1.45;">{{ msg.text }}</div>
+              </sc-if>
+              <sc-if value="{{ msg.isBot }}" hint-placeholder-val="{{ false }}">
+                <div style="align-self: flex-start; max-width: 94%; display: flex; flex-direction: column; gap: 14px;">
+                  <p style="margin: 0; font-size: 15px; line-height: 1.55; color: #111111;">{{ msg.short }}</p>
+                  <sc-if value="{{ msg.hasCard }}" hint-placeholder-val="{{ false }}">
+                    <div style="border-radius: 4px; overflow: hidden; background: {{ msg.cardGrad }}; color: #1a1a1a; padding: 22px; min-height: 170px; display: flex; flex-direction: column; justify-content: flex-end;">
+                      <div style="font-size: 18px; font-weight: 400; letter-spacing: -0.01em; line-height: 1.2;">{{ msg.cardTitle }}</div>
+                      <div style="margin-top: 6px; font-size: 14px; line-height: 1.45; color: rgba(26,26,26,0.62);">{{ msg.cardDesc }}</div>
+                    </div>
+                  </sc-if>
+                  <sc-if value="{{ msg.hasExcerpt }}" hint-placeholder-val="{{ false }}">
+                    <div style="border-left: 3px solid #cfcac4; padding: 2px 0 2px 16px;">
+                      <div style="font-size: 16px; line-height: 1.5; color: #2a2620; font-style: italic;">&ldquo;{{ msg.excerptText }}&rdquo;</div>
+                      <div style="margin-top: 8px; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: #8a847f;">From {{ msg.excerptSource }}</div>
+                    </div>
+                  </sc-if>
+                  <sc-if value="{{ msg.hasDigest }}" hint-placeholder-val="{{ false }}">
+                    <div style="border: 1px solid #e4e4e4; border-radius: 10px; padding: 14px 16px;">
+                      <div style="font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #8a847f;">Digest</div>
+                      <div style="margin-top: 6px; font-size: 16px; color: #111111;">{{ msg.digestTitle }}</div>
+                      <div style="margin-top: 10px; display: flex; flex-direction: column; gap: 8px;">
+                        <sc-for list="{{ msg.digestItems }}" as="d" hint-placeholder-count="3">
+                          <div style="display: flex; gap: 10px; font-size: 14px; line-height: 1.45; color: #3a3a3a;"><span style="color: #b3aea9;">&mdash;</span><span>{{ d }}</span></div>
+                        </sc-for>
+                      </div>
+                    </div>
+                  </sc-if>
+                  <sc-if value="{{ msg.hasGuide }}" hint-placeholder-val="{{ false }}">
+                    <div style="border: 1px solid #e4e4e4; border-radius: 10px; padding: 14px 16px;">
+                      <div style="font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #8a847f;">Recommended guide</div>
+                      <div style="margin-top: 6px; font-size: 16px; color: #111111;">{{ msg.guideTitle }}</div>
+                      <div style="margin-top: 4px; font-size: 14px; color: #6e6862; line-height: 1.45;">{{ msg.guideDesc }}</div>
+                    </div>
+                  </sc-if>
+                  <sc-if value="{{ msg.hasTools }}" hint-placeholder-val="{{ false }}">
+                    <div>
+                      <div style="font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #8a847f; margin-bottom: 8px;">Related tools</div>
+                      <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                        <sc-for list="{{ msg.tools }}" as="tool" hint-placeholder-count="0">
+                          <span style="border: 1px solid #e4e4e4; border-radius: 999px; padding: 7px 14px; font-size: 13px; color: #111111;">{{ tool }}</span>
+                        </sc-for>
+                      </div>
+                    </div>
+                  </sc-if>
+                  <sc-if value="{{ msg.hasIntel }}" hint-placeholder-val="{{ false }}">
+                    <div style="border: 1px solid #e4e4e4; border-radius: 10px; padding: 14px 16px;">
+                      <div style="font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #8a847f;">Relevant intel</div>
+                      <div style="margin-top: 6px; font-size: 16px; color: #111111;">{{ msg.intelTitle }}</div>
+                      <div style="margin-top: 4px; font-size: 14px; color: #6e6862; line-height: 1.45;">{{ msg.intelWhy }}</div>
+                    </div>
+                  </sc-if>
+                  <sc-if value="{{ msg.hasSource }}" hint-placeholder-val="{{ false }}">
+                    <a href="#" style="display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: #111111; text-decoration: underline; text-underline-offset: 3px;">Source: {{ msg.sourceTitle }} &rarr;</a>
+                  </sc-if>
+                  <sc-if value="{{ msg.hasNext }}" hint-placeholder-val="{{ false }}">
+                    <button type="button" onClick="{{ msg.askNext }}" style="align-self: flex-start; text-align: left; border: 1px dashed #cfcac4; border-radius: 10px; padding: 10px 14px; background: transparent; cursor: pointer; font-family: inherit; font-size: 14px; color: #6e6862;">Ask next: {{ msg.next }}</button>
+                  </sc-if>
+                </div>
+              </sc-if>
+            </sc-for>
+            <sc-if value="{{ thinking }}" hint-placeholder-val="{{ false }}">
+              <div style="align-self: flex-start; font-size: 15px; color: #8a847f;">Thinking&hellip;</div>
+            </sc-if>
+          </div>
+        </div>
+      </sc-if>
+
+      <div style="background: #ffffff; border-radius: 4px; box-shadow: 0 8px 28px rgba(40,20,12,0.10); display: flex; align-items: center; gap: 10px; padding: 8px 10px 8px 18px;">
+        <button type="button" class="iconbtn" aria-label="Attach" style="display: inline-flex; align-items: center; justify-content: center; width: 38px; height: 38px; padding: 0; border: none; background: transparent; cursor: pointer; flex: 0 0 auto;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9a9a9a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path></svg>
+        </button>
+        <input id="chat-input" value="{{ chatDraft }}" onInput="{{ onDraft }}" onFocus="{{ openChat }}" onKeyDown="{{ onChatKey }}" aria-label="Ask the TRIPTK assistant" style="flex: 1 1 auto; min-width: 0; border: none; outline: none; background: transparent; font-family: inherit; font-size: 17px; color: #111111; padding: 10px 0;">
+        <button type="button" class="sendbtn" aria-label="Send" onClick="{{ sendChat }}" style="display: inline-flex; align-items: center; justify-content: center; width: 42px; height: 42px; padding: 0; border: none; border-radius: 4px; background: #1a1a1a; cursor: pointer; flex: 0 0 auto;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"></path><path d="M5 12l7-7 7 7"></path></svg>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Card detail pop-up -->
+  <sc-if value="{{ modalOpen }}" hint-placeholder-val="{{ false }}">
+    <div class="cardscrim {{ closingCls }}" data-screen-label="Card detail" onClick="{{ closeCard }}" style="font-family: 'Scto Grotesk B', 'Helvetica Neue', Helvetica, Arial, sans-serif; position: fixed; inset: 0; z-index: 300; background: rgba(20,12,8,0.46); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); display: flex; align-items: flex-start; justify-content: center; padding: clamp(16px, 4vh, 56px) 20px; overflow-y: auto;">
+      <div class="cardmodal {{ closingCls }}" onClick="{{ stopModal }}" style="position: relative; width: min(1080px, 100%); margin: auto; background: #f7f6f3; border-radius: 16px; box-shadow: 0 40px 120px rgba(20,12,8,0.34); padding: 12px;">
+        <button type="button" class="modalclose" aria-label="Close" onClick="{{ closeCard }}" style="position: absolute; top: 28px; right: 28px; z-index: 4; width: 46px; height: 46px; border-radius: 999px; border: none; background: #ffffff; box-shadow: 0 2px 12px rgba(20,12,8,0.14); cursor: pointer; display: inline-flex; align-items: center; justify-content: center; color: #111111; padding: 0;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"></line><line x1="18" y1="6" x2="6" y2="18"></line></svg>
+        </button>
+        <div style="position: relative; border-radius: 4px; overflow: hidden; aspect-ratio: 16 / 9; background: #e7e4e0; display: flex; align-items: center; justify-content: center;">
+          <div style="position: relative; width: 88%; aspect-ratio: 16 / 9; background: radial-gradient(120% 130% at 50% 0%, #ffffff 0%, #f2f1ee 100%); border: 1px solid rgba(20,12,8,0.05); border-radius: 16px; box-shadow: 0 1px 2px rgba(20,12,8,0.05); overflow: hidden;">
+            <svg viewBox="0 0 960 540" preserveAspectRatio="xMidYMid meet" style="position: absolute; inset: 0; width: 100%; height: 100%; display: block;">
+              <g fill="#dad7d2">
+                <circle cx="330" cy="150" r="34"></circle>
+                <circle cx="250" cy="206" r="17" fill="#e4e1dc"></circle>
+                <circle cx="388" cy="205" r="46"></circle>
+                <circle cx="360" cy="356" r="54"></circle>
+                <circle cx="298" cy="408" r="23" fill="#e4e1dc"></circle>
+                <circle cx="612" cy="360" r="40"></circle>
+                <circle cx="688" cy="334" r="15" fill="#e4e1dc"></circle>
+                <circle cx="600" cy="432" r="29"></circle>
+              </g>
+              <g stroke="#c5c2bd" stroke-width="1.6" stroke-linecap="round" stroke-dasharray="2 7">
+                <line x1="480" y1="74" x2="480" y2="466"></line>
+                <line x1="150" y1="270" x2="810" y2="270"></line>
+              </g>
+              <g fill="#f6f5f3" stroke="#b7b4af" stroke-width="1.6">
+                <circle cx="480" cy="74" r="4.5"></circle>
+                <circle cx="480" cy="466" r="4.5"></circle>
+                <circle cx="150" cy="270" r="4.5"></circle>
+                <circle cx="810" cy="270" r="4.5"></circle>
+              </g>
+            </svg>
+            <div style="position: absolute; top: 6%; left: 50%; transform: translateX(-50%); font-size: clamp(9px, 1.1vw, 13px); font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #111111; white-space: nowrap;">Spectrum A</div>
+            <div style="position: absolute; bottom: 6%; left: 50%; transform: translateX(-50%); font-size: clamp(9px, 1.1vw, 13px); font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #111111; white-space: nowrap;">Spectrum B</div>
+            <div style="position: absolute; left: 3.5%; top: 50%; transform: translateY(-50%); font-size: clamp(9px, 1.1vw, 13px); font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #111111; white-space: nowrap;">Spectrum 1</div>
+            <div style="position: absolute; right: 3.5%; top: 50%; transform: translateY(-50%); font-size: clamp(9px, 1.1vw, 13px); font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #111111; white-space: nowrap;">Spectrum 2</div>
+            <div style="position: absolute; left: 30%; top: 26%; color: #111111;">
+              <div style="font-size: clamp(11px, 1.35vw, 15px); font-weight: 700; line-height: 1.2;">Quadrant Handle</div>
+              <div style="font-size: clamp(10px, 1.2vw, 14px); font-style: italic; line-height: 1.2; margin-top: 2px;">Description</div>
+            </div>
+            <div style="position: absolute; left: 56%; top: 26%; color: #111111;">
+              <div style="font-size: clamp(11px, 1.35vw, 15px); font-weight: 700; line-height: 1.2;">Quadrant Handle</div>
+              <div style="font-size: clamp(10px, 1.2vw, 14px); font-style: italic; line-height: 1.2; margin-top: 2px;">Description</div>
+            </div>
+            <div style="position: absolute; left: 30%; top: 61%; color: #111111;">
+              <div style="font-size: clamp(11px, 1.35vw, 15px); font-weight: 700; line-height: 1.2;">Quadrant Handle</div>
+              <div style="font-size: clamp(10px, 1.2vw, 14px); font-style: italic; line-height: 1.2; margin-top: 2px;">Description</div>
+            </div>
+            <div style="position: absolute; left: 56%; top: 61%; color: #111111;">
+              <div style="font-size: clamp(11px, 1.35vw, 15px); font-weight: 700; line-height: 1.2;">Quadrant Handle</div>
+              <div style="font-size: clamp(10px, 1.2vw, 14px); font-style: italic; line-height: 1.2; margin-top: 2px;">Description</div>
+            </div>
+          </div>
+        </div>
+        <div style="padding: clamp(52px, 7vw, 104px) clamp(24px, 5vw, 40px) clamp(60px, 8vw, 120px) clamp(24px, 5vw, 40px);">
+          <div style="max-width: 760px; margin: 0 auto;">
+            <h2 style="margin: 0; font-weight: 400; font-size: clamp(36px, 4.4vw, 56px); line-height: 1.12; letter-spacing: -0.02em; color: #111111; text-wrap: balance;">{{ tool.name }}</h2>
+            <p style="margin: 26px 0 0 0; font-size: clamp(20px, 2.2vw, 26px); line-height: 1.42; color: #2a2620; text-wrap: pretty;">{{ tool.oneLiner }}</p>
+
+            <div style="margin-top: clamp(44px, 5vw, 68px); font-size: 17px; color: #8a847f;">Overview</div>
+            <div style="display: flex; flex-direction: column; gap: 22px; margin-top: 22px;">
+              <sc-for list="{{ tool.overview }}" as="para" hint-placeholder-count="3">
+                <p style="margin: 0; font-size: 18px; line-height: 1.66; color: #2a2620; text-wrap: pretty;">{{ para }}</p>
+              </sc-for>
+            </div>
+
+            <div style="margin-top: clamp(44px, 5vw, 68px); font-size: 17px; color: #8a847f;">When to use it</div>
+            <div style="display: flex; flex-direction: column; gap: 14px; margin-top: 22px;">
+              <sc-for list="{{ tool.whenUse }}" as="use" hint-placeholder-count="4">
+                <div style="display: flex; gap: 14px; align-items: flex-start;">
+                  <span style="flex: 0 0 auto; width: 7px; height: 7px; border-radius: 999px; background: #b3aea9; margin-top: 11px;"></span>
+                  <span style="font-size: 18px; line-height: 1.55; color: #2a2620; text-wrap: pretty;">{{ use }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- Footer card -->
+  <footer data-screen-label="Footer" style="display: flex; justify-content: center; padding: 120px 24px 144px 24px;">
+    <div style="width: min(1480px, 100%); background: #ffffff; border-radius: 4px; padding: clamp(40px, 5vw, 72px); overflow: hidden;">
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 48px;">
+
+        <div style="flex: 1 1 560px; min-width: 280px;">
+          <span style="display: block; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: #8a847f;">Find us</span>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 30px 40px; margin-top: 26px;">
+            <sc-for list="{{ offices }}" as="o" hint-placeholder-count="4">
+              <div>
+                <div style="font-size: 17px; color: #111111;">{{ o.name }}</div>
+                <div style="margin-top: 8px; font-size: 15px; line-height: 1.5; color: #8f8a85;">{{ o.line1 }}</div>
+                <div style="font-size: 15px; line-height: 1.5; color: #8f8a85;">{{ o.line2 }}</div>
+                <div style="margin-top: 12px; font-size: 14px; color: #b3aea9;">{{ o.time }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+
+        <div style="flex: 0 1 220px; min-width: 180px;">
+          <span style="display: block; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: #8a847f;">Inquiries</span>
+          <a href="mailto:hello@triptk.com" class="navlink" style="display: inline-block; margin-top: 26px; font-size: 17px; color: #111111;">hello@triptk.com</a>
+        </div>
+
+      </div>
+
+      <div style="margin-top: clamp(72px, 8vw, 120px);">
+        <img src="images/triptk-logo.png" alt="TRIPTK" style="display: block; width: 100%; height: auto;">
+      </div>
+    </div>
+  </footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { menuOpen: false, chatOpen: false, draft: "", messages: [], thinking: false, activeCard: null, modalClosing: false };
+
+  componentDidMount() {
+    if (!window.__vtGuard) { window.__vtGuard = true; window.addEventListener("unhandledrejection", function (ev) { try { var m = ev && ev.reason ? String(ev.reason.message || ev.reason) : ""; if (/transition|aborted|skipped|invalid state/i.test(m)) ev.preventDefault(); } catch (e) {} }); }
+    this._onKey = (e) => { if (e.key === "Escape") this.closeMenu(); };
+    window.addEventListener("keydown", this._onKey);
+    this.initPlaceholder();
+  }
+  componentWillUnmount() {
+    if (this._onKey) window.removeEventListener("keydown", this._onKey);
+    if (this._navClick) document.removeEventListener("click", this._navClick, true);
+    if (this._phT) clearTimeout(this._phT);
+    if (this._phRetry) clearTimeout(this._phRetry);
+    document.body.style.overflow = "";
+  }
+
+  openMenu() { this.setState({ menuOpen: true }); document.body.style.overflow = "hidden"; }
+  closeMenu() { this.setState({ menuOpen: false }); document.body.style.overflow = ""; }
+  openCard(i) { clearTimeout(this._modalT); this.setState({ activeCard: i, modalClosing: false }); document.body.style.overflow = "hidden"; }
+  closeCard() {
+    if (this.state.activeCard == null || this.state.modalClosing) return;
+    this.setState({ modalClosing: true });
+    document.body.style.overflow = "";
+    clearTimeout(this._modalT);
+    this._modalT = setTimeout(() => this.setState({ activeCard: null, modalClosing: false }), 330);
+  }
+
+  // Typewriter: auto-types/deletes sample prompts in the chat bar while idle.
+  initPlaceholder() {
+    const el = document.getElementById("chat-input");
+    if (!el) { this._phRetry = setTimeout(() => this.initPlaceholder(), 150); return; }
+    const prompts = [
+      "How do we scope qualitative research?",
+      "What framework should I use for a positioning project?",
+      "What are we seeing in healthcare right now?",
+      "Show me examples of strong strategy outputs.",
+      "How should I prepare for a client presentation?",
+    ];
+    const s = { qi: 0, ci: 0, deleting: false };
+    const active = () => document.activeElement !== el && (el.value || "") === "";
+    const set = (t) => el.setAttribute("placeholder", t);
+    const tick = () => {
+      if (!active()) { this._phT = setTimeout(tick, 400); return; }
+      const q = prompts[s.qi];
+      if (!s.deleting) {
+        s.ci++; set(q.slice(0, s.ci));
+        if (s.ci >= q.length) { s.deleting = true; this._phT = setTimeout(tick, 1700); return; }
+        this._phT = setTimeout(tick, 52 + Math.random() * 46);
+      } else {
+        s.ci--; set(q.slice(0, Math.max(0, s.ci)));
+        if (s.ci <= 0) { s.deleting = false; s.qi = (s.qi + 1) % prompts.length; this._phT = setTimeout(tick, 320); return; }
+        this._phT = setTimeout(tick, 26);
+      }
+    };
+    el.addEventListener("focus", () => { s.ci = 0; s.deleting = false; set("Ask me anything\u2026"); });
+    set("");
+    tick();
+  }
+
+  playEnter() {
+    try {
+      const p = document.getElementById("page");
+      if (!p) return;
+      if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      p.style.transition = "none";
+      p.style.transform = "translateY(80px)";
+      p.style.willChange = "transform";
+      void p.offsetWidth;
+      requestAnimationFrame(() => {
+        p.style.transition = "transform 780ms cubic-bezier(0.22, 1, 0.36, 1)";
+        p.style.transform = "translateY(0)";
+      });
+      clearTimeout(this._enterT);
+      this._enterT = setTimeout(() => { p.style.transition = ""; p.style.transform = ""; p.style.willChange = ""; }, 900);
+    } catch (e) {}
+  }
+
+  openChat() { this.setState({ chatOpen: true }); }
+  closeChat() { this.setState({ chatOpen: false }); }
+  scrollChat() {
+    setTimeout(() => { const el = document.getElementById("chat-scroll"); if (el) el.scrollTop = el.scrollHeight; }, 40);
+  }
+  send() {
+    const t = (this.state.draft || "").trim();
+    if (!t) return;
+    this.setState({ draft: "" });
+    this._respond(t);
+  }
+  sendText(t) { this._respond(t); }
+  _respond(text) {
+    const userMsg = { isUser: true, isBot: false, text: text };
+    this.setState((s) => ({ messages: [...s.messages, userMsg], thinking: true, chatOpen: true }));
+    this.scrollChat();
+    setTimeout(() => {
+      const reply = this.answer(text);
+      this.setState((s) => ({ messages: [...s.messages, reply], thinking: false }));
+      this.scrollChat();
+    }, 760);
+  }
+  mk(o) {
+    return {
+      isUser: false, isBot: true,
+      short: o.short || "",
+      hasGuide: !!o.guide, guideTitle: o.guide ? o.guide.title : "", guideDesc: o.guide ? o.guide.desc : "",
+      hasCard: !!o.card, cardTitle: o.card ? o.card.title : "", cardDesc: o.card ? o.card.desc : "", cardGrad: o.card ? (o.card.grad || "radial-gradient(120% 92% at 50% -12%, #5db786 0%, #d2ecdf 46%, #f1f4f2 100%)") : "",
+      hasExcerpt: !!o.excerpt, excerptText: o.excerpt ? o.excerpt.text : "", excerptSource: o.excerpt ? o.excerpt.source : "",
+      hasDigest: !!o.digest, digestTitle: o.digest ? o.digest.title : "", digestItems: o.digest ? o.digest.items : [],
+      hasTools: !!(o.tools && o.tools.length), tools: o.tools || [],
+      hasIntel: !!o.intel, intelTitle: o.intel ? o.intel.title : "", intelWhy: o.intel ? o.intel.why : "",
+      hasSource: !!o.source, sourceTitle: o.source || "",
+      hasNext: !!o.next, next: o.next || "",
+      askNext: o.next ? () => this.sendText(o.next) : null,
+      fallback: !!o.fallback,
+    };
+  }
+  nextSuggestion(q) {
+    const POOL = [
+      "What framework should I use for a positioning project?",
+      "What are we seeing in healthcare right now?",
+      "How should I prepare for a client presentation?",
+      "Show me examples of strong strategy outputs.",
+      "How do we scope qualitative research?",
+      "How do we run effective internal reviews?",
+      "What tools do we have for futures work?",
+      "How do we approach a naming project?",
+    ];
+    if (typeof this._nextIdx !== "number") this._nextIdx = 0;
+    for (let i = 0; i < POOL.length; i++) {
+      const cand = POOL[this._nextIdx % POOL.length];
+      this._nextIdx++;
+      if (cand.toLowerCase() !== (q || "").toLowerCase()) return cand;
+    }
+    return POOL[0];
+  }
+  answer(q) {
+    const t = (q || "").toLowerCase();
+    const has = (...ks) => ks.some((k) => t.indexOf(k) !== -1);
+    if (has("position")) return this.mk({ short: "For a positioning project, map and pressure-test territories before you commit to language. Start with this:", card: { title: "Positioning Territory Builder", desc: "Map and pressure-test positioning territories before you commit.", grad: "radial-gradient(120% 92% at 50% -12%, #6f8cff 0%, #cdd6ff 46%, #f1f2f5 100%)" }, tools: ["Cultural Codes Scan", "Brand Strategy"], source: "Tools & Frameworks", next: this.nextSuggestion(q) });
+    if (has("qual", "research", "interview", "scope")) return this.mk({ short: "Scope qualitative research backwards from the decision it informs: set the learning objectives first, then choose methods and sample to match.", guide: { title: "Research Methods", desc: "Uncover and package compelling insights." }, tools: ["Research Planning Toolkit"], source: "Tools & Frameworks", next: this.nextSuggestion(q) });
+    if (has("healthcare", "payer", "provider", "medicare", "health")) return this.mk({ short: "Here's the latest on healthcare \u2014 a quick digest of what's moving this quarter.", digest: { title: "Healthcare Intelligence Digest", items: ["Payers are tightening prior-authorization criteria", "Provider consolidation is accelerating across the Midwest", "Medicare.gov is opening a new opportunity window for plan finders"] }, source: "Industry Intel", next: this.nextSuggestion(q) });
+    if (has("present", "pitch", "deck", "client meeting")) return this.mk({ short: "Walk in ready. Here's the principle we lead with, pulled straight from the guide:", excerpt: { text: "Decide the one decision you need from the room, then build everything backward from it \u2014 context first, recommendation second, proof third.", source: "Preparing for a Client Presentation" }, guide: { title: "Preparing for a Client Presentation", desc: "Walk in ready and leave them convinced." }, next: this.nextSuggestion(q) });
+    if (has("name", "naming")) return this.mk({ short: "For naming, run a focused sprint: generate broad, filter against strategy and trademark, then present a tight shortlist with rationale.", guide: { title: "Name Development", desc: "Ideate, filter, and present new names." }, tools: ["Naming sprint"], source: "Tools & Frameworks", next: this.nextSuggestion(q) });
+    if (has("innovation", "product idea", "future", "service")) return this.mk({ short: "For innovation, move from insight to tangible concepts fast. The Future Service Story Canvas helps you prototype and narrate the experience.", guide: { title: "Innovation Strategy", desc: "Develop new product ideas, then launch them." }, tools: ["Future Service Story Canvas"], source: "Tools & Frameworks", next: this.nextSuggestion(q) });
+    if (has("feedback", "review", "critique")) return this.mk({ short: "Good feedback sharpens the work, not the person. Run reviews with a clear objective and separate 'is it on strategy' from 'is the craft right'.", guide: { title: "Giving Better Feedback", desc: "Feedback that lands and moves work forward." }, tools: ["Running Effective Internal Reviews"], source: "How We Work", next: this.nextSuggestion(q) });
+    if (has("culture", "cultural", "trend", "signal")) return this.mk({ short: "To read culture, decode the codes operating in a category, then map where they're shifting. The Cultural Codes Scan is the place to start.", guide: { title: "Cultural Insight", desc: "Help brands seize relevant cultural trends." }, tools: ["Cultural Codes Scan"], source: "Tools & Frameworks", next: this.nextSuggestion(q) });
+    if (has("example", "examples", "strong strategy", "output")) return this.mk({ short: "A few strong outputs to look at \u2014 here's a recent featured one:", card: { title: "New Medicare.gov opportunity framework", desc: "An opportunity map built for a federal health context.", grad: "radial-gradient(120% 92% at 50% -12%, #5db786 0%, #d2ecdf 46%, #f1f4f2 100%)" }, tools: ["Future Service Story Canvas", "Positioning Territory Builder"], source: "Browse everything", next: this.nextSuggestion(q) });
+    return this.mk({ fallback: true, short: "I don't see that in the current TRIPTK materials yet.", next: this.nextSuggestion(q) });
+  }
+
+  renderVals() {
+    const mo = this.state.menuOpen;
+    const panelEase = "cubic-bezier(0.22, 1, 0.36, 1)";
+    const panelDur = mo ? "400ms" : "350ms";
+    const menuStyle = {
+      position: "fixed", top: 0, left: 0, right: 0, height: "100vh", zIndex: 100, background: "#472218", color: "#ffffff",
+      display: "flex", flexDirection: "column",
+      padding: "clamp(88px, 10vh, 120px) clamp(24px, 4vw, 56px)",
+      overflowY: "auto",
+      transform: mo ? "translateY(0)" : "translateY(-50%)",
+      opacity: mo ? 1 : 0,
+      filter: mo ? "blur(0)" : "blur(2px)",
+      pointerEvents: mo ? "auto" : "none",
+      transition: "transform " + panelDur + " " + panelEase + ", opacity " + panelDur + " " + panelEase + ", filter " + panelDur + " " + panelEase,
+      willChange: "transform, opacity, filter",
+    };
+    const spreadEase = "transform 520ms cubic-bezier(0.4, 0, 0.1, 1)";
+    const headerStyle = {
+      display: "block", padding: "26px 48px", background: "transparent",
+      position: mo ? "fixed" : "static", top: 0, left: 0, right: 0, zIndex: 120,
+    };
+    const logoStyle = { height: "28px", width: "auto", display: "block", filter: mo ? "brightness(0) invert(1)" : "none", transition: "filter 240ms ease, " + spreadEase };
+    const menuBtnStyle = { display: "inline-grid", placeItems: "center", width: "28px", height: "28px", padding: 0, border: "none", background: "transparent", cursor: "pointer", position: "relative", color: mo ? "#ffffff" : "#111111", transition: "color 240ms ease, " + spreadEase };
+    const swapEase = "ease-in-out";
+    const swapDur = "250ms";
+    const iconBase = { gridArea: "1 / 1", display: "flex", placeItems: "center", lineHeight: 0, transition: "opacity " + swapDur + " " + swapEase + ", filter " + swapDur + " " + swapEase + ", transform " + swapDur + " " + swapEase + ", color 240ms ease", willChange: "opacity, filter, transform" };
+    const iconMenuStyle = { ...iconBase, opacity: mo ? 0 : 1, filter: mo ? "blur(2px)" : "blur(0)", transform: mo ? "scale(0.25)" : "scale(1)" };
+    const iconCloseStyle = { ...iconBase, opacity: mo ? 1 : 0, filter: mo ? "blur(0)" : "blur(2px)", transform: mo ? "scale(1)" : "scale(0.25)" };
+
+    const GRADS = [
+      "radial-gradient(120% 92% at 50% -12%, #ff8a3d 0%, #ffd9b8 46%, #f4f2f0 100%)",
+      "radial-gradient(120% 92% at 50% -12%, #6f8cff 0%, #cdd6ff 46%, #f1f2f5 100%)",
+      "radial-gradient(120% 92% at 50% -12%, #5db786 0%, #d2ecdf 46%, #f1f4f2 100%)",
+      "radial-gradient(120% 92% at 50% -12%, #ff6f88 0%, #ffd4dc 46%, #f5f1f2 100%)",
+      "radial-gradient(120% 92% at 50% -12%, #9b7cff 0%, #e0d6ff 46%, #f3f1f6 100%)",
+      "radial-gradient(120% 92% at 50% -12%, #4fc4d6 0%, #d2eef3 46%, #eef3f4 100%)",
+      "radial-gradient(120% 92% at 50% -12%, #ffc94d 0%, #fff0c2 46%, #f5f3ec 100%)",
+    ];
+    const carousel = [
+      { title: "New and noted: what the team is reading this week", grad: GRADS[0] },
+      { title: "Sharpening a brand's positioning before you commit to language", grad: GRADS[1] },
+      { title: "The signals shaping healthcare strategy across payers and providers", grad: GRADS[2] },
+      { title: "Examples of strong strategy outputs worth borrowing from", grad: GRADS[3] },
+      { title: "Field notes from the studio on how we actually work", grad: GRADS[4] },
+      { title: "Client-ready playbooks and the standards that keep work sharp", grad: GRADS[5] },
+      { title: "Decoding the cultural codes operating inside any category", grad: GRADS[6] },
+    ];
+    const categories = [
+      { title: "AI Tools & Workflows", desc: "Put AI to work across research, strategy, and craft" },
+      { title: "Insight & Opportunity Analysis", desc: "Frame sharp insights and new opportunities" },
+      { title: "Brand Strategy", desc: "Define a brand's essence and narrative" },
+      { title: "Innovation Strategy", desc: "Develop new product ideas, then launch them" },
+      { title: "Brand Activation", desc: "Turn strategy into tangible brand actions" },
+      { title: "Cultural Insight", desc: "Help brands seize relevant cultural trends" },
+      { title: "Name Development", desc: "Ideate, filter, and present new names" },
+      { title: "Design Strategy", desc: "Bring a product or brand to life visually" },
+      { title: "Research Methods", desc: "Uncover and package compelling insights" },
+      { title: "Storytelling & Artifacts", desc: "Immersive deliverables beyond traditional presentations" },
+      { title: "Group Ideation & Workshops", desc: "Run successful ideation sessions and workshops" },
+      { title: "Psychology Inspiration", desc: "Frameworks from psychology to inspire thinking" },
+    ];
+    const menuFeatured = [
+      { label: "Featured", title: "New Medicare.gov opportunity framework", grad: GRADS[0] },
+      { label: "Story", title: "Field notes from the studio", grad: GRADS[1] },
+      { label: "Intel", title: "Healthcare Intelligence Digest", grad: GRADS[2] },
+    ];
+
+    const G = {
+      orange: "radial-gradient(120% 92% at 50% -12%, #ff8a3d 0%, #ffd9b8 46%, #f4f2f0 100%)",
+      blue: "radial-gradient(120% 92% at 50% -12%, #6f8cff 0%, #cdd6ff 46%, #f1f2f5 100%)",
+      green: "radial-gradient(120% 92% at 50% -12%, #5db786 0%, #d2ecdf 46%, #f1f4f2 100%)",
+      pink: "radial-gradient(120% 92% at 50% -12%, #ff6f88 0%, #ffd4dc 46%, #f5f1f2 100%)",
+      purple: "radial-gradient(120% 92% at 50% -12%, #9b7cff 0%, #e0d6ff 46%, #f3f1f6 100%)",
+      cyan: "radial-gradient(120% 92% at 50% -12%, #4fc4d6 0%, #d2eef3 46%, #eef3f4 100%)",
+    };
+    const modules = [
+      { l1: "Brand", l2: "Foundations", desc: "Building essential strategic brand frameworks and tools",
+        col1: ["Brand Positioning", "Portfolio & Architecture", "Audience Strategy"],
+        col2: ["Visual & Verbal Systems", "Go to Market Strategy"],
+        cards: [{ title: "Positioning Territory Builder", grad: G.orange }, { title: "Brand Architecture Playbook", grad: G.blue }] },
+      { l1: "Brand", l2: "Futures", desc: "Defining brand opportunities at the forefront of culture",
+        col1: ["Adaptive Strategy", "Futures and Forecasting", "Thought Leadership"],
+        col2: ["Ventures and Partnerships", "Innovation Strategy"],
+        cards: [{ title: "Signals & Trends Radar", grad: G.blue }, { title: "Future Service Story Canvas", grad: G.green }] },
+      { l1: "Brand-led", l2: "Change", desc: "Creating a brand-driven organizational culture",
+        col1: ["Mission, Vision, Values", "Employee Value Proposition", "Culture & Behavior Change"],
+        col2: ["Employer Brand Design", "Internal Brand Activation"],
+        cards: [{ title: "Culture & Behavior Toolkit", grad: G.green }, { title: "Employee Value Proposition Guide", grad: G.pink }] },
+      { l1: "Brand", l2: "Experience", desc: "Designing an ecosystem of meaningful brand experiences",
+        col1: ["Experience Research", "Experience Vision & Strategy", "Product, Service & Experience Design"],
+        col2: ["Concepting & Prototyping", "Membership & Loyalty Strategy"],
+        cards: [{ title: "Experience Vision Canvas", grad: G.pink }, { title: "Service Blueprint Kit", grad: G.purple }] },
+      { l1: "Brand", l2: "Technology", desc: "Deploying new technology in service of brand growth",
+        col1: ["AI for Brand Strategy", "AI Integration Solutions", "AI Adoption & Change"],
+        col2: ["AI Brand Operating Systems", "AI for Marketing Innovation"],
+        cards: [{ title: "AI Brand Operating System", grad: G.purple }, { title: "AI Adoption Playbook", grad: G.cyan }] },
+    ];
+
+    const activeCard = this.state.activeCard;
+    const tool = {
+      name: "Whitespace Cartography",
+      oneLiner: "Map the market to find the open spaces a brand can credibly own.",
+      overview: [
+        "Whitespace Cartography is a positioning and innovation tool that helps teams see where competitors, cultural shifts, and consumer needs are clustering, and where they are not.",
+        "The map is built around two meaningful tensions: for example, a category moving from functional to emotional, or consumers shifting from convenience to control. Once the axes are defined, brands, products, behaviors, or ideas are plotted across the four quadrants.",
+        "The goal is to identify underused territory: spaces where demand may be growing, but few competitors are currently playing with clarity or credibility.",
+      ],
+      whenUse: [
+        "When a market feels crowded and the team needs to find a clearer lane",
+        "When developing a positioning, innovation pipeline, or concept territory",
+        "When comparing competitors beyond basic features or messaging",
+        "When you need to show where a brand can stretch without losing credibility",
+      ],
+    };
+
+    const tfmt = (tz) => {
+      try { return new Intl.DateTimeFormat("en-US", { timeZone: tz, hour: "numeric", minute: "2-digit", hour12: true }).format(new Date()); }
+      catch (e) { return ""; }
+    };
+    const offices = [
+      { name: "New York", line1: "200 Hudson St", line2: "New York, NY 10013", time: tfmt("America/New_York") },
+      { name: "London", line1: "3 Pancras Sq", line2: "London N1C 4AG", time: tfmt("Europe/London") },
+      { name: "Mexico City", line1: "Av. P.º de la Reforma 296", line2: "Level 44, CDMX 06600", time: tfmt("America/Mexico_City") },
+      { name: "Singapore", line1: "80 Robinson Rd", line2: "Level 20, Singapore 068898", time: tfmt("Asia/Singapore") },
+    ];
+
+    return {
+      menuStyle,
+      headerStyle,
+      logoStyle,
+      menuBtnStyle,
+      iconMenuStyle,
+      iconCloseStyle,
+      menuFeatured,
+      carousel,
+      categories,
+      modules,
+      offices,
+      modalOpen: activeCard != null,
+      closingCls: this.state.modalClosing ? "closing" : "",
+      tool,
+      onCardOpen: (e) => { if (e) e.preventDefault(); this.openCard(0); },
+      closeCard: () => this.closeCard(),
+      stopModal: (e) => e.stopPropagation(),
+      noop: (e) => e.preventDefault(),
+      toggleMenu: () => (this.state.menuOpen ? this.closeMenu() : this.openMenu()),
+      closeMenu: () => this.closeMenu(),
+      chatOpen: this.state.chatOpen,
+      chatDraft: this.state.draft,
+      messages: this.state.messages,
+      noMessages: this.state.messages.length === 0,
+      samples: ["What framework should I use for a positioning project?", "What are we seeing in healthcare right now?", "How should I prepare for a client presentation?", "Show me examples of strong strategy outputs."].map((q) => ({ text: q, onClick: () => this.sendText(q) })),
+      thinking: this.state.thinking,
+      openChat: () => this.openChat(),
+      closeChat: () => this.closeChat(),
+      onDraft: (e) => this.setState({ draft: e.target.value }),
+      onChatKey: (e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); this.send(); } },
+      sendChat: () => this.send(),
+    };
+  }
+}
+</script>
+</body>
+</html>

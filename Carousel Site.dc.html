@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    @font-face {
+      font-family: 'Scto Grotesk B';
+      src: url('fonts/SctoGroteskB-Regular.otf') format('opentype');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Scto Grotesk B';
+      src: url('fonts/SctoGroteskB-Bold.otf') format('opentype');
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Rhymes Display';
+      src: url('fonts/RhymesDisplay-UltraLight.ttf') format('truetype');
+      font-weight: 200;
+      font-style: normal;
+      font-display: swap;
+    }
+    html, body { margin: 0; padding: 0; background: #ebe7e7; }
+    * { box-sizing: border-box; }
+    .carousel::-webkit-scrollbar { display: none; }
+    /* Program rows: resting look is inline; hover handled here. The pill fill
+       stays flush with the cards (no left/right change) so only the headline
+       shifts inward — the description and arrow never move. */
+    .prow:hover {
+      background: #cccccc !important;
+      border-bottom-color: transparent !important;
+      box-shadow: 0 16px 40px rgba(17,17,17,0.12) !important;
+      z-index: 1;
+    }
+    .prow:hover .ptitle { color: #111111 !important; padding-left: 16px !important; }
+    .prow:hover .pdesc { color: #555555 !important; }
+    .prow:hover .parrow { color: #111111 !important; }
+  </style>
+</helmet>
+
+<div style="min-height: 100vh; background: #ebe7e7; color: #111111; font-family: 'Scto Grotesk B', 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 17px; line-height: 1.55; -webkit-font-smoothing: antialiased;">
+
+  <!-- Site header: logo + hamburger aligned to the featured card's edges -->
+  <header data-screen-label="Header" style="display: flex; justify-content: center; padding: 28px 48px;">
+    <div style="width: min(1200px, 100%); display: flex; justify-content: space-between; align-items: center;">
+      <a href="#" style="display: inline-flex; align-items: center;">
+        <img src="images/triptk-logo.png" alt="TRIPTK" style="height: 22px; width: auto; display: block;">
+      </a>
+      <button type="button" aria-label="Menu" style="display: flex; flex-direction: column; justify-content: center; gap: 5px; width: 28px; height: 28px; padding: 0; border: none; background: transparent; cursor: pointer;">
+        <span style="display: block; width: 24px; height: 2px; background: #111111;"></span>
+        <span style="display: block; width: 24px; height: 2px; background: #111111;"></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Featured card: centered on the page; its left edge sets the carousel's start -->
+  <section data-screen-label="Featured card" style="display: flex; justify-content: center; padding: 48px 48px 0 48px;">
+    <article style="position: relative; width: min(1200px, 100%); height: 660px; border-radius: 4px; overflow: hidden; background: #b7c4db; transition: box-shadow 160ms ease, transform 160ms ease;" style-hover="box-shadow: 0 8px 24px rgba(17,17,17,0.08); transform: scale(1.008);">
+      <div style="position: absolute; left: 24px; right: 24px; bottom: 24px; display: flex; flex-direction: column; gap: 6px;">
+        <span style="font-weight: 400; font-size: 19px; color: #111111;">Selected work</span>
+        <span style="font-size: 15px; line-height: 1.45; color: #111111; max-width: 420px;">Strategy and brand projects with leaders at key inflection points — drag to explore.</span>
+      </div>
+    </article>
+  </section>
+
+  <!-- Categories intro -->
+  <section data-screen-label="Categories intro" style="display: flex; justify-content: center; padding: 104px 48px 8px 48px;">
+    <div style="width: min(1200px, 100%);">
+      <h2 style="margin: 0; max-width: 920px; font-family: 'Scto Grotesk B', 'Helvetica Neue', Helvetica, Arial, sans-serif; font-weight: 400; font-size: clamp(32px, 3.6vw, 52px); line-height: 1.18; letter-spacing: -0.02em; color: #111111; text-wrap: pretty;">The 100+ tools you’ll find here have been bucketed into 11 categories based on their specialty.</h2>
+      <a href="#" style="display: inline-flex; align-items: center; margin-top: 36px; padding: 16px 32px; background: #cccccc; color: #111111; font-size: 16px; line-height: 1; border-radius: 999px; text-decoration: none; transition: background 200ms ease;" style-hover="background: #bfbfbf;">Explore Categories</a>
+    </div>
+  </section>
+
+  <!-- Program list -->
+  <section data-screen-label="Program list" style="display: flex; justify-content: center; padding: 40px 48px 64px 48px;">
+    <div style="width: min(1200px, 100%);">
+      <sc-for list="{{ programs }}" as="row" hint-placeholder-count="5">
+        <a href="#" class="prow" style="display: flex; align-items: center; gap: 24px; padding: 22px 24px 22px 0; border-radius: 4px; border-bottom: 1px solid #dad3d3; text-decoration: none; box-sizing: border-box; position: relative; transition: background 320ms cubic-bezier(0.22,0.61,0.36,1), box-shadow 320ms cubic-bezier(0.22,0.61,0.36,1);">
+          <span class="ptitle" style="flex: 0 0 38%; font-size: 28px; letter-spacing: -0.01em; color: #111111; padding-left: 0; transition: color 320ms ease, padding 320ms cubic-bezier(0.22,0.61,0.36,1);">{{ row.title }}</span>
+          <span class="pdesc" style="flex: 1 1 auto; font-size: 16px; line-height: 1.45; color: #9a958e; transition: color 320ms ease;">{{ row.desc }}</span>
+          <span class="parrow" style="flex: 0 0 auto; font-size: 20px; line-height: 1; color: transparent; transition: color 320ms ease;">→</span>
+        </a>
+      </sc-for>
+      <a href="#" style="display: inline-flex; align-items: center; gap: 8px; margin: 28px 0 0 0; font-size: 16px; font-weight: 400; color: #111111; text-decoration: none;">
+        All Programs ({{ count }}) <span style="font-size: 16px;">→</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- Carousel row -->
+  <section data-screen-label="Card carousel" style="padding: 24px 0 88px 0;">
+    <div class="carousel" onPointerDown="{{ dragStart }}" style="display: flex; gap: 12px; overflow-x: auto; padding: 4px 48px 28px max(48px, calc((100% - 1200px) / 2)); cursor: grab; user-select: none; scrollbar-width: none;">
+      <sc-for list="{{ cards }}" as="card" hint-placeholder-count="5">
+        <article style="position: relative; flex: 0 0 380px; height: 500px; border-radius: 4px; overflow: hidden; background: {{ card.bg }}; transition: box-shadow 160ms ease, transform 160ms ease;" style-hover="box-shadow: 0 8px 24px rgba(17,17,17,0.08); transform: scale(1.015);">
+          <div style="position: absolute; left: 24px; right: 24px; bottom: 20px; display: flex; flex-direction: column; gap: 4px; color: {{ card.fg }};">
+            <span style="font-weight: 400;">{{ card.title }}</span>
+            <span style="font-size: 14px; line-height: 1.45;">{{ card.desc }}</span>
+          </div>
+        </article>
+      </sc-for>
+    </div>
+  </section>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  renderVals() {
+    const items = [
+      { title: "Insight & Opportunity Analysis", desc: "Frame sharp insights and new opportunities" },
+      { title: "Brand Strategy", desc: "Define a brand's essence and narrative" },
+      { title: "Innovation Strategy", desc: "Develop new product ideas, then launch them" },
+      { title: "Brand Activation", desc: "Turn strategy into tangible brand actions" },
+      { title: "Cultural Insight", desc: "Help brands seize relevant cultural trends" },
+      { title: "Name Development", desc: "Ideate, filter, and present new names" },
+      { title: "Design Strategy", desc: "Bring a product or brand to life visually" },
+      { title: "Research Methods", desc: "Uncover and package compelling insights" },
+      { title: "Storytelling & Artifacts", desc: "Immersive deliverables beyond traditional presentations" },
+      { title: "Group Ideation & Workshops", desc: "Run successful ideation sessions and workshops" },
+      { title: "Psychology Inspiration", desc: "Frameworks from psychology to inspire thinking" },
+    ];
+
+    // Feature only the first 5 rows; the rest live on a future subpage.
+    // Hover styling is handled by the .prow CSS in <helmet>.
+    const programs = items.slice(0, 5);
+
+    // Card palette with light/dark caption color per field
+    const palette = [
+      { bg: "#f9504b", fg: "#ffffff" },
+      { bg: "#f1be62", fg: "#111111" },
+      { bg: "#5db786", fg: "#111111" },
+      { bg: "#a6dfea", fg: "#111111" },
+      { bg: "#acc5f2", fg: "#111111" },
+    ];
+
+    const loremDesc = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut.";
+    const cards = palette.map(p => ({ title: "Lorem Ipsum", desc: loremDesc, bg: p.bg, fg: p.fg }));
+
+    return {
+      cards,
+      programs,
+      count: items.length,
+      dragStart: (e) => this.beginDrag(e),
+    };
+  }
+
+  beginDrag(e) {
+    // Only left button / primary touch
+    if (e.button !== undefined && e.button !== 0) return;
+    const el = e.currentTarget;
+    const startX = e.clientX;
+    const startScroll = el.scrollLeft;
+    let moved = false;
+    el.style.cursor = "grabbing";
+
+    const onMove = (ev) => {
+      const dx = ev.clientX - startX;
+      if (Math.abs(dx) > 3) moved = true;
+      el.scrollLeft = startScroll - dx;
+    };
+    const onUp = () => {
+      el.style.cursor = "grab";
+      window.removeEventListener("pointermove", onMove);
+      window.removeEventListener("pointerup", onUp);
+      // Swallow the click that follows a drag so links inside cards don't fire
+      if (moved) {
+        const swallow = (ce) => { ce.stopPropagation(); ce.preventDefault(); };
+        el.addEventListener("click", swallow, { capture: true, once: true });
+        setTimeout(() => el.removeEventListener("click", swallow, { capture: true }), 0);
+      }
+    };
+    window.addEventListener("pointermove", onMove);
+    window.addEventListener("pointerup", onUp);
+  }
+}
+</script>
+</body>
+</html>
