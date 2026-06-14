@@ -13,11 +13,11 @@
     @font-face { font-family: 'Scto Grotesk B'; src: url('fonts/SctoGroteskB-Regular.otf') format('opentype'); font-weight: 400; font-style: normal; font-display: swap; }
     @font-face { font-family: 'Scto Grotesk B'; src: url('fonts/SctoGroteskB-Bold.otf') format('opentype'); font-weight: 700; font-style: normal; font-display: swap; }
     html, body { margin: 0; padding: 0; background: #ebe7e7; }
-    @view-transition { navigation: auto; }
-    @keyframes vt-up { from { transform: translateY(100%); } to { transform: translateY(0); } }
-    ::view-transition-old(root) { animation: none; }
-    ::view-transition-new(root) { animation: vt-up 640ms cubic-bezier(0.22, 1, 0.36, 1) both; }
-    @media (prefers-reduced-motion: reduce) { ::view-transition-old(root), ::view-transition-new(root) { animation: none !important; } }
+    #mobile-block { display: none; position: fixed; inset: 0; z-index: 100000; background: #000000; color: #ffffff; align-items: center; justify-content: center; text-align: center; padding: 32px; font-family: 'Scto Grotesk B', 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: clamp(18px, 5.2vw, 24px); line-height: 1.4; letter-spacing: -0.01em; }
+    @media (max-width: 760px) {
+      #mobile-block { display: flex; }
+      html, body { overflow: hidden !important; }
+    }
     * { box-sizing: border-box; }
     .navlink { color: #111111; text-decoration: none; transition: color 160ms ease; }
     .navlink:hover { color: #8a847f; }
@@ -53,6 +53,8 @@
 </helmet>
 
 <div id="page" style="min-height: 100vh; background: #ebe7e7; color: #111111; font-family: 'Scto Grotesk B', 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 17px; line-height: 1.55; -webkit-font-smoothing: antialiased; display: flex; flex-direction: column;">
+
+  <div id="mobile-block">Oops, access on mobile is limited right now.</div>
 
   <!-- Nav menu overlay (slides down from top; black) -->
   <div style="{{ menuStyle }}">
@@ -408,6 +410,7 @@ class Component extends DCLogic {
     this._onKey = (e) => { if (e.key === "Escape") this.closeMenu(); };
     window.addEventListener("keydown", this._onKey);
     this.initPlaceholder();
+    this.playEnter();
   }
   componentWillUnmount() {
     if (this._onKey) window.removeEventListener("keydown", this._onKey);
@@ -475,6 +478,23 @@ class Component extends DCLogic {
       });
       clearTimeout(this._enterT);
       this._enterT = setTimeout(() => { p.style.transition = ""; p.style.transform = ""; p.style.willChange = ""; }, 900);
+    } catch (e) {}
+  }
+
+  playEnter() {
+    try {
+      var p = document.getElementById("page");
+      if (!p) return;
+      if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      p.style.transition = "none";
+      p.style.transform = "translateY(70px)";
+      p.style.willChange = "transform";
+      void p.offsetWidth;
+      requestAnimationFrame(function () {
+        p.style.transition = "transform 720ms cubic-bezier(0.22, 1, 0.36, 1)";
+        p.style.transform = "translateY(0)";
+        setTimeout(function () { p.style.transition = ""; p.style.transform = ""; p.style.willChange = ""; }, 820);
+      });
     } catch (e) {}
   }
 
