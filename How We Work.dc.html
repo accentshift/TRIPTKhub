@@ -21,8 +21,6 @@
     * { box-sizing: border-box; }
     .navlink { color: #111111; text-decoration: none; transition: color 160ms ease; }
     .navlink:hover { color: #8a847f; }
-    .backlink { color: #8a847f; text-decoration: none; transition: color 160ms ease; }
-    .backlink:hover { color: #111111; }
     .menulink { transition: color 160ms ease; }
     .menunav:hover .menulink { color: rgba(255,255,255,0.4) !important; }
     .menunav:hover .menulink:hover { color: #ffffff !important; }
@@ -32,6 +30,8 @@
     .featrow > * { position: relative; z-index: 1; }
     .gcard { transition: transform 220ms cubic-bezier(0.22,0.61,0.36,1), box-shadow 220ms ease; }
     .gcard:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(40,20,12,0.07); }
+    .carscroll { scrollbar-width: none; }
+    .carscroll::-webkit-scrollbar { height: 0; width: 0; }
     @keyframes chatpop { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
     .chatpanel { animation: chatpop 300ms cubic-bezier(0.22,0.61,0.36,1); }
     #chat-scroll::-webkit-scrollbar { width: 0; }
@@ -56,14 +56,13 @@
     .prow:has(+ .prow:hover) { border-bottom-color: transparent !important; }
     .prow:hover .parrow { color: #111111 !important; }
   </style>
-  <script src="category-data.js"></script>
 </helmet>
 
-<div id="page" style="min-height: 100vh; background: #ebe7e7; color: #111111; font-family: 'Scto Grotesk B', 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 17px; line-height: 1.55; -webkit-font-smoothing: antialiased; display: flex; flex-direction: column; padding-bottom: 104px;">
+<div id="page" style="min-height: 100vh; background: #ebe7e7; color: #111111; font-family: 'Scto Grotesk B', 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 17px; line-height: 1.55; -webkit-font-smoothing: antialiased; display: flex; flex-direction: column;">
 
   <div id="mobile-block">Oops, access on mobile is limited right now.</div>
 
-  <!-- Nav menu overlay -->
+  <!-- Nav menu overlay (slides down from top; black) -->
   <div style="{{ menuStyle }}">
     <div style="width: 100%; max-width: 1240px; margin: auto; display: flex; flex-wrap: wrap; gap: clamp(40px, 6vw, 96px);">
       <nav class="menunav" style="display: flex; flex-direction: column; gap: clamp(2px, 0.6vw, 10px); flex: 1 1 340px;">
@@ -108,58 +107,73 @@
     </div>
   </header>
 
-  <!-- Category hero -->
-  <section data-screen-label="Category hero" style="display: flex; justify-content: center; padding: clamp(64px, 9vw, 132px) 48px 0 48px;">
-    <div style="width: min(1100px, 100%); text-align: center;">
-      <a class="backlink" href="Tools.dc.html" style="display: inline-flex; align-items: center; gap: 8px; font-size: clamp(14px, 1.3vw, 17px); letter-spacing: -0.005em;">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"></path><path d="M11 18l-6-6 6-6"></path></svg>
-        Tools &amp; Frameworks
-      </a>
-      <h1 style="margin: clamp(28px, 3.5vw, 48px) 0 0 0; font-size: clamp(44px, 6vw, 86px); line-height: 1.04; letter-spacing: -0.035em; font-weight: 400; color: #111111; text-wrap: balance;">{{ cat.title }}</h1>
-      <p style="margin: clamp(18px, 2vw, 26px) auto 0 auto; max-width: 640px; font-size: clamp(18px, 1.7vw, 23px); line-height: 1.4; letter-spacing: -0.01em; color: #8a847f; text-wrap: pretty;">{{ cat.subtitle }}</p>
+  <!-- Hero card: masthead + header card image -->
+  <section data-screen-label="Welcome" style="display: flex; justify-content: center; padding: 96px 24px 0 24px;">
+    <div style="width: min(1480px, 100%); margin: 0 auto;">
+      <h1 style="margin: 0 0 48px 0; max-width: min(1180px, 100%); font-size: clamp(40px, 5.2vw, 72px); line-height: 1.08; letter-spacing: -0.035em; font-weight: 400; color: #111111;">How we work together<br>and communicate thoughtfully</h1>
+      <div style="width: 100%; height: clamp(420px, 48vw, 760px); border-radius: 4px; background: radial-gradient(120% 95% at 50% 108%, #ff8a3d 0%, #ffd9b8 44%, #f4f2f0 100%);"></div>
     </div>
   </section>
 
-  <!-- Hero band -->
-  <section data-screen-label="Category band" style="display: flex; justify-content: center; padding: clamp(56px, 7vw, 104px) 24px 0 24px;">
-    <div style="position: relative; width: min(1480px, 100%); height: clamp(360px, 44vw, 620px); border-radius: 4px; overflow: hidden; background: {{ cat.grad }};"></div>
-  </section>
-
-  <!-- Intro -->
-  <section data-screen-label="Category intro" style="display: flex; justify-content: center; padding: clamp(80px, 11vw, 150px) 48px 8px 48px;">
+  <!-- Subcopy -->
+  <section data-screen-label="Subcopy" style="display: flex; justify-content: center; padding: clamp(80px, 11vw, 150px) 48px 8px 48px;">
     <div style="width: min(1240px, 100%);">
-      <div style="margin: 0 0 clamp(20px, 2.2vw, 32px) 0; font-size: clamp(15px, 1.4vw, 18px); letter-spacing: -0.01em; color: #8a847f;">About this category</div>
-      <p style="margin: 0; max-width: min(880px, 100%); font-size: clamp(26px, 3vw, 40px); line-height: 1.24; letter-spacing: -0.02em; font-weight: 400; color: #111111; text-wrap: pretty;">{{ cat.intro }}</p>
+      <div style="margin: 0 0 clamp(20px, 2.2vw, 32px) 0; font-size: clamp(15px, 1.4vw, 18px); letter-spacing: -0.01em; color: #8a847f;">What this is</div>
+      <p style="margin: 0; max-width: min(880px, 100%); font-size: clamp(30px, 3.2vw, 46px); line-height: 1.2; letter-spacing: -0.02em; font-weight: 400; color: #111111; text-wrap: pretty;">A practical guide to how we work as a team: how we onboard, communicate, run projects, make decisions, and keep the work moving.</p>
     </div>
   </section>
 
-  <!-- Tools grid -->
-  <section data-screen-label="Tools" style="display: flex; justify-content: center; padding: clamp(64px, 8vw, 110px) 24px 0 24px;">
+  <!-- Body copy column -->
+  <section data-screen-label="Body" style="display: flex; justify-content: center; padding: clamp(44px, 5.5vw, 80px) 48px 0 48px;">
+    <div style="width: min(1240px, 100%);">
+    <div style="max-width: 620px; display: flex; flex-direction: column; gap: 24px;">
+      <p style="margin: 0; font-size: clamp(18px, 1.5vw, 21px); line-height: 1.62; letter-spacing: -0.005em; color: #111111; text-wrap: pretty;">This is where we document the habits, rituals, standards, and expectations that shape day-to-day life at TRIPTK. It covers how people get started, how projects are set up and reviewed, how feedback works, and how we make sure the work stays sharp.</p>
+      <p style="margin: 0; font-size: clamp(18px, 1.5vw, 21px); line-height: 1.62; letter-spacing: -0.005em; color: #111111; text-wrap: pretty;">Use it when you&rsquo;re new to the team, joining a project, or trying to understand how something gets done. It&rsquo;s part process, part shared standard, and it should keep getting better as we do.</p>
+    </div>
+    </div>
+  </section>
+
+  <!-- Carousel -->
+  <section data-screen-label="Carousel" style="padding: clamp(100px, 13vw, 200px) 0 0 0;">
+    <div style="padding: 0 24px 0 max(48px, calc((100% - 1240px) / 2));">
+      <div style="margin: 0 0 clamp(20px, 2.2vw, 32px) 0; font-size: clamp(15px, 1.4vw, 18px); letter-spacing: -0.01em; color: #8a847f;">Featured guides</div>
+    </div>
+    <div class="carscroll" style="display: flex; gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-left: max(48px, calc((100% - 1240px) / 2)); -webkit-overflow-scrolling: touch; padding: 0 24px 4px max(48px, calc((100% - 1240px) / 2));">
+      <sc-for list="{{ carousel }}" as="card" hint-placeholder-count="7">
+        <a class="gcard" href="#" onClick="{{ card.open }}" style="flex: 0 0 clamp(280px, 40vw, 400px); scroll-snap-align: start; display: flex; flex-direction: column; justify-content: flex-end; aspect-ratio: 3 / 4; border-radius: 4px; overflow: hidden; padding: 28px; text-decoration: none; background: {{ card.grad }}; color: #1a1a1a; cursor: pointer;">
+          <h3 style="margin: 0; font-size: 20px; font-weight: 400; letter-spacing: -0.01em; line-height: 1.22; text-wrap: balance;">{{ card.label }}</h3>
+          <p style="margin: 10px 0 0 0; font-size: 20px; line-height: 1.3; letter-spacing: -0.01em; color: rgba(26,26,26,0.6); text-wrap: pretty;">{{ card.title }}</p>
+          <span style="margin-top: 48px; display: inline-flex; line-height: 1;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6"></path><path d="M10 20H4v-6"></path></svg></span>
+        </a>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- Starter packs intro -->
+  <section data-screen-label="Starter packs intro" style="display: flex; justify-content: center; padding: clamp(96px, 13vw, 190px) 48px 0 48px;">
+    <div style="width: min(1240px, 100%);">
+      <div style="margin: 0 0 clamp(20px, 2.2vw, 32px) 0; font-size: clamp(15px, 1.4vw, 18px); letter-spacing: -0.01em; color: #8a847f;">Starter packs</div>
+      <p style="margin: 0; max-width: min(880px, 100%); font-size: clamp(26px, 3vw, 40px); line-height: 1.24; letter-spacing: -0.02em; font-weight: 400; color: #111111; text-wrap: pretty;">A personalized starter pack for everyone on the team &mdash; the guides, intros, and standards each person needs to get up to speed and do their best work from day one.</p>
+    </div>
+  </section>
+
+  <section data-screen-label="Starter pack grid" style="display: flex; justify-content: center; padding: clamp(64px, 8vw, 110px) 24px 0 24px;">
     <div style="width: min(1480px, 100%);">
       <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;">
-        <sc-for list="{{ tools }}" as="tool" hint-placeholder-count="12">
-          <a class="gcard" href="#" onClick="{{ tool.open }}" style="display: flex; flex-direction: column; justify-content: flex-end; aspect-ratio: 3 / 4; border-radius: 4px; overflow: hidden; padding: 28px; text-decoration: none; background: {{ tool.grad }}; color: #1a1a1a; cursor: pointer;">
-            <h3 style="margin: 0; font-size: 20px; font-weight: 400; letter-spacing: -0.01em; line-height: 1.22; text-wrap: balance;">{{ tool.name }}</h3>
-            <p style="margin: 10px 0 0 0; font-size: 20px; line-height: 1.3; letter-spacing: -0.01em; color: rgba(26,26,26,0.6); text-wrap: pretty;">{{ tool.oneLiner }}</p>
-            <span style="margin-top: 48px; display: inline-flex; line-height: 1;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6"></path><path d="M10 20H4v-6"></path></svg></span>
+        <sc-for list="{{ packs }}" as="card" hint-placeholder-count="8">
+          <a class="gcard" href="#" onClick="{{ card.open }}" style="display: flex; flex-direction: column; aspect-ratio: 3 / 4; border-radius: 4px; overflow: hidden; text-decoration: none; background: #ffffff; border: 1px solid #e7e3de; color: #1a1a1a; cursor: pointer;">
+            <div style="flex: 1 1 auto; min-height: 0; overflow: hidden; background: #d9d4cf;">
+              <img src="{{ card.photo }}" alt="{{ card.name }}" style="width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block;">
+            </div>
+            <div style="padding: 18px 22px 22px 22px;">
+              <div style="font-size: 18px; font-weight: 400; letter-spacing: -0.01em; line-height: 1.25;">{{ card.name }}</div>
+              <div style="font-size: 18px; font-weight: 400; letter-spacing: -0.01em; line-height: 1.25; color: rgba(26,26,26,0.55);">{{ card.title }}</div>
+              <span style="margin-top: 48px; display: inline-flex; line-height: 1;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6"></path><path d="M10 20H4v-6"></path></svg></span>
+            </div>
           </a>
         </sc-for>
       </div>
-    </div>
-  </section>
-
-  <!-- Explore other categories -->
-  <section data-screen-label="Other categories" style="display: flex; justify-content: center; padding: clamp(96px, 12vw, 168px) 48px 24px 48px;">
-    <div style="width: min(1240px, 100%);">
-      <div style="margin: 0 0 clamp(20px, 2.2vw, 32px) 0; font-size: clamp(15px, 1.4vw, 18px); letter-spacing: -0.01em; color: #8a847f;">Explore more</div>
-      <sc-for list="{{ otherCats }}" as="row" hint-placeholder-count="5">
-        <a href="{{ row.href }}" class="prow" style="display: flex; align-items: center; gap: 24px; padding: 22px 24px 22px 0; border-radius: 4px; border-bottom: 1px solid #cfc8c1; text-decoration: none; box-sizing: border-box; position: relative; transition: background 320ms cubic-bezier(0.22,0.61,0.36,1), box-shadow 320ms cubic-bezier(0.22,0.61,0.36,1);">
-          <span style="flex: 0 0 38%; font-size: 28px; letter-spacing: -0.01em; color: #111111;">{{ row.title }}</span>
-          <span style="flex: 1 1 auto; margin-left: 40px; font-size: 16px; line-height: 1.45; color: #5a544e;">{{ row.desc }}</span>
-          <span class="parrow" style="flex: 0 0 auto; font-size: 20px; line-height: 1; color: transparent; transition: color 320ms ease;">&rarr;</span>
-        </a>
-      </sc-for>
-      <button type="button" onClick="{{ toggleCats }}" class="navlink" style="display: inline-flex; align-items: center; gap: 8px; margin: 28px 0 0 0; font-size: 16px; background: transparent; border: none; padding: 0; cursor: pointer; font-family: inherit; color: #111111;">{{ allCatsLabel }} <span style="font-size: 16px;">{{ allCatsArrow }}</span></button>
+      <button type="button" onClick="{{ toggleTeam }}" class="navlink" style="display: inline-flex; align-items: center; gap: 8px; margin: 32px 0 0 0; font-size: 16px; background: transparent; border: none; padding: 0; cursor: pointer; font-family: inherit; color: #111111;">{{ teamLabel }} <span style="font-size: 16px;">{{ teamArrow }}</span></button>
     </div>
   </section>
 
@@ -226,10 +240,17 @@
                     <div>
                       <div style="font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #8a847f; margin-bottom: 8px;">Related tools</div>
                       <div style="display: flex; flex-wrap: wrap; gap: 8px;">
-                        <sc-for list="{{ msg.tools }}" as="rtool" hint-placeholder-count="0">
-                          <span style="border: 1px solid #e4e4e4; border-radius: 999px; padding: 7px 14px; font-size: 13px; color: #111111;">{{ rtool }}</span>
+                        <sc-for list="{{ msg.tools }}" as="tool" hint-placeholder-count="0">
+                          <span style="border: 1px solid #e4e4e4; border-radius: 999px; padding: 7px 14px; font-size: 13px; color: #111111;">{{ tool }}</span>
                         </sc-for>
                       </div>
+                    </div>
+                  </sc-if>
+                  <sc-if value="{{ msg.hasIntel }}" hint-placeholder-val="{{ false }}">
+                    <div style="border: 1px solid #e4e4e4; border-radius: 10px; padding: 14px 16px;">
+                      <div style="font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #8a847f;">Relevant intel</div>
+                      <div style="margin-top: 6px; font-size: 16px; color: #111111;">{{ msg.intelTitle }}</div>
+                      <div style="margin-top: 4px; font-size: 14px; color: #6e6862; line-height: 1.45;">{{ msg.intelWhy }}</div>
                     </div>
                   </sc-if>
                   <sc-if value="{{ msg.hasSource }}" hint-placeholder-val="{{ false }}">
@@ -261,9 +282,9 @@
     </div>
   </div>
 
-  <!-- Tool detail pop-up -->
+  <!-- Card detail pop-up -->
   <sc-if value="{{ modalOpen }}" hint-placeholder-val="{{ false }}">
-    <div class="cardscrim {{ closingCls }}" data-screen-label="Tool detail" onClick="{{ closeCard }}" style="font-family: 'Scto Grotesk B', 'Helvetica Neue', Helvetica, Arial, sans-serif; position: fixed; inset: 0; z-index: 300; background: rgba(20,12,8,0.46); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); display: flex; align-items: flex-start; justify-content: center; padding: clamp(16px, 4vh, 56px) 20px; overflow-y: auto;">
+    <div class="cardscrim {{ closingCls }}" data-screen-label="Card detail" onClick="{{ closeCard }}" style="font-family: 'Scto Grotesk B', 'Helvetica Neue', Helvetica, Arial, sans-serif; position: fixed; inset: 0; z-index: 300; background: rgba(20,12,8,0.46); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); display: flex; align-items: flex-start; justify-content: center; padding: clamp(16px, 4vh, 56px) 20px; overflow-y: auto;">
       <div class="cardmodal {{ closingCls }}" onClick="{{ stopModal }}" style="position: relative; width: min(1080px, 100%); margin: auto; background: #f7f6f3; border-radius: 16px; box-shadow: 0 40px 120px rgba(20,12,8,0.34); padding: 12px;">
         <button type="button" class="modalclose" aria-label="Close" onClick="{{ closeCard }}" style="position: absolute; top: 28px; right: 28px; z-index: 4; width: 46px; height: 46px; border-radius: 999px; border: none; background: #ffffff; box-shadow: 0 2px 12px rgba(20,12,8,0.14); cursor: pointer; display: inline-flex; align-items: center; justify-content: center; color: #111111; padding: 0;">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"></line><line x1="18" y1="6" x2="6" y2="18"></line></svg>
@@ -321,14 +342,14 @@
 
             <div style="margin-top: clamp(44px, 5vw, 68px); font-size: 17px; color: #8a847f;">Overview</div>
             <div style="display: flex; flex-direction: column; gap: 22px; margin-top: 22px;">
-              <sc-for list="{{ tool.overview }}" as="para" hint-placeholder-count="2">
+              <sc-for list="{{ tool.overview }}" as="para" hint-placeholder-count="3">
                 <p style="margin: 0; font-size: 18px; line-height: 1.66; color: #2a2620; text-wrap: pretty;">{{ para }}</p>
               </sc-for>
             </div>
 
             <div style="margin-top: clamp(44px, 5vw, 68px); font-size: 17px; color: #8a847f;">When to use it</div>
             <div style="display: flex; flex-direction: column; gap: 14px; margin-top: 22px;">
-              <sc-for list="{{ tool.whenUse }}" as="use" hint-placeholder-count="3">
+              <sc-for list="{{ tool.whenUse }}" as="use" hint-placeholder-count="4">
                 <div style="display: flex; gap: 14px; align-items: flex-start;">
                   <span style="flex: 0 0 auto; width: 7px; height: 7px; border-radius: 999px; background: #b3aea9; margin-top: 11px;"></span>
                   <span style="font-size: 18px; line-height: 1.55; color: #2a2620; text-wrap: pretty;">{{ use }}</span>
@@ -341,10 +362,105 @@
     </div>
   </sc-if>
 
+  <!-- Employee starter pack pop-up -->
+  <sc-if value="{{ packOpen }}" hint-placeholder-val="{{ false }}">
+    <div class="cardscrim {{ packClosingCls }}" data-screen-label="Employee pack" onClick="{{ closePack }}" style="font-family: 'Scto Grotesk B', 'Helvetica Neue', Helvetica, Arial, sans-serif; position: fixed; inset: 0; z-index: 300; background: rgba(20,12,8,0.46); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); display: flex; align-items: flex-start; justify-content: center; padding: clamp(16px, 4vh, 56px) 20px; overflow-y: auto;">
+      <div class="cardmodal {{ packClosingCls }}" onClick="{{ stopModal }}" style="position: relative; width: min(940px, 100%); margin: auto; background: #f7f6f3; border-radius: 16px; box-shadow: 0 40px 120px rgba(20,12,8,0.34); overflow: hidden;">
+        <button type="button" class="modalclose" aria-label="Close" onClick="{{ closePack }}" style="position: absolute; top: 24px; right: 24px; z-index: 4; width: 46px; height: 46px; border-radius: 999px; border: none; background: #ffffff; box-shadow: 0 2px 12px rgba(20,12,8,0.14); cursor: pointer; display: inline-flex; align-items: center; justify-content: center; color: #111111; padding: 0;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"></line><line x1="18" y1="6" x2="6" y2="18"></line></svg>
+        </button>
+        <div style="display: flex; flex-wrap: wrap; gap: clamp(20px, 3vw, 40px); align-items: center; padding: clamp(28px, 4vw, 48px); background: #efece8;">
+          <div style="flex: 0 0 auto; width: clamp(120px, 18vw, 176px); aspect-ratio: 4 / 5; border-radius: 6px; overflow: hidden; background: #d9d4cf; box-shadow: 0 12px 34px rgba(20,12,8,0.22);">
+            <img src="{{ pack.photo }}" alt="{{ pack.name }}" style="width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block;">
+          </div>
+          <div style="flex: 1 1 240px; min-width: 0; color: #1a1a1a;">
+            <div style="font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(26,26,26,0.6);">Employee starter pack</div>
+            <h2 style="margin: 12px 0 0 0; font-weight: 400; font-size: clamp(30px, 4vw, 46px); line-height: 1.08; letter-spacing: -0.02em;">{{ pack.name }}</h2>
+            <div style="margin-top: 8px; font-size: clamp(16px, 1.6vw, 19px); color: rgba(26,26,26,0.62);">{{ pack.title }}</div>
+          </div>
+        </div>
+        <div style="padding: clamp(28px, 4vw, 48px); display: flex; flex-direction: column; gap: clamp(32px, 4vw, 44px);">
+          <p style="margin: 0; font-size: clamp(18px, 1.9vw, 22px); line-height: 1.5; color: #2a2620; text-wrap: pretty;">{{ pack.intro }}</p>
+          <div>
+            <div style="font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; color: #8a847f;">What&rsquo;s inside</div>
+            <div style="margin-top: 18px; display: flex; flex-direction: column; gap: 12px;">
+              <sc-for list="{{ pack.inside }}" as="item" hint-placeholder-count="4">
+                <div style="display: flex; gap: 14px; align-items: flex-start;">
+                  <span style="flex: 0 0 auto; width: 7px; height: 7px; border-radius: 999px; background: #b3aea9; margin-top: 10px;"></span>
+                  <span style="font-size: 17px; line-height: 1.5; color: #2a2620;">{{ item }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+          <div>
+            <div style="font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; color: #8a847f;">How to work with {{ pack.firstName }}</div>
+            <div style="margin-top: 18px; display: flex; flex-direction: column; gap: 12px;">
+              <sc-for list="{{ pack.howTo }}" as="tip" hint-placeholder-count="3">
+                <div style="display: flex; gap: 14px; align-items: flex-start;">
+                  <span style="flex: 0 0 auto; width: 7px; height: 7px; border-radius: 999px; background: #b3aea9; margin-top: 10px;"></span>
+                  <span style="font-size: 17px; line-height: 1.5; color: #2a2620;">{{ tip }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- Featured guide pop-up -->
+  <sc-if value="{{ guideOpen }}" hint-placeholder-val="{{ false }}">
+    <div class="cardscrim {{ guideClosingCls }}" data-screen-label="Guide" onClick="{{ closeGuide }}" style="font-family: 'Scto Grotesk B', 'Helvetica Neue', Helvetica, Arial, sans-serif; position: fixed; inset: 0; z-index: 300; background: rgba(20,12,8,0.46); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); display: flex; align-items: flex-start; justify-content: center; padding: clamp(16px, 4vh, 56px) 20px; overflow-y: auto;">
+      <div class="cardmodal {{ guideClosingCls }}" onClick="{{ stopModal }}" style="position: relative; width: min(900px, 100%); margin: auto; background: #f7f6f3; border-radius: 16px; box-shadow: 0 40px 120px rgba(20,12,8,0.34); overflow: hidden;">
+        <button type="button" class="modalclose" aria-label="Close" onClick="{{ closeGuide }}" style="position: absolute; top: 24px; right: 24px; z-index: 4; width: 46px; height: 46px; border-radius: 999px; border: none; background: #ffffff; box-shadow: 0 2px 12px rgba(20,12,8,0.14); cursor: pointer; display: inline-flex; align-items: center; justify-content: center; color: #111111; padding: 0;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"></line><line x1="18" y1="6" x2="6" y2="18"></line></svg>
+        </button>
+        <div style="position: relative; aspect-ratio: 21 / 9; background: {{ guide.grad }}; display: flex; flex-direction: column; justify-content: flex-end; padding: clamp(28px, 4vw, 48px);">
+          <div style="font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(26,26,26,0.62);">Guide &middot; {{ guide.label }}</div>
+          <h2 style="margin: 12px 0 0 0; font-weight: 400; font-size: clamp(30px, 4.2vw, 48px); line-height: 1.08; letter-spacing: -0.02em; color: #1a1a1a; max-width: 640px; text-wrap: balance;">{{ guide.title }}</h2>
+        </div>
+        <div style="padding: clamp(34px, 4.5vw, 52px) clamp(28px, 5vw, 56px) clamp(54px, 7vw, 84px);">
+          <div style="max-width: 680px; margin: 0 auto; display: flex; flex-direction: column; gap: clamp(30px, 3.6vw, 40px);">
+            <p style="margin: 0; font-size: clamp(19px, 2.1vw, 24px); line-height: 1.45; color: #2a2620; text-wrap: pretty;">{{ guide.lead }}</p>
+            <div style="border: 1px solid #e7e3de; border-radius: 12px; padding: clamp(20px, 3vw, 28px); background: #ffffff;">
+              <div style="font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; color: #8a847f;">What you&rsquo;ll learn</div>
+              <div style="margin-top: 16px; display: flex; flex-direction: column; gap: 12px;">
+                <sc-for list="{{ guide.learn }}" as="item" hint-placeholder-count="3">
+                  <div style="display: flex; gap: 14px; align-items: flex-start;">
+                    <span style="flex: 0 0 auto; width: 7px; height: 7px; border-radius: 999px; background: #b3aea9; margin-top: 10px;"></span>
+                    <span style="font-size: 17px; line-height: 1.5; color: #2a2620;">{{ item }}</span>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+            <p style="margin: 0; font-size: 18px; line-height: 1.65; color: #2a2620; text-wrap: pretty;">{{ guide.read0 }}</p>
+            <div style="border-radius: 10px; overflow: hidden; aspect-ratio: 16 / 9; background: {{ guide.grad2 }}; display: flex; align-items: flex-end; padding: 18px;">
+              <span style="font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(26,26,26,0.6);">Fig. 01 &mdash; In practice</span>
+            </div>
+            <p style="margin: 0; font-size: 18px; line-height: 1.65; color: #2a2620; text-wrap: pretty;">{{ guide.read1 }}</p>
+            <div style="border-left: 3px solid #cfcac4; padding: 4px 0 4px 20px;">
+              <div style="font-size: clamp(20px, 2.4vw, 27px); line-height: 1.3; letter-spacing: -0.01em; color: #1a1a1a; text-wrap: pretty;">&ldquo;{{ guide.principle }}&rdquo;</div>
+              <div style="margin-top: 10px; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: #8a847f;">The principle</div>
+            </div>
+            <div>
+              <div style="font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; color: #8a847f;">Related guides</div>
+              <div style="margin-top: 14px; display: flex; flex-wrap: wrap; gap: 8px;">
+                <sc-for list="{{ guide.related }}" as="rel" hint-placeholder-count="3">
+                  <span style="border: 1px solid #e0dcd6; border-radius: 999px; padding: 9px 16px; font-size: 14px; color: #111111; background: #ffffff;">{{ rel }}</span>
+                </sc-for>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
   <!-- Footer card -->
   <footer data-screen-label="Footer" style="display: flex; justify-content: center; padding: 120px 24px 144px 24px;">
     <div style="width: min(1480px, 100%); background: #ffffff; border-radius: 4px; padding: clamp(40px, 5vw, 72px); overflow: hidden;">
       <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 48px;">
+
         <div style="flex: 1 1 560px; min-width: 280px;">
           <span style="display: block; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: #8a847f;">Find us</span>
           <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 30px 40px; margin-top: 26px;">
@@ -358,11 +474,14 @@
             </sc-for>
           </div>
         </div>
+
         <div style="flex: 0 1 220px; min-width: 180px;">
           <span style="display: block; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: #8a847f;">Inquiries</span>
           <a href="mailto:hello@triptk.com" class="navlink" style="display: inline-block; margin-top: 26px; font-size: 17px; color: #111111;">hello@triptk.com</a>
         </div>
+
       </div>
+
       <div style="margin-top: clamp(72px, 8vw, 120px);">
         <img src="images/triptk-logo.png" alt="TRIPTK" style="display: block; width: 100%; height: auto;">
       </div>
@@ -373,27 +492,20 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script>
 class Component extends DCLogic {
-  state = { menuOpen: false, chatOpen: false, draft: "", messages: [], thinking: false, activeCard: null, modalClosing: false, slug: null, catsExpanded: false };
+  state = { menuOpen: false, chatOpen: false, draft: "", messages: [], thinking: false, activeCard: null, modalClosing: false, activePack: null, packClosing: false, teamExpanded: false, activeGuide: null, guideClosing: false };
 
   componentDidMount() {
-    try { this.setState({ slug: new URLSearchParams(location.search).get("c") }); } catch (e) {}
-    this._onKey = (e) => { if (e.key === "Escape") { this.closeMenu(); this.closeCard(); } };
+    if (!window.__vtGuard) { window.__vtGuard = true; window.addEventListener("unhandledrejection", function (ev) { try { var m = ev && ev.reason ? String(ev.reason.message || ev.reason) : ""; if (/transition|aborted|skipped|invalid state/i.test(m)) ev.preventDefault(); } catch (e) {} }); }
+    this._onKey = (e) => { if (e.key === "Escape") this.closeMenu(); };
     window.addEventListener("keydown", this._onKey);
-    this._tries = 0;
-    this._tryData = () => {
-      if (window.TRIPTK_CATEGORIES) { this.forceUpdate(); return; }
-      if (this._tries++ > 40) return;
-      this._dataT = setTimeout(this._tryData, 70);
-    };
-    this._tryData();
     this.initPlaceholder();
     this.playEnter();
   }
   componentWillUnmount() {
     if (this._onKey) window.removeEventListener("keydown", this._onKey);
+    if (this._navClick) document.removeEventListener("click", this._navClick, true);
     if (this._phT) clearTimeout(this._phT);
     if (this._phRetry) clearTimeout(this._phRetry);
-    if (this._dataT) clearTimeout(this._dataT);
     document.body.style.overflow = "";
   }
 
@@ -407,7 +519,24 @@ class Component extends DCLogic {
     clearTimeout(this._modalT);
     this._modalT = setTimeout(() => this.setState({ activeCard: null, modalClosing: false }), 330);
   }
+  openPack(i) { clearTimeout(this._packT); this.setState({ activePack: i, packClosing: false }); document.body.style.overflow = "hidden"; }
+  closePack() {
+    if (this.state.activePack == null || this.state.packClosing) return;
+    this.setState({ packClosing: true });
+    document.body.style.overflow = "";
+    clearTimeout(this._packT);
+    this._packT = setTimeout(() => this.setState({ activePack: null, packClosing: false }), 330);
+  }
+  openGuide(i) { clearTimeout(this._guideT); this.setState({ activeGuide: i, guideClosing: false }); document.body.style.overflow = "hidden"; }
+  closeGuide() {
+    if (this.state.activeGuide == null || this.state.guideClosing) return;
+    this.setState({ guideClosing: true });
+    document.body.style.overflow = "";
+    clearTimeout(this._guideT);
+    this._guideT = setTimeout(() => this.setState({ activeGuide: null, guideClosing: false }), 330);
+  }
 
+  // Typewriter: auto-types/deletes sample prompts in the chat bar while idle.
   initPlaceholder() {
     const el = document.getElementById("chat-input");
     if (!el) { this._phRetry = setTimeout(() => this.initPlaceholder(), 150); return; }
@@ -437,6 +566,24 @@ class Component extends DCLogic {
     el.addEventListener("focus", () => { s.ci = 0; s.deleting = false; set("Ask me anything\u2026"); });
     set("");
     tick();
+  }
+
+  playEnter() {
+    try {
+      const p = document.getElementById("page");
+      if (!p) return;
+      if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      p.style.transition = "none";
+      p.style.transform = "translateY(80px)";
+      p.style.willChange = "transform";
+      void p.offsetWidth;
+      requestAnimationFrame(() => {
+        p.style.transition = "transform 780ms cubic-bezier(0.22, 1, 0.36, 1)";
+        p.style.transform = "translateY(0)";
+      });
+      clearTimeout(this._enterT);
+      this._enterT = setTimeout(() => { p.style.transition = ""; p.style.transform = ""; p.style.willChange = ""; }, 900);
+    } catch (e) {}
   }
 
   playEnter() {
@@ -487,9 +634,11 @@ class Component extends DCLogic {
       hasExcerpt: !!o.excerpt, excerptText: o.excerpt ? o.excerpt.text : "", excerptSource: o.excerpt ? o.excerpt.source : "",
       hasDigest: !!o.digest, digestTitle: o.digest ? o.digest.title : "", digestItems: o.digest ? o.digest.items : [],
       hasTools: !!(o.tools && o.tools.length), tools: o.tools || [],
+      hasIntel: !!o.intel, intelTitle: o.intel ? o.intel.title : "", intelWhy: o.intel ? o.intel.why : "",
       hasSource: !!o.source, sourceTitle: o.source || "",
       hasNext: !!o.next, next: o.next || "",
       askNext: o.next ? () => this.sendText(o.next) : null,
+      fallback: !!o.fallback,
     };
   }
   nextSuggestion(q) {
@@ -499,7 +648,9 @@ class Component extends DCLogic {
       "How should I prepare for a client presentation?",
       "Show me examples of strong strategy outputs.",
       "How do we scope qualitative research?",
+      "How do we run effective internal reviews?",
       "What tools do we have for futures work?",
+      "How do we approach a naming project?",
     ];
     if (typeof this._nextIdx !== "number") this._nextIdx = 0;
     for (let i = 0; i < POOL.length; i++) {
@@ -516,10 +667,12 @@ class Component extends DCLogic {
     if (has("qual", "research", "interview", "scope")) return this.mk({ short: "Scope qualitative research backwards from the decision it informs: set the learning objectives first, then choose methods and sample to match.", guide: { title: "Research Methods", desc: "Uncover and package compelling insights." }, tools: ["Research Planning Toolkit"], source: "Tools & Frameworks", next: this.nextSuggestion(q) });
     if (has("healthcare", "payer", "provider", "medicare", "health")) return this.mk({ short: "Here's the latest on healthcare \u2014 a quick digest of what's moving this quarter.", digest: { title: "Healthcare Intelligence Digest", items: ["Payers are tightening prior-authorization criteria", "Provider consolidation is accelerating across the Midwest", "Medicare.gov is opening a new opportunity window for plan finders"] }, source: "Industry Intel", next: this.nextSuggestion(q) });
     if (has("present", "pitch", "deck", "client meeting")) return this.mk({ short: "Walk in ready. Here's the principle we lead with, pulled straight from the guide:", excerpt: { text: "Decide the one decision you need from the room, then build everything backward from it \u2014 context first, recommendation second, proof third.", source: "Preparing for a Client Presentation" }, guide: { title: "Preparing for a Client Presentation", desc: "Walk in ready and leave them convinced." }, next: this.nextSuggestion(q) });
-    if (has("ai", "automate", "prompt")) return this.mk({ short: "AI Tools & Workflows is the place to start \u2014 here's a system that wires AI across strategy, content, and operations.", card: { title: "AI Brand Operating System", desc: "Put AI to work across a brand's strategy, content, and operations.", grad: "radial-gradient(120% 92% at 50% -12%, #9b7cff 0%, #e0d6ff 46%, #f3f1f6 100%)" }, tools: ["AI Adoption Playbook", "Prompt Library for Strategists"], source: "Tools & Frameworks", next: this.nextSuggestion(q) });
-    if (has("future", "innovation", "service")) return this.mk({ short: "For futures and innovation work, move from signal to tangible concept fast.", guide: { title: "Innovation Strategy", desc: "Develop new product ideas, then launch them." }, tools: ["Future Service Story Canvas", "Signals & Trends Radar"], source: "Tools & Frameworks", next: this.nextSuggestion(q) });
+    if (has("name", "naming")) return this.mk({ short: "For naming, run a focused sprint: generate broad, filter against strategy and trademark, then present a tight shortlist with rationale.", guide: { title: "Name Development", desc: "Ideate, filter, and present new names." }, tools: ["Naming sprint"], source: "Tools & Frameworks", next: this.nextSuggestion(q) });
+    if (has("innovation", "product idea", "future", "service")) return this.mk({ short: "For innovation, move from insight to tangible concepts fast. The Future Service Story Canvas helps you prototype and narrate the experience.", guide: { title: "Innovation Strategy", desc: "Develop new product ideas, then launch them." }, tools: ["Future Service Story Canvas"], source: "Tools & Frameworks", next: this.nextSuggestion(q) });
+    if (has("feedback", "review", "critique")) return this.mk({ short: "Good feedback sharpens the work, not the person. Run reviews with a clear objective and separate 'is it on strategy' from 'is the craft right'.", guide: { title: "Giving Better Feedback", desc: "Feedback that lands and moves work forward." }, tools: ["Running Effective Internal Reviews"], source: "How We Work", next: this.nextSuggestion(q) });
+    if (has("culture", "cultural", "trend", "signal")) return this.mk({ short: "To read culture, decode the codes operating in a category, then map where they're shifting. The Cultural Codes Scan is the place to start.", guide: { title: "Cultural Insight", desc: "Help brands seize relevant cultural trends." }, tools: ["Cultural Codes Scan"], source: "Tools & Frameworks", next: this.nextSuggestion(q) });
     if (has("example", "examples", "strong strategy", "output")) return this.mk({ short: "A few strong outputs to look at \u2014 here's a recent featured one:", card: { title: "New Medicare.gov opportunity framework", desc: "An opportunity map built for a federal health context.", grad: "radial-gradient(120% 92% at 50% -12%, #5db786 0%, #d2ecdf 46%, #f1f4f2 100%)" }, tools: ["Future Service Story Canvas", "Positioning Territory Builder"], source: "Browse everything", next: this.nextSuggestion(q) });
-    return this.mk({ short: "I don't see that in the current TRIPTK materials yet.", next: this.nextSuggestion(q) });
+    return this.mk({ fallback: true, short: "I don't see that in the current TRIPTK materials yet.", next: this.nextSuggestion(q) });
   }
 
   renderVals() {
@@ -551,45 +704,115 @@ class Component extends DCLogic {
     const iconMenuStyle = { ...iconBase, opacity: mo ? 0 : 1, filter: mo ? "blur(2px)" : "blur(0)", transform: mo ? "scale(0.25)" : "scale(1)" };
     const iconCloseStyle = { ...iconBase, opacity: mo ? 1 : 0, filter: mo ? "blur(0)" : "blur(2px)", transform: mo ? "scale(1)" : "scale(0.25)" };
 
-    const Gmap = {
-      orange: "radial-gradient(120% 92% at 50% -12%, #ff8a3d 0%, #ffd9b8 46%, #f4f2f0 100%)",
-      blue: "radial-gradient(120% 92% at 50% -12%, #6f8cff 0%, #cdd6ff 46%, #f1f2f5 100%)",
-      green: "radial-gradient(120% 92% at 50% -12%, #5db786 0%, #d2ecdf 46%, #f1f4f2 100%)",
-      pink: "radial-gradient(120% 92% at 50% -12%, #ff6f88 0%, #ffd4dc 46%, #f5f1f2 100%)",
-      purple: "radial-gradient(120% 92% at 50% -12%, #9b7cff 0%, #e0d6ff 46%, #f3f1f6 100%)",
-      cyan: "radial-gradient(120% 92% at 50% -12%, #4fc4d6 0%, #d2eef3 46%, #eef3f4 100%)",
-      yellow: "radial-gradient(120% 92% at 50% -12%, #ffc94d 0%, #fff0c2 46%, #f5f3ec 100%)",
+    const GRADS = [
+      "radial-gradient(120% 92% at 50% -12%, #ff8a3d 0%, #ffd9b8 46%, #f4f2f0 100%)",
+      "radial-gradient(120% 92% at 50% -12%, #6f8cff 0%, #cdd6ff 46%, #f1f2f5 100%)",
+      "radial-gradient(120% 92% at 50% -12%, #5db786 0%, #d2ecdf 46%, #f1f4f2 100%)",
+      "radial-gradient(120% 92% at 50% -12%, #ff6f88 0%, #ffd4dc 46%, #f5f1f2 100%)",
+      "radial-gradient(120% 92% at 50% -12%, #9b7cff 0%, #e0d6ff 46%, #f3f1f6 100%)",
+      "radial-gradient(120% 92% at 50% -12%, #4fc4d6 0%, #d2eef3 46%, #eef3f4 100%)",
+      "radial-gradient(120% 92% at 50% -12%, #ffc94d 0%, #fff0c2 46%, #f5f3ec 100%)",
+    ];
+    const guidesRaw = [
+      { label: "Start Here", title: "A first-week guide for everyone joining the team", grad: GRADS[0],
+        lead: "Your first week is about getting oriented, not getting everything right. This is the short path to feeling settled and useful fast.",
+        learn: ["Where to find the people, tools, and docs you'll need", "What to focus on in week one (and what to ignore)", "Who to meet and what to ask them"],
+        read: ["Start by getting set up: accounts, channels, and the handful of docs that explain how we work. Then meet your team and the people on your first project \u2014 a short intro and a good question go a long way.", "Don't try to absorb everything. Pick one project to follow closely, ask questions in the open, and write down what confuses you. By the end of the week you should know where things live and who to ask."] },
+      { label: "How We Communicate", title: "Channels, norms, and when to use what", grad: GRADS[1],
+        lead: "Clear communication is a team skill, not a personality trait. Here's how we keep everyone in the loop without drowning in messages.",
+        learn: ["Which channel to use for what", "How we write so others can skim and act", "When to go async vs. when to talk"],
+        read: ["Default to async and in writing: it's inclusive, searchable, and respects focus time. Use chat for quick things, docs for decisions, and meetings for the conversations that genuinely need them.", "Write for the reader: lead with the point, make asks explicit, and give enough context to act without a follow-up. Over-communicate status; under-communicate noise."] },
+      { label: "Running Projects", title: "How we scope, staff, and ship a project", grad: GRADS[2],
+        lead: "Good projects are set up well before they're executed well. This is how we go from brief to shipped.",
+        learn: ["How we scope and frame the work", "How we staff and set roles", "The checkpoints that keep work on track"],
+        read: ["Start by framing the real problem and the decision the work serves, then scope to that. Agree on roles, milestones, and what 'done' looks like before the work starts.", "Keep momentum with light, regular checkpoints \u2014 enough to catch drift early, not so many that they become the work. Ship, reflect, and carry the lessons forward."] },
+      { label: "Giving Feedback", title: "Feedback that lands and moves the work forward", grad: GRADS[3],
+        lead: "Feedback should sharpen the work, not the person. Here's how we give it so it actually helps.",
+        learn: ["How to separate strategy from craft", "How to be specific and kind at once", "How to receive feedback well"],
+        read: ["Anchor feedback to the goal: is the work on strategy first, is the craft right second. Be specific, point to the thing, and offer a direction rather than just a reaction.", "Receiving is a skill too. Assume good intent, ask clarifying questions, and decide what to act on. Not every note needs to be taken \u2014 but every note deserves a listen."] },
+      { label: "Client Presentations", title: "Walk in ready and leave the room convinced", grad: GRADS[4],
+        lead: "A presentation is a decision-making tool, not a document. Here's how we prepare to lead the room.",
+        learn: ["How to decide the one decision you need", "How to structure for belief", "How to handle the room and questions"],
+        read: ["Decide the single decision you need from the room, then build everything backward from it: context first, recommendation second, proof third. Cut anything that doesn't serve that decision.", "Rehearse the open and the ask. Anticipate the hard questions, and leave room for a real conversation \u2014 the goal is alignment, not just applause."] },
+      { label: "Internal Reviews", title: "Reviews that sharpen the work, not the person", grad: GRADS[5],
+        lead: "A good review makes the work better and the team smarter. Here's how we run them.",
+        learn: ["How to set a clear objective for the review", "How to run it so the best ideas surface", "How to close with clear next steps"],
+        read: ["Open with the objective and where you need help \u2014 a review without a question is just a status update. Separate 'is it on strategy' from 'is the craft right' so feedback stays useful.", "Make space for every voice, keep it about the work, and end with clear owners and next steps. A review that doesn't change anything was a meeting, not a review."] },
+      { label: "Ways of Working", title: "The rituals and standards that keep us aligned", grad: GRADS[6],
+        lead: "The small, shared defaults are what let a team move fast without losing the thread. These are ours.",
+        learn: ["The rituals we keep and why", "The standards we hold the work to", "How we keep improving the way we work"],
+        read: ["Rituals exist to serve the work: the standups, reviews, and retros we keep are the ones that earn their time. Standards keep quality consistent when everyone's moving fast.", "Treat the way we work as a living thing. If a ritual stops being useful, change it. The goal is a team that gets a little better every project."] },
+    ];
+    const GUIDE_EXTRA = [
+      { principle: "Curiosity beats correctness in week one.", related: ["How We Communicate", "Ways of Working", "Running Projects"] },
+      { principle: "Default to writing \u2014 it scales, chat doesn't.", related: ["Running Projects", "Giving Feedback", "Internal Reviews"] },
+      { principle: "Frame the decision before you scope the work.", related: ["Internal Reviews", "Client Presentations", "Giving Feedback"] },
+      { principle: "Sharpen the work, not the person.", related: ["Internal Reviews", "How We Communicate", "Running Projects"] },
+      { principle: "Decide the one decision you need from the room.", related: ["Running Projects", "Internal Reviews", "How We Communicate"] },
+      { principle: "A review without a question is just a status update.", related: ["Giving Feedback", "Running Projects", "Ways of Working"] },
+      { principle: "Keep the rituals that earn their time.", related: ["How We Communicate", "Running Projects", "Internal Reviews"] },
+    ];
+    const guides = guidesRaw.map((g, i) => ({ label: g.label, title: g.title, grad: g.grad, grad2: GRADS[(i + 3) % GRADS.length], lead: g.lead, learn: g.learn, read0: g.read[0], read1: g.read[1], principle: GUIDE_EXTRA[i].principle, related: GUIDE_EXTRA[i].related, open: (e) => { if (e) e.preventDefault(); this.openGuide(i); } }));
+    const PACK_CONTENT = {
+      intro: "Alex is a Principal on our North America team. This pack is the fastest way to get up to speed on how Alex thinks, what they're working on, and how to do great work together.",
+      inside: ["A short intro to Alex and the work they lead", "Recent projects and case studies worth reviewing", "The people to meet in your first few weeks", "The tools, rituals, and standards Alex relies on"],
+      howTo: ["Bring a clear question \u2014 Alex is sharpest when the problem is well framed", "Share work early and often; rough is welcome", "Default to writing decisions down so they're easy to revisit"],
     };
-    const cyc = ["orange", "blue", "green", "pink", "purple", "cyan", "yellow"];
-    const pad2 = (n) => (n < 10 ? "0" + n : "" + n);
-
-    const GRADS = [Gmap.orange, Gmap.blue, Gmap.green];
+    const packsRaw = Array.from({ length: 30 }, (_, i) => ({ name: "Alex Anderson", title: "Principal, NA", photo: "images/alex-headshot.png", grad: GRADS[i % GRADS.length] }));
+    const packs = packsRaw.map((p, i) => ({ name: p.name, title: p.title, photo: p.photo, grad: p.grad, intro: PACK_CONTENT.intro, inside: PACK_CONTENT.inside, howTo: PACK_CONTENT.howTo, firstName: (p.name || "").split(" ")[0], open: (e) => { if (e) e.preventDefault(); this.openPack(i); } }));
     const menuFeatured = [
       { label: "Featured", title: "New Medicare.gov opportunity framework", grad: GRADS[0] },
       { label: "Story", title: "Field notes from the studio", grad: GRADS[1] },
       { label: "Intel", title: "Healthcare Intelligence Digest", grad: GRADS[2] },
     ];
 
-    const cats = window.TRIPTK_CATEGORIES || [];
-    let idx = cats.findIndex((c) => c.slug === this.state.slug);
-    if (idx < 0) idx = 0;
-    const catRaw = cats[idx] || { title: "", subtitle: "", intro: "", tools: [] };
-    const catTools = catRaw.tools || [];
-    const cat = { title: catRaw.title || "", subtitle: catRaw.subtitle || "", intro: catRaw.intro || "", num: pad2(idx + 1), toolCount: catTools.length, grad: Gmap[cyc[idx % cyc.length]] };
-
-    const tools = catTools.map((t, i) => ({
-      name: t.name, oneLiner: t.oneLiner, overview: t.overview || [], whenUse: t.whenUse || [],
-      grad: Gmap[cyc[i % cyc.length]],
-      open: (e) => { if (e) e.preventDefault(); this.openCard(i); },
-    }));
-
-    const otherAll = cats
-      .filter((c, i) => i !== idx)
-      .map((c) => ({ title: c.title, desc: (c.subtitle || "").replace(/\.$/, ""), href: "Category.dc.html?c=" + c.slug }));
-    const otherCats = this.state.catsExpanded ? otherAll : otherAll.slice(0, 5);
+    const G = {
+      orange: "radial-gradient(120% 92% at 50% -12%, #ff8a3d 0%, #ffd9b8 46%, #f4f2f0 100%)",
+      blue: "radial-gradient(120% 92% at 50% -12%, #6f8cff 0%, #cdd6ff 46%, #f1f2f5 100%)",
+      green: "radial-gradient(120% 92% at 50% -12%, #5db786 0%, #d2ecdf 46%, #f1f4f2 100%)",
+      pink: "radial-gradient(120% 92% at 50% -12%, #ff6f88 0%, #ffd4dc 46%, #f5f1f2 100%)",
+      purple: "radial-gradient(120% 92% at 50% -12%, #9b7cff 0%, #e0d6ff 46%, #f3f1f6 100%)",
+      cyan: "radial-gradient(120% 92% at 50% -12%, #4fc4d6 0%, #d2eef3 46%, #eef3f4 100%)",
+    };
+    const modules = [
+      { l1: "Brand", l2: "Foundations", desc: "Building essential strategic brand frameworks and tools",
+        col1: ["Brand Positioning", "Portfolio & Architecture", "Audience Strategy"],
+        col2: ["Visual & Verbal Systems", "Go to Market Strategy"],
+        cards: [{ title: "Positioning Territory Builder", grad: G.orange }, { title: "Brand Architecture Playbook", grad: G.blue }] },
+      { l1: "Brand", l2: "Futures", desc: "Defining brand opportunities at the forefront of culture",
+        col1: ["Adaptive Strategy", "Futures and Forecasting", "Thought Leadership"],
+        col2: ["Ventures and Partnerships", "Innovation Strategy"],
+        cards: [{ title: "Signals & Trends Radar", grad: G.blue }, { title: "Future Service Story Canvas", grad: G.green }] },
+      { l1: "Brand-led", l2: "Change", desc: "Creating a brand-driven organizational culture",
+        col1: ["Mission, Vision, Values", "Employee Value Proposition", "Culture & Behavior Change"],
+        col2: ["Employer Brand Design", "Internal Brand Activation"],
+        cards: [{ title: "Culture & Behavior Toolkit", grad: G.green }, { title: "Employee Value Proposition Guide", grad: G.pink }] },
+      { l1: "Brand", l2: "Experience", desc: "Designing an ecosystem of meaningful brand experiences",
+        col1: ["Experience Research", "Experience Vision & Strategy", "Product, Service & Experience Design"],
+        col2: ["Concepting & Prototyping", "Membership & Loyalty Strategy"],
+        cards: [{ title: "Experience Vision Canvas", grad: G.pink }, { title: "Service Blueprint Kit", grad: G.purple }] },
+      { l1: "Brand", l2: "Technology", desc: "Deploying new technology in service of brand growth",
+        col1: ["AI for Brand Strategy", "AI Integration Solutions", "AI Adoption & Change"],
+        col2: ["AI Brand Operating Systems", "AI for Marketing Innovation"],
+        cards: [{ title: "AI Brand Operating System", grad: G.purple }, { title: "AI Adoption Playbook", grad: G.cyan }] },
+    ];
 
     const activeCard = this.state.activeCard;
-    const tool = (activeCard != null && tools[activeCard]) ? tools[activeCard] : (tools[0] || { name: "", oneLiner: "", overview: [], whenUse: [] });
+    const tool = {
+      name: "Whitespace Cartography",
+      oneLiner: "Map the market to find the open spaces a brand can credibly own.",
+      overview: [
+        "Whitespace Cartography is a positioning and innovation tool that helps teams see where competitors, cultural shifts, and consumer needs are clustering, and where they are not.",
+        "The map is built around two meaningful tensions: for example, a category moving from functional to emotional, or consumers shifting from convenience to control. Once the axes are defined, brands, products, behaviors, or ideas are plotted across the four quadrants.",
+        "The goal is to identify underused territory: spaces where demand may be growing, but few competitors are currently playing with clarity or credibility.",
+      ],
+      whenUse: [
+        "When a market feels crowded and the team needs to find a clearer lane",
+        "When developing a positioning, innovation pipeline, or concept territory",
+        "When comparing competitors beyond basic features or messaging",
+        "When you need to show where a brand can stretch without losing credibility",
+      ],
+    };
 
     const tfmt = (tz) => {
       try { return new Intl.DateTimeFormat("en-US", { timeZone: tz, hour: "numeric", minute: "2-digit", hour12: true }).format(new Date()); }
@@ -598,22 +821,41 @@ class Component extends DCLogic {
     const offices = [
       { name: "New York", line1: "200 Hudson St", line2: "New York, NY 10013", time: tfmt("America/New_York") },
       { name: "London", line1: "3 Pancras Sq", line2: "London N1C 4AG", time: tfmt("Europe/London") },
-      { name: "Mexico City", line1: "Av. P.\u00e9o de la Reforma 296", line2: "Level 44, CDMX 06600", time: tfmt("America/Mexico_City") },
+      { name: "Mexico City", line1: "Av. P.º de la Reforma 296", line2: "Level 44, CDMX 06600", time: tfmt("America/Mexico_City") },
       { name: "Singapore", line1: "80 Robinson Rd", line2: "Level 20, Singapore 068898", time: tfmt("Asia/Singapore") },
     ];
 
     return {
-      menuStyle, headerStyle, logoStyle, menuBtnStyle, iconMenuStyle, iconCloseStyle,
-      menuFeatured, offices,
-      cat, tools, otherCats, tool,
-      catsExpanded: this.state.catsExpanded,
-      toggleCats: () => this.setState((s) => ({ catsExpanded: !s.catsExpanded })),
-      allCatsLabel: this.state.catsExpanded ? "Show less" : "See All Categories",
-      allCatsArrow: this.state.catsExpanded ? "\u2191" : "\u2193",
+      menuStyle,
+      headerStyle,
+      logoStyle,
+      menuBtnStyle,
+      iconMenuStyle,
+      iconCloseStyle,
+      menuFeatured,
+      carousel: guides,
+      packs: this.state.teamExpanded ? packs : packs.slice(0, 8),
+      teamExpanded: this.state.teamExpanded,
+      toggleTeam: () => this.setState((s) => ({ teamExpanded: !s.teamExpanded })),
+      teamLabel: this.state.teamExpanded ? "Show less" : "See Full Team",
+      teamArrow: this.state.teamExpanded ? "\u2191" : "\u2193",
+      modules,
+      offices,
       modalOpen: activeCard != null,
       closingCls: this.state.modalClosing ? "closing" : "",
+      tool,
+      onCardOpen: (e) => { if (e) e.preventDefault(); this.openCard(0); },
+      packOpen: this.state.activePack != null,
+      packClosingCls: this.state.packClosing ? "closing" : "",
+      pack: (this.state.activePack != null && packs[this.state.activePack]) ? packs[this.state.activePack] : packs[0],
+      closePack: () => this.closePack(),
+      guideOpen: this.state.activeGuide != null,
+      guideClosingCls: this.state.guideClosing ? "closing" : "",
+      guide: (this.state.activeGuide != null && guides[this.state.activeGuide]) ? guides[this.state.activeGuide] : guides[0],
+      closeGuide: () => this.closeGuide(),
       closeCard: () => this.closeCard(),
       stopModal: (e) => e.stopPropagation(),
+      noop: (e) => e.preventDefault(),
       toggleMenu: () => (this.state.menuOpen ? this.closeMenu() : this.openMenu()),
       closeMenu: () => this.closeMenu(),
       chatOpen: this.state.chatOpen,

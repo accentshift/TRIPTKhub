@@ -126,7 +126,7 @@
   <!-- Hero card: houses the entire search / AI module -->
   <section data-screen-label="Welcome" style="display: flex; justify-content: center; padding: 96px 24px 0 24px;">
     <div style="width: min(1480px, 100%); margin: 0 auto;">
-      <h1 style="margin: 0 0 48px 0; max-width: min(1180px, 100%); font-size: clamp(40px, 5.2vw, 72px); line-height: 1.08; letter-spacing: -0.035em; font-weight: 400; color: #111111; text-wrap: balance;">Welcome to our team hub for strategy &amp; design tools, rituals, and resources</h1>
+      <h1 style="margin: 0 0 48px 0; max-width: none; font-size: clamp(40px, 5.2vw, 72px); line-height: 1.08; letter-spacing: -0.035em; font-weight: 400; color: #111111; text-wrap: balance;">Welcome to our Intelligence hub for global tools, rituals, and resources</h1>
       <div style="width: 100%; height: clamp(420px, 48vw, 760px); border-radius: 4px; background: radial-gradient(120% 95% at 50% 108%, #ff8a3d 0%, #ffd9b8 44%, #f4f2f0 100%);"></div>
     </div>
   </section>
@@ -172,24 +172,22 @@
             </sc-if>
 
             <sc-if value="{{ card.isWeather }}" hint-placeholder-val="{{ false }}">
-              <a class="gcard" href="#" style="display: block; border-radius: 4px; text-decoration: none; background: {{ card.grad }}; color: #ffffff;">
-                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; min-height: 340px; padding: 40px 30px;">
-                  <sc-if value="{{ card.isSun }}" hint-placeholder-val="{{ false }}">
-                    <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.3"></circle><path d="M12 2.5v2.2M12 19.3v2.2M4.6 4.6l1.6 1.6M17.8 17.8l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.6 19.4l1.6-1.6M17.8 6.2l1.6-1.6"></path></svg>
-                  </sc-if>
-                  <sc-if value="{{ card.isStorm }}" hint-placeholder-val="{{ false }}">
-                    <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 13.5h10.5a3.8 3.8 0 0 0 0-7.6 5.3 5.3 0 0 0-10.2 1.4A3.4 3.4 0 0 0 6 13.5z"></path><path d="M12.5 13l-2.2 4.2h3L11 21.5"></path></svg>
-                  </sc-if>
-                  <sc-if value="{{ card.isRain }}" hint-placeholder-val="{{ false }}">
-                    <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 12.5h10.5a3.8 3.8 0 0 0 0-7.6 5.3 5.3 0 0 0-10.2 1.4A3.4 3.4 0 0 0 6 12.5z"></path><path d="M8.5 16.5l-1 2.5M12 16.5l-1 2.5M15.5 16.5l-1 2.5"></path></svg>
-                  </sc-if>
-                  <sc-if value="{{ card.isPartly }}" hint-placeholder-val="{{ false }}">
-                    <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="8.5" cy="7.5" r="2.8"></circle><path d="M8.5 1.8v1.6M3.9 3.9l1.1 1.1M2.2 8.5h1.6M3.9 13.1l1.1-1.1M13.1 3.9l-1.1 1.1"></path><path d="M9 19.5h8a3.6 3.6 0 0 0 0-7.2 4.7 4.7 0 0 0-9-1.2A3.1 3.1 0 0 0 9 19.5z"></path></svg>
-                  </sc-if>
-                  <h3 style="margin: 34px 0 0 0; font-size: 34px; font-weight: 400; letter-spacing: -0.02em; line-height: 1.1;">{{ card.title }}</h3>
-                  <span style="margin-top: 30px; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.78);">{{ card.caption }}</span>
-                </div>
-              </a>
+              <div class="gcard" style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; aspect-ratio: 3 / 4; border-radius: 4px; padding: 40px 30px; background: {{ card.bg }}; color: #ffffff;">
+                <sc-if value="{{ card.isClear }}" hint-placeholder-val="{{ false }}">
+                  <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.5"></circle><path d="M12 2.5v2.5M12 19v2.5M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2.5 12H5M19 12h2.5M4.2 19.8l1.8-1.8M18 6l1.8-1.8"></path></svg>
+                </sc-if>
+                <sc-if value="{{ card.isClouds }}" hint-placeholder-val="{{ false }}">
+                  <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17.5h9.5a4.2 4.2 0 0 0 0-8.4 5.8 5.8 0 0 0-11.1 1.6A3.8 3.8 0 0 0 7 17.5z"></path></svg>
+                </sc-if>
+                <sc-if value="{{ card.isRain }}" hint-placeholder-val="{{ false }}">
+                  <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15h9.5a4 4 0 0 0 0-8 5.6 5.6 0 0 0-10.8 1.5A3.7 3.7 0 0 0 7 15z"></path><path d="M9 18l-1 2.5M12.5 18l-1 2.5M16 18l-1 2.5"></path></svg>
+                </sc-if>
+                <sc-if value="{{ card.isSnow }}" hint-placeholder-val="{{ false }}">
+                  <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 14.5h9.5a4 4 0 0 0 0-8 5.6 5.6 0 0 0-10.8 1.5A3.7 3.7 0 0 0 7 14.5z"></path><path d="M9 19h.01M12.5 20h.01M16 19h.01"></path></svg>
+                </sc-if>
+                <h3 style="margin: 34px 0 0 0; font-size: 28px; font-weight: 400; letter-spacing: -0.02em; line-height: 1.12; text-wrap: balance;">{{ card.city }}</h3>
+                <span style="margin-top: 24px; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.82);">{{ card.caption }}</span>
+              </div>
             </sc-if>
 
             <sc-if value="{{ card.isTheme }}" hint-placeholder-val="{{ false }}">
@@ -221,6 +219,52 @@
       </div>
     </div>
   </section>
+
+  <!-- Starter pack pop-up -->
+  <sc-if value="{{ packOpen }}" hint-placeholder-val="{{ false }}">
+    <div class="cardscrim {{ packClosingCls }}" data-screen-label="Starter pack" onClick="{{ closePack }}" style="font-family: 'Scto Grotesk B','Helvetica Neue',Helvetica,Arial,sans-serif; position: fixed; inset: 0; z-index: 300; background: rgba(20,12,8,0.46); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); display: flex; align-items: flex-start; justify-content: center; padding: clamp(16px,4vh,56px) 20px; overflow-y: auto;">
+      <div class="cardmodal {{ packClosingCls }}" onClick="{{ stopModal }}" style="position: relative; width: min(940px,100%); margin: auto; background: #f7f6f3; border-radius: 16px; box-shadow: 0 40px 120px rgba(20,12,8,0.34); overflow: hidden;">
+        <button type="button" class="modalclose" aria-label="Close" onClick="{{ closePack }}" style="position:absolute; top:24px; right:24px; z-index:4; width:46px; height:46px; border-radius:999px; border:none; background:#ffffff; box-shadow:0 2px 12px rgba(20,12,8,0.14); cursor:pointer; display:inline-flex; align-items:center; justify-content:center; color:#111111; padding:0;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"></line><line x1="18" y1="6" x2="6" y2="18"></line></svg></button>
+        <div style="display:flex; flex-wrap:wrap; gap:clamp(20px,3vw,40px); align-items:center; padding:clamp(28px,4vw,48px); background:#efece8;">
+          <div style="flex:0 0 auto; width:clamp(120px,18vw,176px); aspect-ratio:4/5; border-radius:6px; overflow:hidden; background:#d9d4cf; box-shadow:0 12px 34px rgba(20,12,8,0.22);"><img src="{{ pack.photo }}" alt="{{ pack.name }}" style="width:100%; height:100%; object-fit:cover; object-position:top center; display:block;"></div>
+          <div style="flex:1 1 240px; min-width:0; color:#1a1a1a;">
+            <div style="font-size:13px; letter-spacing:0.12em; text-transform:uppercase; color:rgba(26,26,26,0.6);">Employee starter pack</div>
+            <h2 style="margin:12px 0 0 0; font-weight:400; font-size:clamp(30px,4vw,46px); line-height:1.08; letter-spacing:-0.02em;">{{ pack.name }}</h2>
+            <div style="margin-top:8px; font-size:clamp(16px,1.6vw,19px); color:rgba(26,26,26,0.62);">{{ pack.role }}</div>
+          </div>
+        </div>
+        <div style="padding:clamp(28px,4vw,48px); display:flex; flex-direction:column; gap:clamp(32px,4vw,44px);">
+          <p style="margin:0; font-size:clamp(18px,1.9vw,22px); line-height:1.5; color:#2a2620; text-wrap:pretty;">{{ pack.intro }}</p>
+          <div><div style="font-size:13px; letter-spacing:0.1em; text-transform:uppercase; color:#8a847f;">What&rsquo;s inside</div><div style="margin-top:18px; display:flex; flex-direction:column; gap:12px;"><sc-for list="{{ pack.inside }}" as="item" hint-placeholder-count="4"><div style="display:flex; gap:14px; align-items:flex-start;"><span style="flex:0 0 auto; width:7px; height:7px; border-radius:999px; background:#b3aea9; margin-top:10px;"></span><span style="font-size:17px; line-height:1.5; color:#2a2620;">{{ item }}</span></div></sc-for></div></div>
+          <div><div style="font-size:13px; letter-spacing:0.1em; text-transform:uppercase; color:#8a847f;">How to work with {{ pack.firstName }}</div><div style="margin-top:18px; display:flex; flex-direction:column; gap:12px;"><sc-for list="{{ pack.howTo }}" as="tip" hint-placeholder-count="3"><div style="display:flex; gap:14px; align-items:flex-start;"><span style="flex:0 0 auto; width:7px; height:7px; border-radius:999px; background:#b3aea9; margin-top:10px;"></span><span style="font-size:17px; line-height:1.5; color:#2a2620;">{{ tip }}</span></div></sc-for></div></div>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- Featured guide pop-up -->
+  <sc-if value="{{ guideOpen }}" hint-placeholder-val="{{ false }}">
+    <div class="cardscrim {{ guideClosingCls }}" data-screen-label="Guide" onClick="{{ closeGuide }}" style="font-family: 'Scto Grotesk B','Helvetica Neue',Helvetica,Arial,sans-serif; position: fixed; inset: 0; z-index: 300; background: rgba(20,12,8,0.46); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); display: flex; align-items: flex-start; justify-content: center; padding: clamp(16px,4vh,56px) 20px; overflow-y: auto;">
+      <div class="cardmodal {{ guideClosingCls }}" onClick="{{ stopModal }}" style="position: relative; width: min(880px,100%); margin: auto; background: #f7f6f3; border-radius: 16px; box-shadow: 0 40px 120px rgba(20,12,8,0.34); overflow: hidden;">
+        <button type="button" class="modalclose" aria-label="Close" onClick="{{ closeGuide }}" style="position:absolute; top:24px; right:24px; z-index:4; width:46px; height:46px; border-radius:999px; border:none; background:#ffffff; box-shadow:0 2px 12px rgba(20,12,8,0.14); cursor:pointer; display:inline-flex; align-items:center; justify-content:center; color:#111111; padding:0;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"></line><line x1="18" y1="6" x2="6" y2="18"></line></svg></button>
+        <div style="position:relative; aspect-ratio:21/9; background:{{ guide.grad }}; display:flex; flex-direction:column; justify-content:flex-end; padding:clamp(28px,4vw,48px);">
+          <div style="font-size:13px; letter-spacing:0.12em; text-transform:uppercase; color:rgba(26,26,26,0.62);">Guide &middot; {{ guide.label }}</div>
+          <h2 style="margin:12px 0 0 0; font-weight:400; font-size:clamp(30px,4.2vw,48px); line-height:1.08; letter-spacing:-0.02em; color:#1a1a1a; max-width:640px; text-wrap:balance;">{{ guide.title }}</h2>
+        </div>
+        <div style="padding:clamp(34px,4.5vw,52px) clamp(28px,5vw,56px) clamp(54px,7vw,84px);">
+          <div style="max-width:680px; margin:0 auto; display:flex; flex-direction:column; gap:clamp(30px,3.6vw,40px);">
+            <p style="margin:0; font-size:clamp(19px,2.1vw,24px); line-height:1.45; color:#2a2620; text-wrap:pretty;">{{ guide.lead }}</p>
+            <div style="border:1px solid #e7e3de; border-radius:12px; padding:clamp(20px,3vw,28px); background:#ffffff;"><div style="font-size:13px; letter-spacing:0.1em; text-transform:uppercase; color:#8a847f;">What you&rsquo;ll learn</div><div style="margin-top:16px; display:flex; flex-direction:column; gap:12px;"><sc-for list="{{ guide.learn }}" as="item" hint-placeholder-count="3"><div style="display:flex; gap:14px; align-items:flex-start;"><span style="flex:0 0 auto; width:7px; height:7px; border-radius:999px; background:#b3aea9; margin-top:10px;"></span><span style="font-size:17px; line-height:1.5; color:#2a2620;">{{ item }}</span></div></sc-for></div></div>
+            <p style="margin:0; font-size:18px; line-height:1.65; color:#2a2620; text-wrap:pretty;">{{ guide.read0 }}</p>
+            <div style="border-radius:10px; overflow:hidden; aspect-ratio:16/9; background:{{ guide.grad }}; display:flex; align-items:flex-end; padding:18px;"><span style="font-family:ui-monospace,'SF Mono',Menlo,monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:rgba(26,26,26,0.6);">Fig. 01 &mdash; In practice</span></div>
+            <p style="margin:0; font-size:18px; line-height:1.65; color:#2a2620; text-wrap:pretty;">{{ guide.read1 }}</p>
+            <div style="border-left:3px solid #cfcac4; padding:4px 0 4px 20px;"><div style="font-size:clamp(20px,2.4vw,27px); line-height:1.3; letter-spacing:-0.01em; color:#1a1a1a; text-wrap:pretty;">&ldquo;{{ guide.principle }}&rdquo;</div><div style="margin-top:10px; font-size:12px; letter-spacing:0.1em; text-transform:uppercase; color:#8a847f;">The principle</div></div>
+            <div><div style="font-size:13px; letter-spacing:0.1em; text-transform:uppercase; color:#8a847f;">Related</div><div style="margin-top:14px; display:flex; flex-wrap:wrap; gap:8px;"><sc-for list="{{ guide.related }}" as="rel" hint-placeholder-count="3"><span style="border:1px solid #e0dcd6; border-radius:999px; padding:9px 16px; font-size:14px; color:#111111; background:#ffffff;">{{ rel }}</span></sc-for></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </sc-if>
 
   <!-- Footer card -->
   <footer data-screen-label="Footer" style="display: flex; justify-content: center; padding: 24px 24px 40px 24px;">
@@ -365,24 +409,22 @@
       <nav class="menunav" style="display: flex; flex-direction: column; gap: clamp(2px, 0.6vw, 10px); flex: 1 1 340px;">
         <a class="menulink" href="About.dc.html" style="font-size: clamp(32px, 4.4vw, 60px); letter-spacing: -0.03em; line-height: 1.12; font-weight: 400; color: #ffffff; text-decoration: none;">About TRIPTK</a>
         <a class="menulink" href="Tools.dc.html" style="font-size: clamp(32px, 4.4vw, 60px); letter-spacing: -0.03em; line-height: 1.12; font-weight: 400; color: #ffffff; text-decoration: none;">Tools &amp; Frameworks</a>
-        <a class="menulink" href="#" style="font-size: clamp(32px, 4.4vw, 60px); letter-spacing: -0.03em; line-height: 1.12; font-weight: 400; color: #ffffff; text-decoration: none;">How We Work</a>
-        <a class="menulink" href="#" style="font-size: clamp(32px, 4.4vw, 60px); letter-spacing: -0.03em; line-height: 1.12; font-weight: 400; color: #ffffff; text-decoration: none;">Industry Intel</a>
+        <a class="menulink" href="How%20We%20Work.dc.html" style="font-size: clamp(32px, 4.4vw, 60px); letter-spacing: -0.03em; line-height: 1.12; font-weight: 400; color: #ffffff; text-decoration: none;">How We Work</a>
+        <a class="menulink" href="Industry%20Intel.dc.html" style="font-size: clamp(32px, 4.4vw, 60px); letter-spacing: -0.03em; line-height: 1.12; font-weight: 400; color: #ffffff; text-decoration: none;">Intel &amp; Inspiration</a>
       </nav>
 
       <div style="flex: 1 1 420px; max-width: 540px;">
-        <p style="margin: 0 0 30px 0; font-size: 18px; line-height: 1.5; color: rgba(255,255,255,0.66); max-width: 430px;">A searchable internal platform that helps the TRIPTK team work &amp; learn.</p>
-        <sc-for list="{{ menuFeatured }}" as="f" hint-placeholder-count="3">
-          <a href="#" class="featrow" style="display: flex; align-items: center; gap: 20px; padding: 18px 0; border-top: 1px solid rgba(255,255,255,0.14); text-decoration: none;">
-            <div style="flex: 0 0 auto; width: 88px; height: 66px; border-radius: 6px; overflow: hidden; background: {{ f.grad }};"></div>
-            <div style="flex: 1 1 auto; min-width: 0;">
-              <div style="font-size: 14px; color: #8f8f8f;">{{ f.label }}</div>
-              <div style="margin-top: 4px; font-size: 18px; line-height: 1.25; color: #ffffff; text-wrap: pretty;">{{ f.title }}</div>
+        <div id="menu-deck" style="position: relative; width: min(340px, 100%); height: clamp(440px, 58vh, 540px); margin: 4px auto 0 auto; touch-action: pan-y; user-select: none;">
+          <sc-for list="{{ deck }}" as="d" hint-placeholder-count="4">
+            <div class="deckcard" style="{{ d.wrapStyle }}">
+              <a class="gcard" draggable="false" href="#" onClick="{{ d.onOpen }}" style="{{ d.cardStyle }}">
+                <h3 style="margin: 0; font-size: 20px; font-weight: 400; letter-spacing: -0.01em; line-height: 1.22; text-wrap: balance;">{{ d.label }}</h3>
+                <p style="margin: 10px 0 0 0; font-size: 20px; line-height: 1.3; letter-spacing: -0.01em; color: rgba(26,26,26,0.6); text-wrap: pretty;">{{ d.title }}</p>
+                <span style="margin-top: 48px; display: inline-flex; line-height: 1; color: #1a1a1a;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6"></path><path d="M10 20H4v-6"></path></svg></span>
+              </a>
             </div>
-            <span style="flex: 0 0 auto; display: inline-flex; color: #ffffff;">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg>
-            </span>
-          </a>
-        </sc-for>
+          </sc-for>
+        </div>
       </div>
     </div>
   </div>
@@ -477,7 +519,7 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script>
 class Component extends DCLogic {
-  state = { menuOpen: false, chatOpen: false, draft: "", messages: [], thinking: false, locked: (() => { try { return sessionStorage.getItem("triptk_unlocked") !== "1"; } catch (e) { return true; } })(), gatePass: "", showPass: false, gateError: false, activeCard: null };
+  state = { menuOpen: false, chatOpen: false, draft: "", messages: [], thinking: false, locked: (() => { try { return sessionStorage.getItem("triptk_unlocked") !== "1"; } catch (e) { return true; } })(), gatePass: "", showPass: false, gateError: false, activeCard: null, weather: {}, deckIdx: 0, activePack: null, packClosing: false, activeGuide: null, guideClosing: false };
 
   componentDidMount() {
     if (!window.__vtGuard) { window.__vtGuard = true; window.addEventListener("unhandledrejection", function (ev) { try { var m = ev && ev.reason ? String(ev.reason.message || ev.reason) : ""; if (/transition|aborted|skipped|invalid state/i.test(m)) ev.preventDefault(); } catch (e) {} }); }
@@ -485,9 +527,61 @@ class Component extends DCLogic {
     if (this.state.locked) document.body.style.overflow = "hidden"; // gate scroll only while locked
     this.initPlaceholder();
     this.setupReveal();
+    this.loadWeather();
+    this.setupDeckSwipe();
     this._onKey = (e) => { if (e.key === "Escape") { this.closeMenu(); this.closeCard(); } };
     window.addEventListener("keydown", this._onKey);
     this.playEnter();
+  }
+
+  weatherCities() {
+    return [
+      { key: "nyc", name: "New York City, USA", lat: 40.7128, lon: -74.006 },
+      { key: "sg", name: "Singapore", lat: 1.3521, lon: 103.8198 },
+      { key: "ldn", name: "London, UK", lat: 51.5074, lon: -0.1278 },
+      { key: "mx", name: "Mexico City, Mexico", lat: 19.4326, lon: -99.1332 },
+    ];
+  }
+  mapWeather(code, temp) {
+    const C = { clear: "#5e74d6", clouds: "#646a73", rain: "#2c3c66", snow: "#3a9aac" };
+    code = +code;
+    let cond = "clouds", desc = "Cloudy";
+    if (code === 0) { cond = "clear"; desc = "Clear sky"; }
+    else if (code === 1) { cond = "clear"; desc = "Mainly clear"; }
+    else if (code === 2) { cond = "clouds"; desc = "Partly cloudy"; }
+    else if (code === 3) { cond = "clouds"; desc = "Overcast clouds"; }
+    else if (code === 45 || code === 48) { cond = "clouds"; desc = "Fog"; }
+    else if (code >= 71 && code <= 77) { cond = "snow"; desc = "Snow"; }
+    else if (code === 85 || code === 86) { cond = "snow"; desc = "Snow showers"; }
+    else if (code >= 95) { cond = "rain"; desc = "Thunderstorm"; }
+    else if (code >= 80 && code <= 82) { cond = "rain"; desc = "Rain showers"; }
+    else if (code >= 51 && code <= 67) { cond = "rain"; desc = (code <= 57 ? "Drizzle" : code <= 65 ? "Rain" : "Freezing rain"); }
+    const t = Math.round(+temp);
+    return { cond: cond, bg: C[cond], caption: (desc + " " + t + "\u00b0C").toUpperCase() };
+  }
+  loadWeather() {
+    var self = this;
+    try {
+      var today = new Date().toISOString().slice(0, 10);
+      var KEY = "triptk_weather_v2";
+      var cached = null;
+      try { cached = JSON.parse(localStorage.getItem(KEY) || "null"); } catch (e) {}
+      if (cached && cached.date === today && cached.data && Object.keys(cached.data).length) { this.setState({ weather: cached.data }); return; }
+      var cities = this.weatherCities();
+      Promise.all(cities.map(function (c) {
+        return fetch("https://api.open-meteo.com/v1/forecast?latitude=" + c.lat + "&longitude=" + c.lon + "&current_weather=true&temperature_unit=celsius")
+          .then(function (r) { return r.json(); })
+          .then(function (j) { var cw = (j && j.current_weather) || {}; return [c.key, self.mapWeather(cw.weathercode != null ? cw.weathercode : 3, cw.temperature != null ? cw.temperature : 0)]; })
+          .catch(function () { return [c.key, null]; });
+      })).then(function (pairs) {
+        var data = {};
+        pairs.forEach(function (p) { if (p[1]) data[p[0]] = p[1]; });
+        if (Object.keys(data).length) {
+          self.setState({ weather: data });
+          try { localStorage.setItem(KEY, JSON.stringify({ date: today, data: data })); } catch (e) {}
+        }
+      }).catch(function () {});
+    } catch (e) {}
   }
 
   // Cards float in gracefully as they enter the viewport (subtle, with a light per-row cascade).
@@ -581,6 +675,22 @@ class Component extends DCLogic {
   openMenu() { this.setState({ menuOpen: true }); document.body.style.overflow = "hidden"; }
   closeMenu() { this.setState({ menuOpen: false }); document.body.style.overflow = ""; }
   openCard(i) { clearTimeout(this._modalT); this.setState({ activeCard: i, modalClosing: false }); document.body.style.overflow = "hidden"; }
+  setupDeckSwipe() {
+    if (this._deckSwipeSet) return; this._deckSwipeSet = true;
+    let dragging = false, startX = 0, startY = 0, card = null, moved = false;
+    const cont = () => document.getElementById("menu-deck");
+    const down = (e) => { const c = cont(); if (!c || !c.contains(e.target)) return; card = c.querySelector(".deckcard"); if (!card) return; dragging = true; moved = false; startX = e.clientX; startY = e.clientY; card.style.transition = "none"; card.style.zIndex = "60"; };
+    const move = (e) => { if (!dragging || !card) return; e.preventDefault(); const dx = e.clientX - startX, dy = e.clientY - startY; if (Math.abs(dx) > 4 || Math.abs(dy) > 4) moved = true; card.style.transform = "translate(" + dx + "px," + dy + "px) rotate(" + (dx * 0.05) + "deg)"; };
+    const up = (e) => { if (!dragging || !card) return; dragging = false; const dx = e.clientX - startX, dy = e.clientY - startY; const c = card; card = null; if (Math.abs(dx) > 90) { const dir = dx > 0 ? 1 : -1; c.style.transition = "transform 440ms cubic-bezier(0.33,0,0.2,1), opacity 440ms ease"; c.style.transform = "translate(" + (dir * (window.innerWidth + 240)) + "px," + (dy + dir * 60) + "px) rotate(" + (dir * 22) + "deg)"; c.style.opacity = "0"; setTimeout(() => { c.style.transition = "none"; this.setState({ deckIdx: (this.state.deckIdx || 0) + 1 }); }, 360); } else if (moved) { c.style.transition = "transform 320ms cubic-bezier(0.22,1,0.36,1)"; c.style.transform = "translateY(0px) scale(1) rotate(0deg)"; } };
+    window.addEventListener("dragstart", (e) => { const c = cont(); if (c && c.contains(e.target)) e.preventDefault(); });
+    window.addEventListener("pointerdown", down);
+    window.addEventListener("pointermove", move);
+    window.addEventListener("pointerup", up);
+  }
+  openPack(p) { clearTimeout(this._packT); this.setState({ activePack: p, packClosing: false }); document.body.style.overflow = "hidden"; }
+  closePack() { if (this.state.activePack == null || this.state.packClosing) return; this.setState({ packClosing: true }); document.body.style.overflow = ""; clearTimeout(this._packT); this._packT = setTimeout(() => this.setState({ activePack: null, packClosing: false }), 330); }
+  openGuide(g) { clearTimeout(this._guideT); this.setState({ activeGuide: g, guideClosing: false }); document.body.style.overflow = "hidden"; }
+  closeGuide() { if (this.state.activeGuide == null || this.state.guideClosing) return; this.setState({ guideClosing: true }); document.body.style.overflow = ""; clearTimeout(this._guideT); this._guideT = setTimeout(() => this.setState({ activeGuide: null, guideClosing: false }), 330); }
   closeCard() {
     if (this.state.activeCard == null || this.state.modalClosing) return;
     this.setState({ modalClosing: true });
@@ -862,13 +972,6 @@ class Component extends DCLogic {
       };
     });
 
-    // ---- Weather card alternates (one per city, no repeats) ----
-    const weatherCards = [
-      { isWeather: true, title: "New York City", caption: "Clear sky 22°C", grad: "radial-gradient(135% 110% at 50% 30%, #7b8497 0%, #3b4151 100%)", isSun: true },
-      { isWeather: true, title: "Singapore", caption: "Thunderstorms 30°C", grad: "radial-gradient(135% 110% at 50% 30%, #5b6088 0%, #2a2c46 100%)", isStorm: true },
-      { isWeather: true, title: "London", caption: "Light rain 14°C", grad: "radial-gradient(135% 110% at 50% 30%, #6f7989 0%, #3a4150 100%)", isRain: true },
-      { isWeather: true, title: "Mexico City", caption: "Few clouds 24°C", grad: "radial-gradient(135% 110% at 50% 30%, #80849a 0%, #45495c 100%)", isPartly: true },
-    ];
 
     // ---- Theme card alternates ----
     const themeCards = [
@@ -916,20 +1019,58 @@ class Component extends DCLogic {
       "Inside our approach to brand and product strategy",
     ];
     const cardLabels = ["New & Noted", "Positioning Craft", "Healthcare Signals", "Strong Outputs", "Studio Field Notes", "Client Playbooks", "Cultural Codes", "Future Services", "Better Feedback", "Naming Sprint", "Research Scoping", "How We Work", "Market Moves", "Tool Library", "Internal Reviews", "Scoping & Pricing", "Our Approach"];
-    const baseCards = cardTitles.map((t, i) => ({ isStandard: true, label: cardLabels[i] || "", title: t, grad: GRADS[i % GRADS.length] }));
+    const GUIDE_POOL = [
+      { lead: "A quick, practical read on the idea \u2014 what it is, why it matters, and how to put it to work.", learn: ["The core idea in plain terms", "Where it helps most", "How to apply it this week"], read: ["Start with the why: every good piece of thinking earns its place by changing a decision. Use this one to sharpen how you frame the work.", "Then make it concrete. Pick one live project, apply the idea, and notice what shifts. The point isn't theory; it's better work, faster."], principle: "Good thinking earns its place by changing a decision.", related: ["Tools & Frameworks", "How We Work", "Industry Intel"] },
+      { lead: "What we're noticing, and why it matters for the work right now.", learn: ["The signal worth tracking", "What it means for brands", "How to bring it into a project"], read: ["Culture moves first, categories follow. This is a read on a shift that's still forming \u2014 early enough to act on, clear enough to use.", "Bring it to your next brief as a provocation, not a fact. The teams that win treat signals as fuel for ideas, not just slides."], principle: "Culture moves first; the best brands move with it.", related: ["Cultural Insight", "Industry Intel", "Brand Strategy"] },
+      { lead: "How we actually do this \u2014 the practical version, not the theory.", learn: ["The steps we follow", "The common traps", "What good looks like"], read: ["Most of the value is in the setup: frame the problem, agree on what 'done' means, and decide who owns what before the work starts.", "Then keep it moving with light checkpoints. Ship, reflect, and carry the lessons forward \u2014 that's how we get a little better every project."], principle: "Set the work up well and it tends to go well.", related: ["How We Work", "Running Projects", "Internal Reviews"] },
+      { lead: "A short field note from the studio on the way we think and make.", learn: ["The mindset behind the work", "A habit worth stealing", "How it shows up day to day"], read: ["The best work here starts with curiosity and a clear question. We're at our sharpest when the problem is well framed and the room is honest.", "Keep it human: share early, give real feedback, and write things down. Small, shared habits let a team move fast without losing the thread."], principle: "Curiosity plus clarity beats certainty.", related: ["How We Work", "Ways of Working", "Giving Feedback"] },
+    ];
+    const TOOL_TITLES = { "Sharpening a brand's positioning before you commit to language": 1, "Decoding the cultural codes operating inside any category": 1, "Running a focused naming sprint from brief to shortlist": 1, "Scoping qualitative research backwards from the decision it informs": 1 };
+    const baseCards = cardTitles.map((t, i) => ({ isStandard: true, label: cardLabels[i] || "", title: t, grad: GRADS[i % GRADS.length], kind: TOOL_TITLES[t] ? "tool" : "guide", guideContent: GUIDE_POOL[i % GUIDE_POOL.length] }));
+    const wState = this.state.weather || {};
+    const weatherCards = this.weatherCities().map((wc) => {
+      const w = wState[wc.key] || {};
+      const cond = w.cond || "clouds";
+      return { isWeather: true, city: wc.name, bg: w.bg || "#646a73",
+        isClear: cond === "clear", isClouds: cond === "clouds", isRain: cond === "rain", isSnow: cond === "snow",
+        caption: w.caption || "Updating weather\u2026" };
+    });
+    if (!this._weatherSlots) {
+      const n = baseCards.length, k = weatherCards.length, COLS = 4;
+      const finalPos = (slot) => slot + (slot >= 3 ? 1 : 0) + (slot >= 7 ? 1 : 0) + (slot >= 11 ? 1 : 0);
+      const adjacent = (a, b) => {
+        const ra = Math.floor(a / COLS), ca = a % COLS, rb = Math.floor(b / COLS), cb = b % COLS;
+        return (ra === rb && Math.abs(ca - cb) === 1) || (ca === cb && Math.abs(ra - rb) === 1);
+      };
+      let chosen = null;
+      for (let attempt = 0; attempt < 300 && !chosen; attempt++) {
+        const idxs = Array.from({ length: n }, (_, i) => i);
+        for (let i = idxs.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); const t = idxs[i]; idxs[i] = idxs[j]; idxs[j] = t; }
+        const pick = idxs.slice(0, k), fps = pick.map(finalPos);
+        let ok = true;
+        for (let i = 0; i < fps.length && ok; i++) for (let j = i + 1; j < fps.length && ok; j++) if (adjacent(fps[i], fps[j])) ok = false;
+        if (ok) chosen = pick.sort((a, b) => a - b);
+      }
+      this._weatherSlots = chosen || [0, 6, 11, 16];
+    }
+    const weatherAt = {};
+    this._weatherSlots.forEach((slot, k) => { weatherAt[slot] = weatherCards[k]; });
+    const gridCards = baseCards.map((c, i) => weatherAt[i] || c);
     const introData = [
       { label: "Working with Alex", title: "Here's how to get started.", name: "Alex", src: "images/alex.png" },
       { label: "Working with Jess", title: "Here's how to get started.", name: "Jess", src: "images/jess.png" },
       { label: "Working with Sam", title: "Here's how to get started.", name: "Sam", src: "images/sam.png" },
     ];
+    const ROLES = { Alex: "Principal, NA", Jess: "Strategy Director", Sam: "Design Lead" };
     const introCards = introData.map((d, i) => ({
-      isStandard: true, intro: true, label: d.label, title: d.title, grad: GRADS[(i + 2) % GRADS.length],
+      isStandard: true, intro: true, kind: "pack", label: d.label, title: d.title, grad: GRADS[(i + 2) % GRADS.length],
+      pack: { name: d.name, role: ROLES[d.name] || "TRIPTK Team", photo: d.src, firstName: d.name, intro: d.name + " is a " + (ROLES[d.name] || "member of the team") + " at TRIPTK. This starter pack is the fastest way to understand how " + d.name + " works and how to do great work together.", inside: ["A short intro to " + d.name + " and the work they lead", "Recent projects worth reviewing", "Who to meet in your first few weeks", "The tools and rituals " + d.name + " relies on"], howTo: ["Bring a clear question \u2014 " + d.name + " is sharpest when the problem is well framed", "Share work early and often; rough is welcome", "Default to writing decisions down so they're easy to revisit"] },
       photoEl: d.src
         ? React.createElement("img", { src: d.src, alt: d.name, style: { width: "100%", height: "100%", objectFit: "cover", display: "block" } })
         : React.createElement("div", { style: { width: "100%", height: "100%", background: "rgba(255,255,255,0.55)", display: "flex", alignItems: "center", justifyContent: "center", color: "rgba(26,26,26,0.5)", fontSize: "12px", letterSpacing: "0.06em", textTransform: "uppercase" } }, "Add photo"),
     }));
     const cards = [];
-    baseCards.forEach((c, i) => {
+    gridCards.forEach((c, i) => {
       cards.push(c);
       if (i === 2 && introCards[0]) cards.push(introCards[0]);
       if (i === 6 && introCards[1]) cards.push(introCards[1]);
@@ -938,7 +1079,7 @@ class Component extends DCLogic {
     // ---- Wire each visible card to open the detail pop-up ----
     cards.forEach((c, i) => {
       c.idx = i;
-      c.onOpen = (e) => { if (e) e.preventDefault(); this.openCard(i); };
+      c.onOpen = c.isWeather ? undefined : (e) => { if (e) e.preventDefault(); if (c.kind === "pack") this.openPack(c.pack); else if (c.kind === "guide") this.openGuide(c); else this.openCard(i); };
     });
     const activeCard = this.state.activeCard;
     const modal = (activeCard != null && cards[activeCard]) ? cards[activeCard] : {};
@@ -989,6 +1130,21 @@ class Component extends DCLogic {
     const iconBase = { gridArea: "1 / 1", display: "flex", placeItems: "center", lineHeight: 0, transition: "opacity " + swapDur + " " + swapEase + ", filter " + swapDur + " " + swapEase + ", transform " + swapDur + " " + swapEase + ", color 240ms ease", willChange: "opacity, filter, transform" };
     const iconMenuStyle = { ...iconBase, opacity: mo ? 0 : 1, filter: mo ? "blur(2px)" : "blur(0)", transform: mo ? "scale(0.25)" : "scale(1)" };
     const iconCloseStyle = { ...iconBase, opacity: mo ? 1 : 0, filter: mo ? "blur(0)" : "blur(2px)", transform: mo ? "scale(1)" : "scale(0.25)" };
+    const deckBase = cards.filter((c) => c.isStandard && !c.isWeather && !c.intro);
+    const DN = deckBase.length;
+    const di = DN ? ((((this.state.deckIdx || 0) % DN) + DN) % DN) : 0;
+    const deck = [];
+    for (let k = 0; k < Math.min(5, DN); k++) {
+      const c = deckBase[(di + k) % DN];
+      const front = k === 0;
+      const rot = front ? 0 : (k % 2 ? 1 : -1) * (2 + k * 0.5);
+      deck.push({
+        label: c.label, title: c.title,
+        onOpen: front ? c.onOpen : ((e) => { if (e) e.preventDefault(); this.setState({ deckIdx: (this.state.deckIdx || 0) + 1 }); }),
+        wrapStyle: { position: "absolute", left: 0, right: 0, top: 0, transform: "translateY(" + (k * 18) + "px) scale(" + (1 - k * 0.045) + ") rotate(" + rot + "deg)", transformOrigin: "center top", zIndex: 30 - k, opacity: k < 4 ? 1 : 0, transition: "transform 360ms cubic-bezier(0.22,1,0.36,1), opacity 360ms ease", pointerEvents: k < 4 ? "auto" : "none" },
+        cardStyle: { display: "flex", flexDirection: "column", justifyContent: "flex-end", aspectRatio: "3 / 4", borderRadius: "4px", overflow: "hidden", padding: "28px", background: c.grad, color: "#1a1a1a", textDecoration: "none", cursor: "pointer", boxShadow: "0 18px 40px rgba(0,0,0,0.28)" },
+      });
+    }
     const menuFeatured = [
       { label: "Featured", title: "New Medicare.gov opportunity framework", src: art[3] },
       { label: "Story", title: "Field notes from the studio", src: art[1] },
@@ -1007,6 +1163,7 @@ class Component extends DCLogic {
       iconMenuStyle,
       iconCloseStyle,
       menuFeatured,
+      deck, onDeckDown: (e) => { this._swipeX = e.clientX; }, onDeckUp: (e) => { if (this._swipeX == null) return; const dx = e.clientX - this._swipeX; this._swipeX = null; if (dx < -40) this.setState({ deckIdx: (this.state.deckIdx || 0) + 1 }); else if (dx > 40) this.setState({ deckIdx: (this.state.deckIdx || 0) - 1 }); },
       toggleMenu: () => (this.state.menuOpen ? this.closeMenu() : this.openMenu()),
       openMenu: () => this.openMenu(),
       closeMenu: () => this.closeMenu(),
@@ -1054,6 +1211,14 @@ class Component extends DCLogic {
       modalGrad: modal.grad,
       tool,
       closeCard: () => this.closeCard(),
+      packOpen: this.state.activePack != null,
+      packClosingCls: this.state.packClosing ? "closing" : "",
+      pack: this.state.activePack || { name: "", role: "", photo: "", firstName: "", intro: "", inside: [], howTo: [] },
+      closePack: () => this.closePack(),
+      guideOpen: this.state.activeGuide != null,
+      guideClosingCls: this.state.guideClosing ? "closing" : "",
+      guide: (() => { const g = this.state.activeGuide; if (!g) return { label: "", title: "", grad: "", lead: "", learn: [], read0: "", read1: "", principle: "", related: [] }; const gc = g.guideContent || {}; const rd = gc.read || []; return { label: g.label, title: g.title, grad: g.grad, lead: gc.lead || "", learn: gc.learn || [], read0: rd[0] || "", read1: rd[1] || "", principle: gc.principle || "", related: gc.related || [] }; })(),
+      closeGuide: () => this.closeGuide(),
       stopModal: (e) => e.stopPropagation(),
       noop: (e) => e.preventDefault(),
     };

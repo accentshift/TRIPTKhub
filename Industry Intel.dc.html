@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    @font-face { font-family: 'Scto Grotesk B'; src: url('fonts/SctoGroteskB-Regular.otf') format('opentype'); font-weight: 400; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Scto Grotesk B'; src: url('fonts/SctoGroteskB-Bold.otf') format('opentype'); font-weight: 700; font-style: normal; font-display: swap; }
+    html, body { margin: 0; padding: 0; background: #ebe7e7; }
+    * { box-sizing: border-box; }
+    #mobile-block { display: none; position: fixed; inset: 0; z-index: 100000; background: #000000; color: #ffffff; align-items: center; justify-content: center; text-align: center; padding: 32px; font-family: 'Scto Grotesk B', 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: clamp(18px, 5.2vw, 24px); line-height: 1.4; letter-spacing: -0.01em; }
+    @media (max-width: 760px) { #mobile-block { display: flex; } html, body { overflow: hidden !important; } }
+    @keyframes chatpop { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+    .chatpanel { animation: chatpop 300ms cubic-bezier(0.22,0.61,0.36,1); }
+    #chat-scroll::-webkit-scrollbar { width: 0; }
+    .sendbtn { transition: background 160ms ease; }
+    .sendbtn:hover { background: #000000 !important; }
+    .iconbtn:hover svg { stroke: #555555; }
+    .menulink { color: #ffffff; text-decoration: none; transition: color 160ms ease; }
+    .menunav:hover .menulink { color: rgba(255,255,255,0.4); }
+    .menunav:hover .menulink:hover { color: #ffffff; }
+    .featrow { position: relative; }
+    .featrow::before { content: ""; position: absolute; inset: 0 -16px; border-radius: 6px; background: rgba(255,255,255,0.14); opacity: 0; transition: opacity 160ms ease; z-index: 0; }
+    .featrow:hover::before { opacity: 1; }
+    .featrow > * { position: relative; z-index: 1; }
+    .gcard { transition: transform 220ms cubic-bezier(0.22,0.61,0.36,1), box-shadow 220ms ease; }
+    .gcard:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(40,20,12,0.07); }
+    .iglow { position: relative; }
+    .iglow::before { content: ""; position: absolute; inset: 0; pointer-events: none; border-radius: 4px; z-index: 0; opacity: 0.6; background: radial-gradient(260px circle at var(--gx, -400px) var(--gy, -400px), var(--glow, #6f8cff), rgba(255,255,255,0) 58%); }
+    .iglow > * { position: relative; z-index: 1; }
+  </style>
+</helmet>
+
+<div id="page" style="min-height: 100vh; background: #ebe7e7; color: #111111; font-family: 'Scto Grotesk B', 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 17px; line-height: 1.55; -webkit-font-smoothing: antialiased; padding-bottom: 140px;">
+
+  <div id="mobile-block">Oops, access on mobile is limited right now.</div>
+
+  <!-- Nav menu overlay -->
+  <div style="{{ menuStyle }}">
+    <div style="width: 100%; max-width: 1240px; margin: auto; display: flex; flex-wrap: wrap; gap: clamp(40px, 6vw, 96px);">
+      <nav class="menunav" style="display: flex; flex-direction: column; gap: clamp(2px, 0.6vw, 10px); flex: 1 1 340px;">
+        <a class="menulink" href="About.dc.html" style="font-size: clamp(32px, 4.4vw, 60px); letter-spacing: -0.03em; line-height: 1.12; font-weight: 400; color: #ffffff; text-decoration: none;">About TRIPTK</a>
+        <a class="menulink" href="Tools.dc.html" style="font-size: clamp(32px, 4.4vw, 60px); letter-spacing: -0.03em; line-height: 1.12; font-weight: 400; color: #ffffff; text-decoration: none;">Tools &amp; Frameworks</a>
+        <a class="menulink" href="How%20We%20Work.dc.html" style="font-size: clamp(32px, 4.4vw, 60px); letter-spacing: -0.03em; line-height: 1.12; font-weight: 400; color: #ffffff; text-decoration: none;">How We Work</a>
+        <a class="menulink" href="Industry%20Intel.dc.html" style="font-size: clamp(32px, 4.4vw, 60px); letter-spacing: -0.03em; line-height: 1.12; font-weight: 400; color: #ffffff; text-decoration: none;">Intel &amp; Inspiration</a>
+      </nav>
+      <div style="flex: 1 1 420px; max-width: 540px;">
+        <p style="margin: 0 0 30px 0; font-size: 18px; line-height: 1.5; color: rgba(255,255,255,0.66); max-width: 430px;">A searchable internal platform that helps the TRIPTK team work &amp; learn.</p>
+        <sc-for list="{{ menuFeatured }}" as="f" hint-placeholder-count="3">
+          <a href="index.html" class="featrow" style="display: flex; align-items: center; gap: 20px; padding: 18px 0; border-top: 1px solid rgba(255,255,255,0.14); text-decoration: none;">
+            <div style="flex: 0 0 auto; width: 88px; height: 66px; border-radius: 6px; overflow: hidden; background: {{ f.grad }};"></div>
+            <div style="flex: 1 1 auto; min-width: 0;">
+              <div style="font-size: 14px; color: #8f8f8f;">{{ f.label }}</div>
+              <div style="margin-top: 4px; font-size: 18px; line-height: 1.25; color: #ffffff; text-wrap: pretty;">{{ f.title }}</div>
+            </div>
+            <span style="flex: 0 0 auto; display: inline-flex; color: #ffffff;">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg>
+            </span>
+          </a>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header data-screen-label="Header" style="{{ headerStyle }}">
+    <div style="width: 100%; display: flex; justify-content: space-between; align-items: center;">
+      <a href="index.html" aria-label="TRIPTK home" style="display: inline-flex; align-items: center;">
+        <img src="images/triptk-icon.png" alt="TRIPTK" style="{{ logoStyle }}">
+      </a>
+      <button type="button" aria-label="Menu" onClick="{{ toggleMenu }}" style="{{ menuBtnStyle }}">
+        <span style="{{ iconMenuStyle }}">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="8" x2="19" y2="8"></line><line x1="3" y1="14" x2="19" y2="14"></line></svg>
+        </span>
+        <span style="{{ iconCloseStyle }}">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="5" y1="5" x2="17" y2="17"></line><line x1="17" y1="5" x2="5" y2="17"></line></svg>
+        </span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Hero: masthead + image -->
+  <section data-screen-label="Welcome" style="display: flex; justify-content: center; padding: 96px 24px 0 24px;">
+    <div style="width: min(1480px, 100%); margin: 0 auto;">
+      <h1 style="margin: 0 0 48px 0; max-width: min(1180px, 100%); font-size: clamp(40px, 5.2vw, 72px); line-height: 1.08; letter-spacing: -0.035em; font-weight: 400; color: #111111;">What&rsquo;s moving across<br>the industries we serve</h1>
+      <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;">
+        <sc-for list="{{ resources }}" as="card" hint-placeholder-count="12">
+          <a class="gcard iglow" href="{{ card.href }}" target="{{ card.target }}" rel="noopener noreferrer" onClick="{{ card.onClick }}" style="--glow: {{ card.glow }}; display: flex; flex-direction: column; aspect-ratio: 3 / 2; border-radius: 4px; overflow: hidden; padding: 22px; text-decoration: none; background: #ffffff; border: 1px solid #e7e3de; color: #1a1a1a; cursor: pointer;">
+            <h3 style="margin: 0; font-size: 18px; font-weight: 400; letter-spacing: -0.01em; line-height: 1.22; text-wrap: balance;">{{ card.title }}</h3>
+            <p style="margin: 6px 0 0 0; font-size: 14px; line-height: 1.3; letter-spacing: -0.01em; color: rgba(26,26,26,0.55); text-wrap: pretty;">{{ card.cat }}</p>
+            <span style="margin-top: auto; display: inline-flex; line-height: 1;">
+              <sc-if value="{{ card.isNewsletter }}" hint-placeholder-val="{{ false }}">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="M3.5 6.5l8.5 6 8.5-6"></path></svg>
+              </sc-if>
+              <sc-if value="{{ card.isCodex }}" hint-placeholder-val="{{ false }}">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="9 7 17 7 17 15"></polyline></svg>
+              </sc-if>
+              <sc-if value="{{ card.isDefault }}" hint-placeholder-val="{{ false }}">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+              </sc-if>
+            </span>
+          </a>
+        </sc-for>
+      </div>
+      <button type="button" onClick="{{ toggleRes }}" style="display: inline-flex; align-items: center; gap: 8px; margin: 32px 0 0 0; font-size: 16px; background: transparent; border: none; padding: 0; cursor: pointer; font-family: inherit; color: #111111;">{{ resLabel }} <span style="font-size: 16px;">{{ resArrow }}</span></button>
+    </div>
+  </section>
+
+  <!-- Footer card -->
+  <footer data-screen-label="Footer" style="display: flex; justify-content: center; padding: 120px 24px 40px 24px;">
+    <div style="width: min(1480px, 100%); background: #ffffff; border-radius: 4px; padding: clamp(40px, 5vw, 72px); overflow: hidden;">
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 48px;">
+        <div style="flex: 1 1 560px; min-width: 280px;">
+          <span style="display: block; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: #8a847f;">Find us</span>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 30px 40px; margin-top: 26px;">
+            <sc-for list="{{ offices }}" as="o" hint-placeholder-count="4">
+              <div>
+                <div style="font-size: 17px; color: #111111;">{{ o.name }}</div>
+                <div style="margin-top: 8px; font-size: 15px; line-height: 1.5; color: #8f8a85;">{{ o.line1 }}</div>
+                <div style="font-size: 15px; line-height: 1.5; color: #8f8a85;">{{ o.line2 }}</div>
+                <div style="margin-top: 12px; font-size: 14px; color: #b3aea9;">{{ o.time }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+        <div style="flex: 0 1 220px; min-width: 180px;">
+          <span style="display: block; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: #8a847f;">Inquiries</span>
+          <a href="mailto:hello@triptk.com" style="display: inline-block; margin-top: 26px; font-size: 17px; color: #111111; text-decoration: none;">hello@triptk.com</a>
+        </div>
+      </div>
+      <div style="margin-top: clamp(72px, 8vw, 120px);">
+        <img src="images/triptk-logo.png" alt="TRIPTK" style="display: block; width: 100%; height: auto;">
+      </div>
+    </div>
+  </footer>
+
+  <div style="position: fixed; left: 0; right: 0; bottom: 0; z-index: 90; display: flex; justify-content: center; padding: 0 16px 34px; pointer-events: none;">
+    <div style="width: min(720px, 100%); display: flex; flex-direction: column; pointer-events: auto;">
+
+      <sc-if value="{{ chatOpen }}" hint-placeholder-val="{{ false }}">
+        <div class="chatpanel" style="background: #ffffff; border: 1px solid #e4e4e4; border-radius: 4px; box-shadow: 0 18px 50px rgba(40,20,12,0.16); margin-bottom: 12px; display: flex; flex-direction: column; max-height: min(64vh, 560px); overflow: hidden;">
+          <div style="display: flex; align-items: center; justify-content: flex-end; padding: 12px 16px; border-bottom: 1px solid #f0f0f0; flex: 0 0 auto;">
+            <button type="button" aria-label="Collapse" onClick="{{ closeChat }}" style="border: none; background: transparent; cursor: pointer; display: inline-flex; color: #8a847f; padding: 4px;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"></path></svg>
+            </button>
+          </div>
+          <div id="chat-scroll" style="flex: 1 1 auto; overflow-y: auto; padding: 22px 20px; display: flex; flex-direction: column; gap: 18px;">
+            <sc-if value="{{ noMessages }}" hint-placeholder-val="{{ true }}">
+              <div style="display: flex; flex-direction: column; gap: 12px;">
+                <div style="font-size: 13px; letter-spacing: 0.04em; color: #8a847f;">Try asking</div>
+                <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                  <sc-for list="{{ samples }}" as="s" hint-placeholder-count="4">
+                    <button type="button" onClick="{{ s.onClick }}" style="text-align: left; border: 1px solid #e4e4e4; border-radius: 999px; padding: 10px 16px; background: transparent; cursor: pointer; font-family: inherit; font-size: 14px; color: #111111;">{{ s.text }}</button>
+                  </sc-for>
+                </div>
+              </div>
+            </sc-if>
+            <sc-for list="{{ messages }}" as="msg" hint-placeholder-count="0">
+              <sc-if value="{{ msg.isUser }}" hint-placeholder-val="{{ false }}">
+                <div style="align-self: flex-end; max-width: 82%; background: #f0efed; color: #111111; border-radius: 4px; padding: 12px 16px; font-size: 15px; line-height: 1.45;">{{ msg.text }}</div>
+              </sc-if>
+              <sc-if value="{{ msg.isBot }}" hint-placeholder-val="{{ false }}">
+                <div style="align-self: flex-start; max-width: 94%; display: flex; flex-direction: column; gap: 14px;">
+                  <p style="margin: 0; font-size: 15px; line-height: 1.55; color: #111111;">{{ msg.short }}</p>
+                  <sc-if value="{{ msg.hasDigest }}" hint-placeholder-val="{{ false }}">
+                    <div style="border: 1px solid #e4e4e4; border-radius: 10px; padding: 14px 16px;">
+                      <div style="font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #8a847f;">Digest</div>
+                      <div style="margin-top: 6px; font-size: 16px; color: #111111;">{{ msg.digestTitle }}</div>
+                      <div style="margin-top: 10px; display: flex; flex-direction: column; gap: 8px;">
+                        <sc-for list="{{ msg.digestItems }}" as="d" hint-placeholder-count="3">
+                          <div style="display: flex; gap: 10px; font-size: 14px; line-height: 1.45; color: #3a3a3a;"><span style="color: #b3aea9;">&mdash;</span><span>{{ d }}</span></div>
+                        </sc-for>
+                      </div>
+                    </div>
+                  </sc-if>
+                  <sc-if value="{{ msg.hasSource }}" hint-placeholder-val="{{ false }}">
+                    <a href="#" style="display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: #111111; text-decoration: underline; text-underline-offset: 3px;">Source: {{ msg.sourceTitle }} &rarr;</a>
+                  </sc-if>
+                  <sc-if value="{{ msg.hasNext }}" hint-placeholder-val="{{ false }}">
+                    <button type="button" onClick="{{ msg.askNext }}" style="align-self: flex-start; text-align: left; border: 1px dashed #cfcac4; border-radius: 10px; padding: 10px 14px; background: transparent; cursor: pointer; font-family: inherit; font-size: 14px; color: #6e6862;">Ask next: {{ msg.next }}</button>
+                  </sc-if>
+                </div>
+              </sc-if>
+            </sc-for>
+            <sc-if value="{{ thinking }}" hint-placeholder-val="{{ false }}">
+              <div style="align-self: flex-start; font-size: 15px; color: #8a847f;">Thinking&hellip;</div>
+            </sc-if>
+          </div>
+        </div>
+      </sc-if>
+
+      <div style="background: #ffffff; border-radius: 4px; box-shadow: 0 8px 28px rgba(40,20,12,0.10); display: flex; align-items: center; gap: 10px; padding: 8px 10px 8px 18px;">
+        <button type="button" class="iconbtn" aria-label="Attach" style="display: inline-flex; align-items: center; justify-content: center; width: 38px; height: 38px; padding: 0; border: none; background: transparent; cursor: pointer; flex: 0 0 auto;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9a9a9a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path></svg>
+        </button>
+        <input id="chat-input" value="{{ chatDraft }}" onInput="{{ onDraft }}" onFocus="{{ openChat }}" onKeyDown="{{ onChatKey }}" aria-label="Ask about industry intel" style="flex: 1 1 auto; min-width: 0; border: none; outline: none; background: transparent; font-family: inherit; font-size: 17px; color: #111111; padding: 10px 0;">
+        <button type="button" class="sendbtn" aria-label="Send" onClick="{{ sendChat }}" style="display: inline-flex; align-items: center; justify-content: center; width: 42px; height: 42px; padding: 0; border: none; border-radius: 4px; background: #1a1a1a; cursor: pointer; flex: 0 0 auto;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"></path><path d="M5 12l7-7 7 7"></path></svg>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { menuOpen: false, chatOpen: false, draft: "", messages: [], thinking: false, resExpanded: false };
+
+  openMenu() { this.setState({ menuOpen: true }); document.body.style.overflow = "hidden"; }
+  closeMenu() { this.setState({ menuOpen: false }); document.body.style.overflow = ""; }
+
+  componentDidMount() { this.initPlaceholder(); this._onKey = (e) => { if (e.key === "Escape") this.closeMenu(); }; window.addEventListener("keydown", this._onKey); this.setupGlow(); }
+  componentWillUnmount() { if (this._phT) clearTimeout(this._phT); if (this._phRetry) clearTimeout(this._phRetry); if (this._onKey) window.removeEventListener("keydown", this._onKey); if (this._onMove) window.removeEventListener("pointermove", this._onMove); if (this._glowRaf) cancelAnimationFrame(this._glowRaf); document.body.style.overflow = ""; }
+
+  setupGlow() {
+    let mx = -1, my = -1, sx = -1, sy = -1, started = false;
+    this._onMove = (e) => { mx = e.clientX; my = e.clientY; if (!started) { sx = mx; sy = my; started = true; } };
+    window.addEventListener("pointermove", this._onMove);
+    const loop = () => {
+      this._glowRaf = requestAnimationFrame(loop);
+      if (!started) return;
+      sx += (mx - sx) * 0.05;
+      sy += (my - sy) * 0.05;
+      document.querySelectorAll(".iglow").forEach((c) => { const r = c.getBoundingClientRect(); c.style.setProperty("--gx", (sx - r.left) + "px"); c.style.setProperty("--gy", (sy - r.top) + "px"); });
+    };
+    this._glowRaf = requestAnimationFrame(loop);
+  }
+
+  initPlaceholder() {
+    const el = document.getElementById("chat-input");
+    if (!el) { this._phRetry = setTimeout(() => this.initPlaceholder(), 150); return; }
+    const prompts = [
+      "What are we seeing in healthcare right now?",
+      "What's moving in financial services?",
+      "Summarize the latest retail and CPG signals",
+      "Where is AI reshaping our clients' industries?",
+    ];
+    const s = { qi: 0, ci: 0, deleting: false };
+    const active = () => document.activeElement !== el && (el.value || "") === "";
+    const set = (t) => el.setAttribute("placeholder", t);
+    const tick = () => {
+      if (!active()) { this._phT = setTimeout(tick, 400); return; }
+      const q = prompts[s.qi];
+      if (!s.deleting) {
+        s.ci++; set(q.slice(0, s.ci));
+        if (s.ci >= q.length) { s.deleting = true; this._phT = setTimeout(tick, 1700); return; }
+        this._phT = setTimeout(tick, 52 + Math.random() * 46);
+      } else {
+        s.ci--; set(q.slice(0, Math.max(0, s.ci)));
+        if (s.ci <= 0) { s.deleting = false; s.qi = (s.qi + 1) % prompts.length; this._phT = setTimeout(tick, 320); return; }
+        this._phT = setTimeout(tick, 26);
+      }
+    };
+    el.addEventListener("focus", () => { s.ci = 0; s.deleting = false; set("Ask about any industry\u2026"); });
+    set("");
+    tick();
+  }
+
+  openChat() { this.setState({ chatOpen: true }); }
+  closeChat() { this.setState({ chatOpen: false }); }
+  scrollChat() { setTimeout(() => { const el = document.getElementById("chat-scroll"); if (el) el.scrollTop = el.scrollHeight; }, 40); }
+  send() { const t = (this.state.draft || "").trim(); if (!t) return; this.setState({ draft: "" }); this._respond(t); }
+  sendText(t) { this._respond(t); }
+  _respond(text) {
+    this.setState((s) => ({ messages: [...s.messages, { isUser: true, isBot: false, text: text }], thinking: true, chatOpen: true }));
+    this.scrollChat();
+    setTimeout(() => {
+      const reply = this.answer(text);
+      this.setState((s) => ({ messages: [...s.messages, reply], thinking: false }));
+      this.scrollChat();
+    }, 760);
+  }
+  mk(o) {
+    return {
+      isUser: false, isBot: true, short: o.short || "",
+      hasDigest: !!o.digest, digestTitle: o.digest ? o.digest.title : "", digestItems: o.digest ? o.digest.items : [],
+      hasSource: !!o.source, sourceTitle: o.source || "",
+      hasNext: !!o.next, next: o.next || "", askNext: o.next ? () => this.sendText(o.next) : null,
+    };
+  }
+  nextSuggestion(q) {
+    const POOL = ["What's moving in financial services?", "Summarize the latest retail and CPG signals", "Where is AI reshaping our clients' industries?", "What are we seeing in healthcare right now?"];
+    if (typeof this._nextIdx !== "number") this._nextIdx = 0;
+    for (let i = 0; i < POOL.length; i++) { const c = POOL[this._nextIdx % POOL.length]; this._nextIdx++; if (c.toLowerCase() !== (q || "").toLowerCase()) return c; }
+    return POOL[0];
+  }
+  answer(q) {
+    const t = (q || "").toLowerCase();
+    const has = (...ks) => ks.some((k) => t.indexOf(k) !== -1);
+    if (has("media", "entertainment")) return this.mk({ short: "Media & entertainment \u2014 the current outlook.", digest: { title: "Media & Entertainment Digest", items: ["Attention is fragmenting across platforms and formats", "Franchise IP and live moments anchor loyalty", "Creators are now a core distribution channel"] }, source: "Industry Intel", next: this.nextSuggestion(q) });
+    if (has("travel")) return this.mk({ short: "Travel & hospitality \u2014 the latest signals.", digest: { title: "Travel & Hospitality Digest", items: ["Experience-led and transformational travel keep growing", "Loyalty and direct relationships are the margin battleground", "AI is reshaping planning and booking"] }, source: "Industry Intel", next: this.nextSuggestion(q) });
+    if (has("beauty", "wellness")) return this.mk({ short: "Beauty & wellness \u2014 what's shifting.", digest: { title: "Beauty & Wellness Digest", items: ["Wellness and beauty are converging into one routine", "Science-led and ingredient transparency are rising", "Creators and community drive discovery"] }, source: "Industry Intel", next: this.nextSuggestion(q) });
+    if (has("healthcare", "payer", "provider", "medicare", "health", "pharma")) return this.mk({ short: "Here's the latest on healthcare \u2014 what's moving this quarter.", digest: { title: "Healthcare Intelligence Digest", items: ["Payers are tightening prior-authorization criteria", "Provider consolidation is accelerating across the Midwest", "Medicare.gov is opening a new opportunity window for plan finders"] }, source: "Industry Intel", next: this.nextSuggestion(q) });
+    if (has("financ", "bank", "fintech", "insur", "wealth")) return this.mk({ short: "Financial services in brief \u2014 the signals worth watching.", digest: { title: "Financial Services Digest", items: ["Embedded finance is moving from feature to default expectation", "Trust and clarity are outperforming rate-led messaging", "AI underwriting is reshaping the middle of the funnel"] }, source: "Industry Intel", next: this.nextSuggestion(q) });
+    if (has("retail", "cpg", "consumer", "grocery", "commerce")) return this.mk({ short: "Retail and CPG \u2014 here's the current read.", digest: { title: "Retail & CPG Digest", items: ["Value and premium are growing; the middle is thinning", "Retail media is now a core margin story, not an add-on", "Loyalty is shifting from points to genuine membership"] }, source: "Industry Intel", next: this.nextSuggestion(q) });
+    if (has("ai", "tech", "technology", "software", "automation")) return this.mk({ short: "Where AI is reshaping our clients' industries:", digest: { title: "AI & Technology Digest", items: ["Search and discovery behavior is shifting toward assistants", "Brands are competing to be the trusted answer, not just the top link", "Internal AI adoption is becoming a real operating advantage"] }, source: "Industry Intel", next: this.nextSuggestion(q) });
+    if (has("marriott", "hospitality", "hotel")) return this.mk({ short: "Quick briefing on Marriott \u2014 what to keep in mind.", digest: { title: "Marriott International \u2014 Client Briefing", items: ["Bonvoy loyalty is the center of gravity for growth", "Luxury and lifestyle brands are outpacing the core", "Direct booking and app engagement remain key battlegrounds"] }, source: "Client Intelligence", next: this.nextSuggestion(q) });
+    if (has("vf corp", "vans", "north face", "apparel")) return this.mk({ short: "Quick briefing on VF Corporation.", digest: { title: "VF Corporation \u2014 Client Briefing", items: ["Portfolio is reshaping around Vans and The North Face", "Outdoor and active categories are diverging", "DTC and brand heat are the turnaround levers"] }, source: "Client Intelligence", next: this.nextSuggestion(q) });
+    if (has("diageo", "spirits")) return this.mk({ short: "Quick briefing on Diageo.", digest: { title: "Diageo \u2014 Client Briefing", items: ["Premiumization continues, with tequila and no/low growing", "Younger drinkers are reshaping the category", "Culture-led brand building drives the portfolio"] }, source: "Client Intelligence", next: this.nextSuggestion(q) });
+    if (has("netflix", "streaming")) return this.mk({ short: "Quick briefing on Netflix.", digest: { title: "Netflix \u2014 Client Briefing", items: ["Ads tier and paid sharing are reshaping the model", "Live and gaming are new engagement frontiers", "Franchise and brand IP deepen loyalty"] }, source: "Client Intelligence", next: this.nextSuggestion(q) });
+    if (has("briefing on")) { const nm = (q.split(/briefing on/i)[1] || "").replace(/ahead of.*/i, "").replace(/\.$/, "").trim(); return this.mk({ short: "Here's a quick briefing on " + nm + ".", digest: { title: nm + " \u2014 Client Briefing", items: ["Where the brand is winning and where it's under pressure", "The cultural shifts most relevant to the category", "Opportunities worth bringing to the next conversation"] }, source: "Client Intelligence", next: this.nextSuggestion(q) }); }
+    return this.mk({ short: "I don't see that in the current Industry Intel materials yet \u2014 try one of these.", next: this.nextSuggestion(q) });
+  }
+
+  renderVals() {
+    const mo = this.state.menuOpen;
+    const panelEase = "cubic-bezier(0.22, 1, 0.36, 1)";
+    const panelDur = mo ? "400ms" : "350ms";
+    const menuStyle = { position: "fixed", top: 0, left: 0, right: 0, height: "100vh", zIndex: 100, background: "#472218", color: "#ffffff", display: "flex", flexDirection: "column", padding: "clamp(88px, 10vh, 120px) clamp(24px, 4vw, 56px)", overflowY: "auto", transform: mo ? "translateY(0)" : "translateY(-50%)", opacity: mo ? 1 : 0, filter: mo ? "blur(0)" : "blur(2px)", pointerEvents: mo ? "auto" : "none", transition: "transform " + panelDur + " " + panelEase + ", opacity " + panelDur + " " + panelEase + ", filter " + panelDur + " " + panelEase, willChange: "transform, opacity, filter" };
+    const spreadEase = "transform 520ms cubic-bezier(0.4, 0, 0.1, 1)";
+    const headerStyle = { display: "block", padding: "26px 48px", background: "transparent", position: mo ? "fixed" : "static", top: 0, left: 0, right: 0, zIndex: 120 };
+    const logoStyle = { height: "28px", width: "auto", display: "block", filter: mo ? "brightness(0) invert(1)" : "none", transition: "filter 240ms ease, " + spreadEase };
+    const menuBtnStyle = { display: "inline-grid", placeItems: "center", width: "28px", height: "28px", padding: 0, border: "none", background: "transparent", cursor: "pointer", position: "relative", color: mo ? "#ffffff" : "#111111", transition: "color 240ms ease, " + spreadEase };
+    const swapEase = "ease-in-out", swapDur = "250ms";
+    const iconBase = { gridArea: "1 / 1", display: "flex", placeItems: "center", lineHeight: 0, transition: "opacity " + swapDur + " " + swapEase + ", filter " + swapDur + " " + swapEase + ", transform " + swapDur + " " + swapEase + ", color 240ms ease", willChange: "opacity, filter, transform" };
+    const iconMenuStyle = { ...iconBase, opacity: mo ? 0 : 1, filter: mo ? "blur(2px)" : "blur(0)", transform: mo ? "scale(0.25)" : "scale(1)" };
+    const iconCloseStyle = { ...iconBase, opacity: mo ? 1 : 0, filter: mo ? "blur(0)" : "blur(2px)", transform: mo ? "scale(1)" : "scale(0.25)" };
+    const G = ["radial-gradient(120% 92% at 50% -12%, #ff8a3d 0%, #ffd9b8 46%, #f4f2f0 100%)", "radial-gradient(120% 92% at 50% -12%, #6f8cff 0%, #cdd6ff 46%, #f1f2f5 100%)", "radial-gradient(120% 92% at 50% -12%, #5db786 0%, #d2ecdf 46%, #f1f4f2 100%)"];
+    const menuFeatured = [ { label: "Featured", title: "New Medicare.gov opportunity framework", grad: G[0] }, { label: "Story", title: "Field notes from the studio", grad: G[1] }, { label: "Intel", title: "Healthcare Intelligence Digest", grad: G[2] } ];
+    const RGRADS = ["radial-gradient(120% 92% at 50% -12%, #ff8a3d 0%, #ffd9b8 46%, #f4f2f0 100%)", "radial-gradient(120% 92% at 50% -12%, #6f8cff 0%, #cdd6ff 46%, #f1f2f5 100%)", "radial-gradient(120% 92% at 50% -12%, #5db786 0%, #d2ecdf 46%, #f1f4f2 100%)", "radial-gradient(120% 92% at 50% -12%, #ff6f88 0%, #ffd4dc 46%, #f5f1f2 100%)", "radial-gradient(120% 92% at 50% -12%, #9b7cff 0%, #e0d6ff 46%, #f3f1f6 100%)", "radial-gradient(120% 92% at 50% -12%, #4fc4d6 0%, #d2eef3 46%, #eef3f4 100%)", "radial-gradient(120% 92% at 50% -12%, #ffc94d 0%, #fff0c2 46%, #f5f3ec 100%)"];
+    const RES = [
+      { cat: "Newsletter", title: "The Monday Memo" },
+      { cat: "Newsletter", title: "Healthcare Intelligence Digest" },
+      { cat: "Newsletter", title: "Signals \u2014 weekly trend roundup" },
+      { cat: "Newsletter", title: "The Friday Five" },
+      { cat: "Client", title: "Marriott International" },
+      { cat: "Client", title: "VF Corporation" },
+      { cat: "Client", title: "Diageo" },
+      { cat: "Client", title: "Netflix" },
+      { cat: "Industry", title: "Healthcare \u2014 the state of play" },
+      { cat: "Industry", title: "Financial services landscape" },
+      { cat: "Industry", title: "Retail & CPG signals" },
+      { cat: "Industry", title: "Technology & AI shifts" },
+      { cat: "Codex", title: "Decoding Reality: How We Experience the Quiet Power of Places and Objects", url: "https://triptk.substack.com/p/decoding-reality-how-we-experience" },
+      { cat: "Codex", title: "Decoding the Business Case for Play: How Joy Can Be Your Competitive Edge", url: "https://triptk.substack.com/p/decoding-the-business-case-for-play" },
+      { cat: "Codex", title: "Decoding the Ren Faire Renaissance: Why Escapism Needs a Bit of Drama", url: "https://triptk.substack.com/p/a-ren-faire-renaissance" },
+      { cat: "Codex", title: "Decoding our State of Stuckness: How Defiance Unlocks the American Dream", url: "https://triptk.substack.com/p/decoding-our-state-of-stuckness-how" },
+      { cat: "Newsletter", title: "Culture Brief \u2014 monthly" },
+      { cat: "Newsletter", title: "The Strategy Reader" },
+      { cat: "Newsletter", title: "Field Notes from the studio" },
+      { cat: "Client", title: "American Express" },
+      { cat: "Client", title: "Est\u00e9e Lauder" },
+      { cat: "Client", title: "PepsiCo" },
+      { cat: "Industry", title: "Media & entertainment outlook" },
+      { cat: "Industry", title: "Travel & hospitality signals" },
+      { cat: "Industry", title: "Beauty & wellness shifts" },
+      { cat: "Codex", title: "Decoding Backrooms: Kane Parsons, A24, & the Anxiety of Liminal Spaces", url: "https://triptk.substack.com/" },
+      { cat: "Codex", title: "Odds Are The New Oracle: Decoding the Rise of Prediction Markets", url: "https://triptk.substack.com/" },
+      { cat: "Codex", title: "Introducing Codex, a Cultural Digest from TRIPTK", url: "https://triptk.substack.com/p/introducing-codex-a-cultural-digest" },
+    ];
+    if (!this._resOrder || this._resOrder.length !== RES.length) {
+      const idx = RES.map((_, i) => i);
+      for (let i = idx.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); const t = idx[i]; idx[i] = idx[j]; idx[j] = t; }
+      this._resOrder = idx;
+    }
+    const GLOWS = ["#ff8a3d", "#6f8cff", "#5db786", "#ff6f88", "#9b7cff", "#4fc4d6", "#ffc94d"];
+    const PROMPTS = {
+      "Healthcare \u2014 the state of play": "What are we seeing in healthcare right now?",
+      "Financial services landscape": "What's moving in financial services?",
+      "Retail & CPG signals": "Summarize the latest retail and CPG signals",
+      "Technology & AI shifts": "Where is AI reshaping our clients' industries?",
+      "Marriott International": "Give me a briefing on Marriott International",
+      "VF Corporation": "Give me a briefing on VF Corporation",
+      "Diageo": "Give me a briefing on Diageo",
+      "Netflix": "Give me a briefing on Netflix",
+      "American Express": "Give me a briefing on American Express",
+      "Est\u00e9e Lauder": "Give me a briefing on Est\u00e9e Lauder",
+      "PepsiCo": "Give me a briefing on PepsiCo",
+      "Media & entertainment outlook": "What's the outlook for media and entertainment?",
+      "Travel & hospitality signals": "What are the latest travel and hospitality signals?",
+      "Beauty & wellness shifts": "What's shifting in beauty and wellness?",
+    };
+    const resources = this._resOrder.map((i) => { const cat = RES[i].cat; const p = PROMPTS[RES[i].title]; const isCodex = cat === "Codex"; return { cat: cat, title: RES[i].title, grad: RGRADS[i % RGRADS.length], glow: GLOWS[i % GLOWS.length], isNewsletter: cat === "Newsletter", isCodex: isCodex, isDefault: cat !== "Newsletter" && cat !== "Codex", href: isCodex ? (RES[i].url || "https://triptk.substack.com/") : "#", target: isCodex ? "_blank" : "_self", onClick: isCodex ? ((e) => {}) : (p ? ((e) => { if (e) e.preventDefault(); this.sendText(p); }) : ((e) => { if (e) e.preventDefault(); })) }; });
+    const tfmt = (tz) => { try { return new Intl.DateTimeFormat("en-US", { timeZone: tz, hour: "numeric", minute: "2-digit", hour12: true }).format(new Date()); } catch (e) { return ""; } };
+    const offices = [
+      { name: "New York", line1: "200 Hudson St", line2: "New York, NY 10013", time: tfmt("America/New_York") },
+      { name: "London", line1: "3 Pancras Sq", line2: "London N1C 4AG", time: tfmt("Europe/London") },
+      { name: "Mexico City", line1: "Av. P.\u00e9o de la Reforma 296", line2: "Level 44, CDMX 06600", time: tfmt("America/Mexico_City") },
+      { name: "Singapore", line1: "80 Robinson Rd", line2: "Level 20, Singapore 068898", time: tfmt("Asia/Singapore") },
+    ];
+    return {
+      offices,
+      menuStyle, headerStyle, logoStyle, menuBtnStyle, iconMenuStyle, iconCloseStyle, menuFeatured,
+      resources: this.state.resExpanded ? resources : resources.slice(0, 16), noop: (e) => { if (e) e.preventDefault(); }, resExpanded: this.state.resExpanded, toggleRes: () => this.setState((s) => ({ resExpanded: !s.resExpanded })), resLabel: this.state.resExpanded ? "Show less" : "See More Resources", resArrow: this.state.resExpanded ? "\u2191" : "\u2193",
+      toggleMenu: () => (this.state.menuOpen ? this.closeMenu() : this.openMenu()),
+      closeMenu: () => this.closeMenu(),
+      chatOpen: this.state.chatOpen,
+      chatDraft: this.state.draft,
+      messages: this.state.messages,
+      noMessages: this.state.messages.length === 0,
+      thinking: this.state.thinking,
+      samples: ["What are we seeing in healthcare right now?", "What's moving in financial services?", "Summarize the latest retail and CPG signals", "Where is AI reshaping our clients' industries?"].map((q) => ({ text: q, onClick: () => this.sendText(q) })),
+      openChat: () => this.openChat(),
+      closeChat: () => this.closeChat(),
+      onDraft: (e) => this.setState({ draft: e.target.value }),
+      onChatKey: (e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); this.send(); } },
+      sendChat: () => this.send(),
+    };
+  }
+}
+</script>
+</body>
+</html>
