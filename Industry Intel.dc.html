@@ -91,8 +91,8 @@
       <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;">
         <sc-for list="{{ resources }}" as="card" hint-placeholder-count="12">
           <a class="gcard iglow" href="{{ card.href }}" target="{{ card.target }}" rel="noopener noreferrer" onClick="{{ card.onClick }}" style="--glow: {{ card.glow }}; display: flex; flex-direction: column; aspect-ratio: 3 / 2; border-radius: 4px; overflow: hidden; padding: 22px; text-decoration: none; background: #ffffff; border: 1px solid #e7e3de; color: #1a1a1a; cursor: pointer;">
-            <h3 style="margin: 0; font-size: 18px; font-weight: 400; letter-spacing: -0.01em; line-height: 1.22; text-wrap: balance;">{{ card.title }}</h3>
-            <p style="margin: 6px 0 0 0; font-size: 14px; line-height: 1.3; letter-spacing: -0.01em; color: rgba(26,26,26,0.55); text-wrap: pretty;">{{ card.cat }}</p>
+            <h3 style="margin: 0; font-size: 20px; font-weight: 400; letter-spacing: -0.01em; line-height: 1.22; text-wrap: balance;">{{ card.title }}</h3>
+            <p style="margin: 10px 0 0 0; font-size: 20px; line-height: 1.3; letter-spacing: -0.01em; color: rgba(26,26,26,0.55); text-wrap: pretty;">{{ card.cat }}</p>
             <span style="margin-top: auto; display: inline-flex; line-height: 1;">
               <sc-if value="{{ card.isNewsletter }}" hint-placeholder-val="{{ false }}">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="M3.5 6.5l8.5 6 8.5-6"></path></svg>
