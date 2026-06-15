@@ -143,7 +143,7 @@
   <section data-screen-label="Category list" style="display: flex; justify-content: center; padding: 40px 48px 24px 48px;">
     <div style="width: min(1240px, 100%);">
       <sc-for list="{{ programs }}" as="row" hint-placeholder-count="5">
-        <a href="#" class="prow" style="display: flex; align-items: center; gap: 24px; padding: 22px 24px 22px 0; border-radius: 4px; border-bottom: 1px solid #cfc8c1; text-decoration: none; box-sizing: border-box; position: relative; transition: background 320ms cubic-bezier(0.22,0.61,0.36,1), box-shadow 320ms cubic-bezier(0.22,0.61,0.36,1);">
+        <a href="{{ row.href }}" class="prow" style="display: flex; align-items: center; gap: 24px; padding: 22px 24px 22px 0; border-radius: 4px; border-bottom: 1px solid #cfc8c1; text-decoration: none; box-sizing: border-box; position: relative; transition: background 320ms cubic-bezier(0.22,0.61,0.36,1), box-shadow 320ms cubic-bezier(0.22,0.61,0.36,1);">
           <span class="ptitle" style="flex: 0 0 38%; font-size: 28px; letter-spacing: -0.01em; color: #111111; padding-left: 0; transition: color 320ms ease, padding 320ms cubic-bezier(0.22,0.61,0.36,1);">{{ row.title }}</span>
           <span class="pdesc" style="flex: 1 1 auto; margin-left: 40px; font-size: 16px; line-height: 1.45; color: #5a544e; transition: color 320ms ease;">{{ row.desc }}</span>
           <span class="parrow" style="flex: 0 0 auto; font-size: 20px; line-height: 1; color: transparent; transition: color 320ms ease;">→</span>
@@ -165,8 +165,9 @@
                 <sc-if value="{{ card.intro }}" hint-placeholder-val="{{ false }}">
                   <span style="display: block; margin-bottom: 8px; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(26,26,26,0.55);">Introducing</span>
                 </sc-if>
-                <h3 style="margin: 0; font-size: 20px; font-weight: 400; letter-spacing: -0.01em; line-height: 1.22; text-wrap: balance;">{{ card.title }}</h3>
-                <span style="margin-top: 28px; display: inline-flex; line-height: 1;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6"></path><path d="M10 20H4v-6"></path></svg></span>
+                <h3 style="margin: 0; font-size: 20px; font-weight: 400; letter-spacing: -0.01em; line-height: 1.22; text-wrap: balance;">{{ card.label }}</h3>
+                <p style="margin: 10px 0 0 0; font-size: 20px; line-height: 1.3; letter-spacing: -0.01em; color: rgba(26,26,26,0.6); text-wrap: pretty;">{{ card.title }}</p>
+                <span style="margin-top: 48px; display: inline-flex; line-height: 1;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6"></path><path d="M10 20H4v-6"></path></svg></span>
               </a>
             </sc-if>
 
@@ -746,18 +747,18 @@ class Component extends DCLogic {
 
     // ---- Category rows (hover-pill list) ----
     const catItems = [
-      { title: "AI Tools & Workflows", desc: "Put AI to work across research, strategy, and craft" },
-      { title: "Insight & Opportunity Analysis", desc: "Frame sharp insights and new opportunities" },
-      { title: "Brand Strategy", desc: "Define a brand's essence and narrative" },
-      { title: "Innovation Strategy", desc: "Develop new product ideas, then launch them" },
-      { title: "Brand Activation", desc: "Turn strategy into tangible brand actions" },
-      { title: "Cultural Insight", desc: "Help brands seize relevant cultural trends" },
-      { title: "Name Development", desc: "Ideate, filter, and present new names" },
-      { title: "Design Strategy", desc: "Bring a product or brand to life visually" },
-      { title: "Research Methods", desc: "Uncover and package compelling insights" },
-      { title: "Storytelling & Artifacts", desc: "Immersive deliverables beyond traditional presentations" },
-      { title: "Group Ideation & Workshops", desc: "Run successful ideation sessions and workshops" },
-      { title: "Psychology Inspiration", desc: "Frameworks from psychology to inspire thinking" },
+      { title: "Insight & Opportunity Analysis", desc: "Frame sharp insights and new opportunities", href: "Category.dc.html?c=insight-opportunity" },
+      { title: "AI Tools & Workflows", desc: "Put AI to work across research, strategy, and craft", href: "Category.dc.html?c=ai-tools" },
+      { title: "Brand Strategy", desc: "Define a brand's essence and narrative", href: "Category.dc.html?c=brand-strategy" },
+      { title: "Innovation Strategy", desc: "Develop new product ideas, then launch them", href: "Category.dc.html?c=innovation-strategy" },
+      { title: "Brand Activation", desc: "Turn strategy into tangible brand actions", href: "Category.dc.html?c=brand-activation" },
+      { title: "Cultural Insight", desc: "Help brands seize relevant cultural trends", href: "Category.dc.html?c=cultural-insight" },
+      { title: "Name Development", desc: "Ideate, filter, and present new names", href: "Category.dc.html?c=name-development" },
+      { title: "Design Strategy", desc: "Bring a product or brand to life visually", href: "Category.dc.html?c=design-strategy" },
+      { title: "Research Methods", desc: "Uncover and package compelling insights", href: "Category.dc.html?c=research-methods" },
+      { title: "Storytelling & Artifacts", desc: "Immersive deliverables beyond traditional presentations", href: "Category.dc.html?c=storytelling-artifacts" },
+      { title: "Group Ideation & Workshops", desc: "Run successful ideation sessions and workshops", href: "Category.dc.html?c=group-ideation" },
+      { title: "Psychology Inspiration", desc: "Frameworks from psychology to inspire thinking", href: "Category.dc.html?c=psychology-inspiration" },
     ];
     const programs = catItems.slice(0, 5);
 
@@ -914,14 +915,15 @@ class Component extends DCLogic {
       "How we scope and price a new client engagement",
       "Inside our approach to brand and product strategy",
     ];
-    const baseCards = cardTitles.map((t, i) => ({ isStandard: true, title: t, grad: GRADS[i % GRADS.length] }));
+    const cardLabels = ["New & Noted", "Positioning Craft", "Healthcare Signals", "Strong Outputs", "Studio Field Notes", "Client Playbooks", "Cultural Codes", "Future Services", "Better Feedback", "Naming Sprint", "Research Scoping", "How We Work", "Market Moves", "Tool Library", "Internal Reviews", "Scoping & Pricing", "Our Approach"];
+    const baseCards = cardTitles.map((t, i) => ({ isStandard: true, label: cardLabels[i] || "", title: t, grad: GRADS[i % GRADS.length] }));
     const introData = [
-      { title: "Working with Alex? Here's how to get started.", name: "Alex", src: "images/alex.png" },
-      { title: "Working with Jess? Here's how to get started.", name: "Jess", src: "images/jess.png" },
-      { title: "Working with Sam? Here's how to get started.", name: "Sam", src: "images/sam.png" },
+      { label: "Working with Alex", title: "Here's how to get started.", name: "Alex", src: "images/alex.png" },
+      { label: "Working with Jess", title: "Here's how to get started.", name: "Jess", src: "images/jess.png" },
+      { label: "Working with Sam", title: "Here's how to get started.", name: "Sam", src: "images/sam.png" },
     ];
     const introCards = introData.map((d, i) => ({
-      isStandard: true, intro: true, title: d.title, grad: GRADS[(i + 2) % GRADS.length],
+      isStandard: true, intro: true, label: d.label, title: d.title, grad: GRADS[(i + 2) % GRADS.length],
       photoEl: d.src
         ? React.createElement("img", { src: d.src, alt: d.name, style: { width: "100%", height: "100%", objectFit: "cover", display: "block" } })
         : React.createElement("div", { style: { width: "100%", height: "100%", background: "rgba(255,255,255,0.55)", display: "flex", alignItems: "center", justifyContent: "center", color: "rgba(26,26,26,0.5)", fontSize: "12px", letterSpacing: "0.06em", textTransform: "uppercase" } }, "Add photo"),
